@@ -1,0 +1,14 @@
+# Qt Creator 配置文件
+*.pro.user
+*.qbs_user
+
+# 编译输出目录
+build/
+build-*/
+
+# 临时文件
+*.o
+*.obj
+moc_*.cpp
+ui_*.h
+qrc_*.cpp
