@@ -1,7 +1,7 @@
 #ifndef LOGINWIDGET_H
 #define LOGINWIDGET_H
 
-#include <QWidget>
+#include <QDialog>
 #include <QMessageBox>
 #include <QApplication>
 #include <QString>
@@ -10,7 +10,7 @@ namespace Ui {
 class LoginWidget;
 }
 
-class LoginWidget : public QWidget
+class LoginWidget : public QDialog
 {
     Q_OBJECT
 
