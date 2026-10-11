@@ -12,3 +12,9 @@ ToolBarWidget::~ToolBarWidget()
 {
     delete ui;
 }
+
+void ToolBarWidget::on_loginoutButton_clicked()
+{
+    emit loginout();
+}
+

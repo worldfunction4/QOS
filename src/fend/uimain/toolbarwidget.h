@@ -14,6 +14,11 @@ class ToolBarWidget : public QWidget
 public:
     explicit ToolBarWidget(QWidget *parent = nullptr);
     ~ToolBarWidget();
+signals:
+    void loginout();
+
+private slots:
+    void on_loginoutButton_clicked();
 
 private:
     Ui::ToolBarWidget *ui;

@@ -9,9 +9,12 @@ UiMain::UiMain(QWidget *parent)
     ui->setupUi(this);
     ui->splitter->setStretchFactor(0, 1);
     ui->splitter->setStretchFactor(1, 4);
-
     //设置默认宽与高1000*700
     this->resize(1000, 700);
+    connect(ui->widgetToolBar, &ToolBarWidget::loginout, this, [=]{
+        this->hide();
+        showLoginWidget();
+    });
 }
 
 UiMain::~UiMain()
