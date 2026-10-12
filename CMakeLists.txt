@@ -1,6 +1,8 @@
 cmake_minimum_required(VERSION 3.19)
 project(MainWindow LANGUAGES CXX)
 
+set(CMAKE_AUTORCC ON)
+
 if(MSVC)
     add_compile_options(/utf-8)  # 强制MSVC编译器将源文件和执行字符集都视为 UTF-8
 elseif(CMAKE_CXX_COMPILER_ID MATCHES "GNU|Clang")
@@ -22,6 +24,10 @@ qt_add_executable(MainWindow
     src/fend/uimain/objectwidget.h src/fend/uimain/objectwidget.cpp src/fend/uimain/objectwidget.ui
     src/fend/uicom/pagewidget.h src/fend/uicom/pagewidget.cpp src/fend/uicom/pagewidget.ui
     src/fend/uilogin/loginwidget.h src/fend/uilogin/loginwidget.cpp src/fend/uilogin/loginwidget.ui
+    src/helper/filehelper.h src/helper/filehelper.cpp
+    resources.qrc
+
+
 )
 
 target_include_directories(${PROJECT_NAME} PRIVATE
