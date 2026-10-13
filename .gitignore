@@ -1,6 +1,7 @@
 # Qt Creator 配置文件
 *.pro.user
 *.qbs_user
+.qtcreator/
 
 # 编译输出目录
 build/
@@ -12,3 +13,6 @@ build-*/
 moc_*.cpp
 ui_*.h
 qrc_*.cpp
+
+# codegraph文件
+.codegraph/
