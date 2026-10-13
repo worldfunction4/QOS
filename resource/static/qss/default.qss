@@ -108,3 +108,39 @@ QPushButton#loginButton{
 	color:white;
     font: bold 12pt;
 }
+
+/* 左右分栏的拖动条 */
+QSplitter::handle {
+    background-color: #cccccc;
+}
+QSplitter::handle:horizontal {
+    width: 2px;
+}
+QSplitter::handle:vertical {
+    height: 2px;
+}
+
+/* 左侧栏：右边一条线，并且不要被压没 */
+#widget {
+    border-right: 1px solid #cccccc;
+    min-width: 180px;
+}
+
+/* 右侧各层之间的横线 */
+#widgetToolBar,
+#widgetBread {
+    border-bottom: 1px solid #cccccc;
+}
+
+#widgetPage {
+    border-top: 1px solid #cccccc;
+    min-height: 36px;
+}
+
+/* 空列表/空表格也要看得见边界 */
+QListView,
+QTableView {
+    border: 1px solid #dddddd;
+    background-color: #ffffff;
+    gridline-color: #eeeeee;
+}
