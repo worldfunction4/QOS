@@ -26,6 +26,9 @@ qt_add_executable(MainWindow
     src/fend/uilogin/loginwidget.h src/fend/uilogin/loginwidget.cpp src/fend/uilogin/loginwidget.ui
     src/helper/filehelper.h src/helper/filehelper.cpp
     resources.qrc
+    src/bend/models/bucket.h src/bend/models/bucket.cpp
+    src/bend/dao/daobuckets.h src/bend/dao/daobuckets.cpp
+    src/man/manbucket.h src/man/manbucket.cpp
 
 
 )
