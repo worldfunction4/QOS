@@ -23,7 +23,6 @@ signals:
 
 private slots:
     void on_loginButton_clicked();
-    void on_closeButton_clicked();
 
 private:
     Ui::LoginWidget *ui;

@@ -1,11 +1,18 @@
 #include "loginwidget.h"
 #include "ui_loginwidget.h"
-
+#include <QFile>
 LoginWidget::LoginWidget(QWidget *parent)
     : QDialog(parent)
     , ui(new Ui::LoginWidget)
 {
     ui->setupUi(this);
+    this->setWindowIcon(QIcon(":/resource/static/imgs/logo.png"));
+
+    //设置样式
+    ui->loginButton->setProperty("style", "h5");
+    ui->keyLabel->setProperty("style", "h5");
+    ui->idLabel->setProperty("style", "h5");
+    ui->markLabel->setProperty("style", "h5");
 }
 
 LoginWidget::~LoginWidget()
@@ -32,8 +39,3 @@ void LoginWidget::on_loginButton_clicked()
         return;
     }
 }
-void LoginWidget::on_closeButton_clicked()
-{
-    QApplication::quit();//退出整个应用程序
-}
-
