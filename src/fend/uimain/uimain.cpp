@@ -11,6 +11,9 @@ UiMain::UiMain(QWidget *parent)
     ui->splitter->setStretchFactor(1, 4);
     //设置默认宽与高1000*700
     this->resize(1000, 700);
+
+    //添加logo图标
+    this->setWindowIcon(QIcon("D:/QT/projects/Q/MainWindow/resource/static/imgs/logo.png"));
     connect(ui->widgetToolBar, &ToolBarWidget::loginout, this, [=]{
         this->hide();
         showLoginWidget();
