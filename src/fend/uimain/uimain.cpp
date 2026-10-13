@@ -13,7 +13,7 @@ UiMain::UiMain(QWidget *parent)
     this->resize(1000, 700);
 
     //添加logo图标
-    this->setWindowIcon(QIcon("D:/QT/projects/Q/MainWindow/resource/static/imgs/logo.png"));
+    this->setWindowIcon(QIcon(":/resource/static/imgs/logo.png"));
     connect(ui->widgetToolBar, &ToolBarWidget::loginout, this, [=]{
         this->hide();
         showLoginWidget();
