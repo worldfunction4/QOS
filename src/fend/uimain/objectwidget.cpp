@@ -33,6 +33,8 @@ ObjectWidget::ObjectWidget(QWidget *parent)
     //隐藏垂直标题
     ui->tableView->verticalHeader()->setHidden(true);
 
+    //设置鼠标点击排序
+    ui->tableView->setShortcutEnabled(true);
 }
 
 ObjectWidget::~ObjectWidget()
