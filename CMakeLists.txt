@@ -29,6 +29,7 @@ qt_add_executable(MainWindow
     src/bend/models/bucket.h src/bend/models/bucket.cpp
     src/bend/dao/daobuckets.h src/bend/dao/daobuckets.cpp
     src/man/manbucket.h src/man/manbucket.cpp
+    src/fend/uidelegate/bucketdelegate.h src/fend/uidelegate/bucketdelegate.cpp
 
 
 )
