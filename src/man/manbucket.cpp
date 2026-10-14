@@ -1,5 +1,6 @@
 #include "manbucket.h"
 #include "bend/dao/daobuckets.h"
+#include <QDir>
 
 Q_GLOBAL_STATIC(ManBucket, ins);
 
@@ -21,7 +22,19 @@ ManBucket *ManBucket::instance()
 void ManBucket::setManBucket()
 {
     DaoBuckets buckets;
-    QList<Bucket> bucket_lists = buckets.bucketFromMock(":/resource/static/tests/buckets.json");
+    QList<Bucket> bucket_lists;
+    QDir test_dir(":/resource/static/tests");
+    QStringList json_files = test_dir.entryList(
+        QStringList()<<"*.json",
+        QDir::Files,
+        QDir::Name);
+    for(const QString& filename : json_files)
+    {
+        QString file_path = test_dir.filePath(filename);
+        QList<Bucket> current_buckets = buckets.bucketFromMock(file_path);
+        bucket_lists.append(current_buckets);
+    }
+
     model_->setRowCount(bucket_lists.size());
     //创建列
     model_->setColumnCount(3);
@@ -42,6 +55,8 @@ void ManBucket::setManBucket()
 
         ++row;
     }
+    //按时间降序排序
+    model_->sort(2, Qt::DescendingOrder);
 }
 
 QStandardItemModel *ManBucket::model() const
