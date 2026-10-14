@@ -23,7 +23,7 @@ void ManBucket::setManBucket()
     DaoBuckets buckets;
     QList<Bucket> bucket_lists = buckets.bucketFromMock(":/resource/static/tests/buckets.json");
     model_->setRowCount(bucket_lists.size());
-    //设置列数
+    //创建列
     model_->setColumnCount(3);
     //设置计数器
     int row = 0;

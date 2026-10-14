@@ -9,6 +9,7 @@ QWidget *BucketDelegate::createEditor(QWidget *parent, const QStyleOptionViewIte
 {
         QComboBox* box = new QComboBox(parent);
         //显示数据与实际分离
+
         box->addItem("ap-Sichuan", "ap-sichuan");
         box->addItem("ap-Beijing", "ap-beijing");
         box->addItem("ap-Shanghai", "ap-shanghai");
