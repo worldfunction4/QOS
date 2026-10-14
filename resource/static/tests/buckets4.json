@@ -1,0 +1,32 @@
+[
+    {
+        "create_date": "2017-02-08T01:12:30Z",
+        "location": "ap-guangzhou",
+        "name": "logs-1300416388"
+    },
+    {
+        "create_date": "2019-07-19T05:48:12Z",
+        "location": "ap-chengdu",
+        "name": "images-1300416389"
+    },
+    {
+        "create_date": "2020-11-30T10:26:54Z",
+        "location": "ap-beijing",
+        "name": "videos-1300416390"
+    },
+    {
+        "create_date": "2021-08-11T12:03:41Z",
+        "location": "ap-shanghai",
+        "name": "reports-1300416391"
+    },
+    {
+        "create_date": "2023-05-22T09:37:06Z",
+        "location": "ap-shenzhen",
+        "name": "assets-1300416392"
+    },
+    {
+        "create_date": "2026-01-09T15:51:28Z",
+        "location": "ap-nanjing",
+        "name": "database-backup-1300416393"
+    }
+]
