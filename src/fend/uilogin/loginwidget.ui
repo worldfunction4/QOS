@@ -58,6 +58,29 @@
        </spacer>
       </item>
       <item>
+       <widget class="QLabel" name="loginNameLabel">
+        <property name="text">
+         <string>登录名</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLineEdit" name="loginNameLineEdit"/>
+      </item>
+      <item>
+       <spacer name="verticalSpacer_6">
+        <property name="orientation">
+         <enum>Qt::Orientation::Vertical</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>20</width>
+          <height>40</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item>
        <widget class="QLabel" name="idLabel">
         <property name="text">
          <string>SecretId</string>

@@ -13,6 +13,7 @@ LoginWidget::LoginWidget(QWidget *parent)
     ui->keyLabel->setProperty("style", "h5");
     ui->idLabel->setProperty("style", "h5");
     ui->markLabel->setProperty("style", "h5");
+    ui->loginNameLabel->setProperty("style", "h5");
 }
 
 LoginWidget::~LoginWidget()
