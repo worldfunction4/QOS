@@ -6,7 +6,6 @@
 //纯数据
 struct Bucket
 {
-    Bucket();
     QString name;
     QString location;
     QString createDate;
