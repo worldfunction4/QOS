@@ -4,5 +4,9 @@
         <file>resource/static/qss/default.qss</file>
         <file>resource/static/tests/buckets.json</file>
         <file>resource/static/tests/buckets2.json</file>
+        <file>resource/static/tests/buckets3.json</file>
+        <file>resource/static/tests/buckets4.json</file>
+        <file>resource/static/tests/buckets_empty.json</file>
+        <file>resource/static/sql/login_info.sql</file>
     </qresource>
 </RCC>
