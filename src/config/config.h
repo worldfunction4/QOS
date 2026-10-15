@@ -18,7 +18,11 @@ namespace CONFIG
     }
     namespace SQL
     {
-    inline const QString LOGIN_INFO_PATH = ":/resource/static/sql/login_info.sql";
+        inline const QString LOGIN_INFO_PATH = ":/resource/static/sql/login_info.sql";
+    }
+    namespace TABLE
+    {
+        inline const QString LOGIN_INFO_NAME = "login_info";
     }
 
     inline bool init()

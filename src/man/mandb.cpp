@@ -1,5 +1,7 @@
 #include "mandb.h"
-#include "src/config/config.h"
+
+#include <QDateTime>
+
 Q_GLOBAL_STATIC(ManDB, ins)
 
 
@@ -14,19 +16,38 @@ ManDB *ManDB::instance()
 
 void ManDB::init()
 {
-    connect();
-    creatLoginInfoTable();
+    daologininfo_.connect();
+    daologininfo_.createTable();
 }
 
-void ManDB::connect()
+void ManDB::saveLoginInfo(
+    const QString &name, 
+    const QString &id, 
+    const QString &key, 
+    const QString &remark)
 {
-    //取消硬编码
-    db_.connect(CONFIG::SQLITE::NAME);
+    LoginInfo info;
+    info.name = (name == ""?id:name);
+    info.remark = remark.trimmed();
+    info.secretId = id.trimmed();
+    info.secretKey = key.trimmed();
+    info.timeStamp = QDateTime::currentSecsSinceEpoch();
+
+    //查询是否存在这个id？
+    if(daologininfo_.exists(info.secretId))
+    {
+        daologininfo_.update(info);
+    }
+    else
+    {
+        daologininfo_.insert(info);
+    }
 }
 
-void ManDB::creatLoginInfoTable()
+void ManDB::removeLoginInfo(const QString &id)
 {
-    //创建表
-    QString sql = FileHelper::readAllText(CONFIG::SQL::LOGIN_INFO_PATH);
-    db_.exec(sql);
+    if(daologininfo_.exists(id))
+    {
+        daologininfo_.remove(id);
+    }
 }

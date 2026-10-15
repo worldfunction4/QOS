@@ -10,7 +10,7 @@ DbSqlite::DbSqlite()
 DbSqlite::~DbSqlite()
 {
     //分离数据库
-    if(sqldata_.open())
+    if(sqldata_.isOpen())
     {
         sqldata_.close();
     }
