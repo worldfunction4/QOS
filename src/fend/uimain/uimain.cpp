@@ -7,6 +7,9 @@ UiMain::UiMain(QWidget *parent)
     , ui(new Ui::UiMain)
 {
     ui->setupUi(this);
+
+    //拖拽时只进行预览不持续实时调整布局,鼠标松开后真正调整
+    ui->splitter->setOpaqueResize(false);
     ui->splitter->setStretchFactor(0, 1);
     ui->splitter->setStretchFactor(1, 4);
     //设置默认宽与高1000*700
