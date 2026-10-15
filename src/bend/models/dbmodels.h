@@ -1,7 +1,7 @@
 #ifndef DBMODELS_H
 #define DBMODELS_H
 
-#include <Qstring>
+#include <QString>
 
 
 //登录信息数据

@@ -27,9 +27,12 @@ void ManDB::saveLoginInfo(
     const QString &remark)
 {
     LoginInfo info;
-    info.name = (name == ""?id:name);
+    //预防一下输入空格的情况
+    QString tri_name = name.trimmed();
+    QString tri_id = id.trimmed();
+    info.name = (tri_name.isEmpty() ? tri_id : tri_name);
     info.remark = remark.trimmed();
-    info.secretId = id.trimmed();
+    info.secretId = tri_id;
     info.secretKey = key.trimmed();
     info.timeStamp = QDateTime::currentSecsSinceEpoch();
 
