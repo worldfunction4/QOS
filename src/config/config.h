@@ -12,11 +12,15 @@ namespace CONFIG
         inline const QString WORK = QDir::currentPath();
         inline const QString TEMP = FileHelper::joinPath(WORK, "temp");
     }
-
     namespace SQLITE
     {
         inline const QString NAME = FileHelper::joinPath(PATH::TEMP, "cos.db");
     }
+    namespace SQL
+    {
+    inline const QString LOGIN_INFO_PATH = ":/resource/static/sql/login_info.sql";
+    }
+
     inline bool init()
     {
         return FileHelper::makePath(PATH::TEMP);

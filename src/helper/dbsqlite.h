@@ -9,8 +9,10 @@ class DbSqlite
 public:
     DbSqlite();
     ~DbSqlite();
+    //连接数据库
     void connect(const QString& path);
-
+    //执行sql语句
+    void exec(const QString& sql);
 private:
     //创建数据库对象
     QSqlDatabase sqldata_;

@@ -15,6 +15,7 @@ public:
 signals:
 private:
     void connect();
+    void creatLoginInfoTable();
     DbSqlite db_;
 };
 

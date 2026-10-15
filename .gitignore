@@ -13,6 +13,7 @@ build-*/
 moc_*.cpp
 ui_*.h
 qrc_*.cpp
+temp/
 
 # codegraph文件
 .codegraph/
