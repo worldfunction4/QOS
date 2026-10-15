@@ -27,12 +27,14 @@ qt_add_executable(MainWindow
     src/helper/filehelper.h src/helper/filehelper.cpp
     src/config/config.h
     resources.qrc
-    src/bend/models/bucket.h src/bend/models/bucket.cpp
+    src/bend/models/bucket.h
+    src/bend/models/dbmodels.h
     src/bend/dao/daobuckets.h src/bend/dao/daobuckets.cpp
     src/man/manbucket.h src/man/manbucket.cpp
     src/fend/uidelegate/bucketdelegate.h src/fend/uidelegate/bucketdelegate.cpp
     src/man/mandb.h src/man/mandb.cpp
     src/helper/dbsqlite.h src/helper/dbsqlite.cpp
+    src/bend/dao/daologininfo.h src/bend/dao/daologininfo.cpp
 )
 
 target_include_directories(${PROJECT_NAME} PRIVATE
