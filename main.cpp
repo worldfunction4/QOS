@@ -1,4 +1,5 @@
 #include "bend/dao/daobuckets.h"
+#include "man/mandb.h"
 #include "src/man/manbucket.h"
 #include "src/fend/uimain/uimain.h"
 #include <fend/uilogin/loginwidget.h>
@@ -12,9 +13,13 @@ int main(int argc, char *argv[])
 
     //读取qss
     QString qss_str = FileHelper::readAllText(":/resource/static/qss/default.qss");
+    //加载qss内容
     a.setStyleSheet(qss_str);
 
     ManBucket::instance()->setManBucket();
+
+    //连接数据库
+    ManDB::instance()->init();
 
     UiMain w;
     w.showLoginWidget();

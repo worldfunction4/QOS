@@ -9,7 +9,7 @@ elseif(CMAKE_CXX_COMPILER_ID MATCHES "GNU|Clang")
     add_compile_options(-fexec-charset=UTF-8 -finput-charset=UTF-8)
 endif()
 
-find_package(Qt6 6.5 REQUIRED COMPONENTS Core Widgets)
+find_package(Qt6 6.5 REQUIRED COMPONENTS Core Widgets Sql)
 
 qt_standard_project_setup()
 
@@ -30,8 +30,8 @@ qt_add_executable(MainWindow
     src/bend/dao/daobuckets.h src/bend/dao/daobuckets.cpp
     src/man/manbucket.h src/man/manbucket.cpp
     src/fend/uidelegate/bucketdelegate.h src/fend/uidelegate/bucketdelegate.cpp
-
-
+    src/man/mandb.h src/man/mandb.cpp
+    src/helper/dbsqlite.h src/helper/dbsqlite.cpp
 )
 
 target_include_directories(${PROJECT_NAME} PRIVATE
@@ -43,6 +43,7 @@ target_link_libraries(MainWindow
     PRIVATE
         Qt::Core
         Qt::Widgets
+        Qt::Sql
 )
 
 install(TARGETS MainWindow
