@@ -1,4 +1,5 @@
 #include "loginwidget.h"
+#include "man/mandb.h"
 #include "ui_loginwidget.h"
 #include <QFile>
 LoginWidget::LoginWidget(QWidget *parent)
@@ -28,6 +29,21 @@ void LoginWidget::on_loginButton_clicked()
         ui->ketLineEdit->text().trimmed() == "admin123")
     {
         emit loginSucessfuly();
+        if(ui->checkBox->isChecked())
+        {
+            //那么就保存登录信息
+            ManDB::instance()->saveLoginInfo(
+                ui->loginNameLineEdit->text(),
+                ui->idLineEdit->text(),
+                ui->ketLineEdit->text(),
+                ui->markLineEdit->text()
+                );
+        }
+        else
+        {
+            //不然就删除登录信息(不保存，一次性登录)
+            ManDB::instance()->removeLoginInfo(ui->idLineEdit->text());
+        }
         this->close();
     }
     else
