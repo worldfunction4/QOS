@@ -94,6 +94,26 @@ void DaoLoginInfo::remove(const QString &secretId)
     }
 }
 
+QList<LoginInfo> DaoLoginInfo::select()
+{
+    QList<LoginInfo> ret_list;
+    QString sql = QString("select name, secret_id, secret_key, remark, timestamp from %1 "
+                          "order by timestamp desc").arg(CONFIG::TABLE::LOGIN_INFO_NAME);
+
+    QList<Record> records = db_.select(sql);
+    for(const auto& record : records)
+    {
+        LoginInfo info;
+        info.name = record["name"].toString();
+        info.secretId = record["secret_id"].toString();
+        info.secretKey = record["secret_key"].toString();
+        info.remark = record["remark"].toString();
+
+        ret_list.append(info);
+    }
+    return ret_list;
+}
+
 void DaoLoginInfo::connect()
 {
     //取消硬编码

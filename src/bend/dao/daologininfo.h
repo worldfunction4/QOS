@@ -15,6 +15,9 @@ public:
     void update(const LoginInfo& info);
     void remove(const QString &secretId);
 
+    //缓存查询用
+    QList<LoginInfo> select();
+
     //连接数据库以及创建表
     void connect();
     void createTable();

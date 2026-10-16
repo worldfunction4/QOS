@@ -18,6 +18,8 @@ void ManDB::init()
 {
     daologininfo_.connect();
     daologininfo_.createTable();
+    //需要在dao层定义一个select方法进行查询
+    logininfo_list_ = daologininfo_.select();
 }
 
 void ManDB::saveLoginInfo(
@@ -40,10 +42,13 @@ void ManDB::saveLoginInfo(
     if(daologininfo_.exists(info.secretId))
     {
         daologininfo_.update(info);
+        logininfo_list_[logininfoIndex(info.secretId)] = info;
     }
     else
     {
         daologininfo_.insert(info);
+        //缓存也要插入更新
+        logininfo_list_.append(info);
     }
 }
 
@@ -52,5 +57,46 @@ void ManDB::removeLoginInfo(const QString &id)
     if(daologininfo_.exists(id))
     {
         daologininfo_.remove(id);
+        //缓存也要删除
+        logininfo_list_.removeAt(logininfoIndex(id));
     }
+}
+
+int ManDB::logininfoIndex(const QString &secretId)
+{
+    for(int i=0; i < logininfo_list_.size();++i)
+    {
+        if(logininfo_list_[i].secretId == secretId)
+        {
+            return i;
+        }
+    }
+    throw QString("获取登录信息索引失败:%1").arg(secretId);
+}
+
+QStringList ManDB::loginInfoNames() const
+{
+    QStringList names;
+    for(const LoginInfo& info : logininfo_list_)
+    {
+        names.append(info.name);
+    }
+    return names;
+}
+
+bool ManDB::loginInfoByName(const QString &name, LoginInfo *info) const
+{
+    //进行遍历
+    for(const LoginInfo& item : logininfo_list_)
+    {
+        if(item.name == name)
+        {
+            if(info)
+            {
+                *info = item;
+            }
+            return true;
+        }
+    }
+    return false;
 }
