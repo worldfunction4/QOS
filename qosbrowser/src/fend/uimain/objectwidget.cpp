@@ -1,7 +1,7 @@
 #include "objectwidget.h"
 #include "fend/uidelegate/bucketdelegate.h"
 #include "ui_objectwidget.h"
-#include "src/man/manbucket.h"
+#include "src/bend/man/manbucket.h"
 
 ObjectWidget::ObjectWidget(QWidget *parent)
     : QWidget(parent)

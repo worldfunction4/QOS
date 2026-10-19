@@ -1,6 +1,6 @@
 #include "bend/dao/daobuckets.h"
-#include "man/mandb.h"
-#include "src/man/manbucket.h"
+#include "src/bend/man/mandb.h"
+#include "src/bend/man/manbucket.h"
 #include "src/fend/uimain/uimain.h"
 #include <fend/uilogin/loginwidget.h>
 #include "src/helper/filehelper.h"

@@ -1,4 +1,4 @@
-# MainWindow(暂定)
+# QOS(Qt Object Storage)
 基于Qt6的Widget，使用cmkae构建系统的桌面端对象存储管理器
 
 ## 目前的功能

@@ -1,6 +1,6 @@
 #include "bucketswidget.h"
 #include "ui_bucketswidget.h"
-#include "src/man/manbucket.h"
+#include "src/bend/man/manbucket.h"
 
 BucketsWidget::BucketsWidget(QWidget *parent)
     : QWidget(parent)

@@ -1,7 +1,7 @@
 #ifndef DAOBUCKETS_H
 #define DAOBUCKETS_H
 
-#include "src/bend/models/bucket.h"
+#include "src/middle/models/bucket.h"
 #include <QList>
 #include <QString>
 #include <QVariant>

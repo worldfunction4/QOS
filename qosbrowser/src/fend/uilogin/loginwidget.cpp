@@ -1,5 +1,5 @@
 #include "loginwidget.h"
-#include "man/mandb.h"
+#include "src/bend/man/mandb.h"
 #include "ui_loginwidget.h"
 #include <QFile>
 #include <QCompleter>
