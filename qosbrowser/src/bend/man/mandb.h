@@ -1,8 +1,7 @@
 #ifndef MANDB_H
 #define MANDB_H
 
-
-#include "bend/dao/daologininfo.h"
+#include "bend/dao/dbs/daologininfo.h"
 #include <QObject>
 
 
@@ -29,7 +28,8 @@ public:
 
 signals:
 private:
-    DaoLoginInfo daologininfo_;
+    //保留接口
+    DaoLoginInfo* daologininfo_ = nullptr;
     //读取登录信息到缓存，创建一个缓存
     QList<LoginInfo> logininfo_list_;
 };

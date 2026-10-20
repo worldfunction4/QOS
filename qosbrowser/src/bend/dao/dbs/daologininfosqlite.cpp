@@ -1,12 +1,12 @@
-#include "daologininfo.h"
+#include "daologininfosqlite.h"
 #include <QSqlQuery>
 #include <QSqlError>
 #include "src/config/config.h"
 
-DaoLoginInfo::DaoLoginInfo(): table_(CONFIG::TABLE::LOGIN_INFO_NAME)
+DaoLoginInfoSqlite::DaoLoginInfoSqlite(): table_(CONFIG::TABLE::LOGIN_INFO_NAME)
 {}
 
-bool DaoLoginInfo::exists(const QString &secret_id)
+bool DaoLoginInfoSqlite::exists(const QString &secret_id)
 {
     //执行sql语句用
     QSqlQuery query;
@@ -29,7 +29,7 @@ bool DaoLoginInfo::exists(const QString &secret_id)
     return false;
 }
 
-void DaoLoginInfo::insert(const LoginInfo &info)
+void DaoLoginInfoSqlite::insert(const LoginInfo &info)
 {
     QSqlQuery query;
     QString sql = QString(
@@ -52,7 +52,7 @@ void DaoLoginInfo::insert(const LoginInfo &info)
     }
 }
 
-void DaoLoginInfo::update(const LoginInfo &info)
+void DaoLoginInfoSqlite::update(const LoginInfo &info)
 {
     QSqlQuery query;
     QString sql = QString(
@@ -77,7 +77,7 @@ void DaoLoginInfo::update(const LoginInfo &info)
     }
 }
 
-void DaoLoginInfo::remove(const QString &secretId)
+void DaoLoginInfoSqlite::remove(const QString &secretId)
 {
     QSqlQuery query;
     QString sql = QString(
@@ -94,7 +94,7 @@ void DaoLoginInfo::remove(const QString &secretId)
     }
 }
 
-QList<LoginInfo> DaoLoginInfo::select()
+QList<LoginInfo> DaoLoginInfoSqlite::select()
 {
     QList<LoginInfo> ret_list;
     QString sql = QString("select name, secret_id, secret_key, remark, timestamp from %1 "
@@ -114,13 +114,13 @@ QList<LoginInfo> DaoLoginInfo::select()
     return ret_list;
 }
 
-void DaoLoginInfo::connect()
+void DaoLoginInfoSqlite::connect()
 {
     //取消硬编码
     db_.connect(CONFIG::SQLITE::NAME);
 }
 
-void DaoLoginInfo::createTable()
+void DaoLoginInfoSqlite::createTable()
 {
     //创建表
     QString sql = FileHelper::readAllText(CONFIG::SQL::LOGIN_INFO_PATH);

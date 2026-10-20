@@ -18,12 +18,16 @@ qt_add_executable(qosbrowser
     resources.qrc
     src/middle/models/bucket.h
     src/middle/models/dbmodels.h
-    src/bend/dao/daobuckets.h src/bend/dao/daobuckets.cpp
-    src/bend/man/manbucket.h src/bend/man/manbucket.cpp
+
+    src/bend/man/mancloud.h src/bend/man/mancloud.cpp
     src/fend/uidelegate/bucketdelegate.h src/fend/uidelegate/bucketdelegate.cpp
     src/bend/man/mandb.h src/bend/man/mandb.cpp
     src/helper/dbsqlite.h src/helper/dbsqlite.cpp
-    src/bend/dao/daologininfo.h src/bend/dao/daologininfo.cpp
+    src/bend/dao/dbs/daologininfosqlite.h src/bend/dao/dbs/daologininfosqlite.cpp
+    src/bend/dao/clouds/daoclouds.h
+    src/bend/dao/clouds/daocloudsmock.h src/bend/dao/clouds/daocloudsmock.cpp
+    src/bend/dao/dbs/daologininfosqlite.h
+    src/bend/dao/dbs/daologininfo.h
 )
 
 target_include_directories(${PROJECT_NAME} PRIVATE

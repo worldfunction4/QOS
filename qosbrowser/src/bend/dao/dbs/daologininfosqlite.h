@@ -1,13 +1,14 @@
-#ifndef DAOLOGININFO_H
-#define DAOLOGININFO_H
+#ifndef DAOLOGININFOSQLITE_H
+#define DAOLOGININFOSQLITE_H
 
 #include "middle/models/dbmodels.h"
 #include "helper/dbsqlite.h"
+#include "daologininfo.h"
 
-class DaoLoginInfo
+class DaoLoginInfoSqlite : public DaoLoginInfo
 {
 public:
-    DaoLoginInfo();
+    DaoLoginInfoSqlite();
 
     //对登录的信息进行操作
     bool exists(const QString& secret_id);
@@ -27,4 +28,4 @@ private:
     DbSqlite db_;
 };
 
-#endif // DAOLOGININFO_H
+#endif // DAOLOGININFOSQLITE_H

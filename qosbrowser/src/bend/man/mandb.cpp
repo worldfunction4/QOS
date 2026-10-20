@@ -1,4 +1,5 @@
 #include "mandb.h"
+#include "bend/dao/dbs/daologininfosqlite.h"
 
 #include <QDateTime>
 
@@ -7,7 +8,9 @@ Q_GLOBAL_STATIC(ManDB, ins)
 
 ManDB::ManDB(QObject *parent)
     : QObject{parent}
-{}
+{
+    daologininfo_ = new DaoLoginInfoSqlite;
+}
 
 ManDB *ManDB::instance()
 {
@@ -16,10 +19,10 @@ ManDB *ManDB::instance()
 
 void ManDB::init()
 {
-    daologininfo_.connect();
-    daologininfo_.createTable();
+    daologininfo_->connect();
+    daologininfo_->createTable();
     //需要在dao层定义一个select方法进行查询
-    logininfo_list_ = daologininfo_.select();
+    logininfo_list_ = daologininfo_->select();
 }
 
 void ManDB::saveLoginInfo(
@@ -39,14 +42,14 @@ void ManDB::saveLoginInfo(
     info.timeStamp = QDateTime::currentSecsSinceEpoch();
 
     //查询是否存在这个id？
-    if(daologininfo_.exists(info.secretId))
+    if(daologininfo_->exists(info.secretId))
     {
-        daologininfo_.update(info);
+        daologininfo_->update(info);
         logininfo_list_[logininfoIndex(info.secretId)] = info;
     }
     else
     {
-        daologininfo_.insert(info);
+        daologininfo_->insert(info);
         //缓存也要插入更新
         logininfo_list_.append(info);
     }
@@ -54,9 +57,9 @@ void ManDB::saveLoginInfo(
 
 void ManDB::removeLoginInfo(const QString &id)
 {
-    if(daologininfo_.exists(id))
+    if(daologininfo_->exists(id))
     {
-        daologininfo_.remove(id);
+        daologininfo_->remove(id);
         //缓存也要删除
         logininfo_list_.removeAt(logininfoIndex(id));
     }
