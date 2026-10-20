@@ -12,4 +12,5 @@ qt_standard_project_setup()
 enable_testing()
 
 add_subdirectory(qosbrowser)
-# add_subdirectory(tests)  # 暂时关闭，tst_qos.cpp 写好后再打开
+# 添加测试
+add_subdirectory(tests/testfilehelper)
