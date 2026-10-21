@@ -1,3 +1,4 @@
+#include "plugins/manplugin.h"
 #include "src/bend/man/mandb.h"
 #include "src/bend/man/mancloud.h"
 #include "src/fend/uimain/uimain.h"
@@ -14,9 +15,10 @@ int main(int argc, char *argv[])
     QString qss_str = FileHelper::readAllText(":/resource/static/qss/default.qss");
     //加载qss内容
     a.setStyleSheet(qss_str);
+    //启动插件
+    ManPlugin::instance()->installPlugins(argc, argv);
     //调用
     ManCloud::instance()->setManBucket();
-
     //连接数据库
     ManDB::instance()->init();
 

@@ -1,15 +1,13 @@
 #include "manplugin.h"
 #include "bend/dao/clouds/daocloudsmock.h"
+#include "bend/dao/config/versioncmd.h"
 #include "bend/dao/config/versionjson.h"
 #include "src/config/global.h"
 Q_GLOBAL_STATIC(ManPlugin, ins);
 
 ManPlugin::ManPlugin(QObject *parent)
     : QObject{parent}
-{
-    //在初始化管理器的时候直接安装,防止clouds返回空指针导致程序崩溃
-    installPlugins();
-}
+{}
 
 ManPlugin::~ManPlugin()
 {
@@ -22,9 +20,18 @@ ManPlugin *ManPlugin::instance()
     return ins();
 }
 
-void ManPlugin::installPlugins()
+void ManPlugin::installPlugins(int argc, char *argv[])
 {
-    version_ = new VersionJson(GLOBAL::VERSION::JSON_PATH);
+   //增加判断：命令行参数如果有效就使用，反之就使用配置文件
+    if(VersionCmd(argc, argv).isValid())
+    {
+        version_ = new VersionCmd(argc, argv);
+    }
+    else
+    {
+        version_ = new VersionJson(GLOBAL::VERSION::JSON_PATH);
+    }
+
     version_->setVersion();
     if(version_->major() == GLOBAL::VERSION::MAJOR_BUSINESS)
     {

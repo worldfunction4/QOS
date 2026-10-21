@@ -15,7 +15,7 @@ signals:
 
 public:
     //初始化插件
-    void installPlugins();
+    void installPlugins(int argc, char *argv[]);
     DaoClouds* clouds()const;
     explicit ManPlugin(QObject *parent = nullptr);
     ~ManPlugin();
