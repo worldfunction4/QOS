@@ -14,7 +14,7 @@ int main(int argc, char *argv[])
     QString qss_str = FileHelper::readAllText(":/resource/static/qss/default.qss");
     //加载qss内容
     a.setStyleSheet(qss_str);
-
+    //调用
     ManCloud::instance()->setManBucket();
 
     //连接数据库

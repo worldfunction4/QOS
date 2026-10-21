@@ -1,4 +1,4 @@
-#ifndef DBSQLITE_H
+    #ifndef DBSQLITE_H
 #define DBSQLITE_H
 
 #include <QString>

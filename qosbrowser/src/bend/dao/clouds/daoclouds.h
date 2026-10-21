@@ -9,6 +9,7 @@ class DaoClouds
 {
 public:
     DaoClouds()=default;
+    virtual ~DaoClouds()=default;
     //获取存储桶的抽象，所有方式都从这里重写
     virtual QList<Bucket> buckets() = 0;
 };

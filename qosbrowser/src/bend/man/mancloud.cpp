@@ -1,5 +1,5 @@
 #include "mancloud.h"
-#include <bend/dao/clouds/daocloudsmock.h>
+#include <plugins/manplugin.h>
 
 Q_GLOBAL_STATIC(ManCloud, ins);
 
@@ -11,7 +11,7 @@ ManCloud::ManCloud(QObject* parent)
 
     model_ = new QStandardItemModel(this);
     // 目前使用 Mock 数据源
-    dao_ = new DaoCloudsMock(":/resource/static/tests/buckets.json");
+    dao_ = ManPlugin::instance()->clouds();
 }
 
 ManCloud *ManCloud::instance()

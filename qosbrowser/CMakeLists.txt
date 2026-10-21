@@ -28,6 +28,7 @@ qt_add_executable(qosbrowser
     src/bend/dao/clouds/daocloudsmock.h src/bend/dao/clouds/daocloudsmock.cpp
     src/bend/dao/dbs/daologininfosqlite.h
     src/bend/dao/dbs/daologininfo.h
+    src/plugins/manplugin.h src/plugins/manplugin.cpp
 )
 
 target_include_directories(${PROJECT_NAME} PRIVATE
