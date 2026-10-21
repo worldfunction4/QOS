@@ -1,9 +1,9 @@
 #include "daologininfosqlite.h"
 #include <QSqlQuery>
 #include <QSqlError>
-#include "src/config/config.h"
+#include "src/config/global.h"
 
-DaoLoginInfoSqlite::DaoLoginInfoSqlite(): table_(CONFIG::TABLE::LOGIN_INFO_NAME)
+DaoLoginInfoSqlite::DaoLoginInfoSqlite(): table_(GLOBAL::TABLE::LOGIN_INFO_NAME)
 {}
 
 bool DaoLoginInfoSqlite::exists(const QString &secret_id)
@@ -98,7 +98,7 @@ QList<LoginInfo> DaoLoginInfoSqlite::select()
 {
     QList<LoginInfo> ret_list;
     QString sql = QString("select name, secret_id, secret_key, remark, timestamp from %1 "
-                          "order by timestamp desc").arg(CONFIG::TABLE::LOGIN_INFO_NAME);
+                          "order by timestamp desc").arg(GLOBAL::TABLE::LOGIN_INFO_NAME);
 
     QList<Record> records = db_.select(sql);
     for(const auto& record : records)
@@ -117,12 +117,12 @@ QList<LoginInfo> DaoLoginInfoSqlite::select()
 void DaoLoginInfoSqlite::connect()
 {
     //取消硬编码
-    db_.connect(CONFIG::SQLITE::NAME);
+    db_.connect(GLOBAL::SQLITE::NAME);
 }
 
 void DaoLoginInfoSqlite::createTable()
 {
     //创建表
-    QString sql = FileHelper::readAllText(CONFIG::SQL::LOGIN_INFO_PATH);
+    QString sql = FileHelper::readAllText(GLOBAL::SQL::LOGIN_INFO_PATH);
     db_.exec(sql);
 }

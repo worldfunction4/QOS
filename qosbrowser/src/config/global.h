@@ -1,11 +1,11 @@
-#ifndef CONFIG_H
-#define CONFIG_H
+#ifndef GLOBAL_H
+#define GLOBAL_H
 
 #include "helper/filehelper.h"
 #include <QString>
 #include <QDir>
 
-namespace CONFIG
+namespace GLOBAL
 {
     namespace PATH
     {
@@ -31,4 +31,4 @@ namespace CONFIG
     }
     inline bool OK = init();
 }
-#endif // CONFIG_H
+#endif // GLOBAL_H

@@ -14,7 +14,7 @@ qt_add_executable(qosbrowser
     src/fend/uicom/pagewidget.h src/fend/uicom/pagewidget.cpp src/fend/uicom/pagewidget.ui
     src/fend/uilogin/loginwidget.h src/fend/uilogin/loginwidget.cpp src/fend/uilogin/loginwidget.ui
     src/helper/filehelper.h src/helper/filehelper.cpp
-    src/config/config.h
+    src/config/global.h
     resources.qrc
     src/middle/models/bucket.h
     src/middle/models/dbmodels.h
