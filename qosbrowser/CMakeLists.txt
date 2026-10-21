@@ -29,6 +29,9 @@ qt_add_executable(qosbrowser
     src/bend/dao/dbs/daologininfosqlite.h
     src/bend/dao/dbs/daologininfo.h
     src/plugins/manplugin.h src/plugins/manplugin.cpp
+    src/bend/dao/config/version.h
+    src/bend/dao/config/versionjson.h src/bend/dao/config/versionjson.cpp
+    src/bend/dao/config/version.cpp
 )
 
 target_include_directories(${PROJECT_NAME} PRIVATE
