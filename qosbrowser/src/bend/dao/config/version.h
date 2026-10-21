@@ -24,7 +24,7 @@ public:
 
 protected:
     QString m_major; //主版本类型（商业版或个人版），也就是business或者custom
-    QString m_dev; //环境（生产环境还是测试环境），同理：alpha，beta，prod
+    QString m_env; //环境（生产环境还是测试环境），同理：alpha，beta，prod
 
     //版本号，比如1.1.2
     int m_v1=0;

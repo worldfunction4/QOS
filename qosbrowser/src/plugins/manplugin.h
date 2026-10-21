@@ -2,6 +2,7 @@
 #define MANPLUGIN_H
 
 #include "bend/dao/clouds/daoclouds.h"
+#include "bend/dao/config/version.h"
 #include <QObject>
 
 //设置为单例模式
@@ -22,6 +23,8 @@ private:
     //保存installPlugins()中new出来的地址
     //另外这是基类指针指向派生类对象，谁构造谁析构
     DaoClouds* clouds_ = nullptr;
+    //传递一个指向版本的指针
+    Version* version_ = nullptr;
 };
 
 #endif // MANPLUGIN_H

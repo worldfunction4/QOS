@@ -15,7 +15,7 @@ void VersionJson::setVersion()
     //读取版本内容
     obj = obj["version"].toObject();
     m_major = obj["major"].toString();
-    m_dev = obj["dev"].toString();
+    m_env = obj["env"].toString();
     m_v1 = obj["v1"].toInt();
     m_v2 = obj["v2"].toInt();
     m_v3 = obj["v3"].toInt();

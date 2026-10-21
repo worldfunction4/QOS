@@ -24,7 +24,12 @@ namespace GLOBAL
     {
         inline const QString LOGIN_INFO_NAME = "login_info";
     }
-
+    namespace VERSION
+    {
+        inline const QString MAJOR_CUSTOM = "custom";
+        inline const QString MAJOR_BUSINESS = "business";
+        inline const QString JSON_PATH = ":/resource/static/versions/config_default.json";
+    }
     inline bool init()
     {
         return FileHelper::makePath(PATH::TEMP);
