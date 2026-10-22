@@ -33,6 +33,9 @@ qt_add_executable(qosbrowser
     src/bend/dao/config/versionjson.h src/bend/dao/config/versionjson.cpp
     src/bend/dao/config/version.cpp
     src/bend/dao/config/versioncmd.h src/bend/dao/config/versioncmd.cpp
+    src/bend/dao/logs/basiclogger.h src/bend/dao/logs/basiclogger.cpp
+    src/bend/dao/logs/loggerdebug.h src/bend/dao/logs/loggerdebug.cpp
+    src/config/loggerproxy.h src/config/loggerproxy.cpp
 )
 
 target_include_directories(${PROJECT_NAME} PRIVATE
