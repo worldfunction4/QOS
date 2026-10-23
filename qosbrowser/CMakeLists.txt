@@ -40,6 +40,7 @@ qt_add_executable(qosbrowser
     src/config/errorcode.h
     src/config/exceptions.h src/config/exceptions.cpp
     src/middle/signals/mansignals.h src/middle/signals/mansignals.cpp
+    src/bend/gateway.h src/bend/gateway.cpp
 )
 
 target_include_directories(${PROJECT_NAME} PRIVATE
@@ -52,6 +53,7 @@ target_link_libraries(qosbrowser
         Qt::Core
         Qt::Widgets
         Qt::Sql
+        Qt::Concurrent
 )
 
 install(TARGETS qosbrowser

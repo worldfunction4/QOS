@@ -7,7 +7,7 @@ elseif(CMAKE_CXX_COMPILER_ID MATCHES "GNU|Clang")
     add_compile_options(-fexec-charset=UTF-8 -finput-charset=UTF-8)
 endif()
 
-find_package(Qt6 6.5 REQUIRED COMPONENTS Core Widgets Sql Test)
+find_package(Qt6 6.5 REQUIRED COMPONENTS Core Widgets Sql Test Concurrent)
 qt_standard_project_setup()
 enable_testing()
 
