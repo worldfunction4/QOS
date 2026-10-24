@@ -17,10 +17,6 @@ class LoginWidget : public QDialog
 public:
     explicit LoginWidget(QWidget *parent = nullptr);
     ~LoginWidget();
-
-signals:
-    void loginSucessfuly();
-
 private slots:
     void on_loginButton_clicked();
 

@@ -1,9 +1,16 @@
 #include "loginwidget.h"
+#include "bend/gateway.h"
+#include "config/apis.h"
 #include "src/bend/man/mandb.h"
+#include "middle/signals/mansignals.h"
 #include "ui_loginwidget.h"
+
 #include <QFile>
 #include <QCompleter>
 #include <QAbstractItemView>
+#include <QJsonValue>
+#include <QJsonObject>
+#include <QString>
 
 LoginWidget::LoginWidget(QWidget *parent)
     : QDialog(parent)
@@ -38,6 +45,7 @@ LoginWidget::LoginWidget(QWidget *parent)
         );
 
     ui->loginNameLineEdit->setCompleter(completer);
+    //选择登录名时自动填充
     connect(completer, QOverload<const QString&>::of(&QCompleter::activated), this, [=](const QString& name){
         LoginInfo info;
         if(ManDB::instance()->loginInfoByName(name, &info))
@@ -49,20 +57,9 @@ LoginWidget::LoginWidget(QWidget *parent)
             ui->checkBox->setChecked(true);
         }
     });
-}
 
-LoginWidget::~LoginWidget()
-{
-    delete ui;
-}
-
-void LoginWidget::on_loginButton_clicked()
-{
-    //验证信息
-    if(ui->idLineEdit->text().trimmed() == "admin" &&
-        ui->ketLineEdit->text().trimmed() == "admin123")
-    {
-        emit loginSucessfuly();
+    //成功槽根据复选框保存或删除登录信息，然后关闭窗口。
+    connect(ManSignals::instance(), &ManSignals::loginSuccess, this, [=]{
         if(ui->checkBox->isChecked())
         {
             //那么就保存登录信息
@@ -79,14 +76,31 @@ void LoginWidget::on_loginButton_clicked()
             ManDB::instance()->removeLoginInfo(ui->idLineEdit->text());
         }
         this->close();
-    }
-    else
-    {
-        QMessageBox::warning(
-            this,
-            "错误",
-            "检查用户名或密码是否正确"
-        );
-        return;
-    }
+    });
+    //失败槽不是登录接口就 return；是的话就弹出警告框，显示错误原因。
+    connect(ManSignals::instance(), &ManSignals::error, this, [=](int api, const QString& msg){
+        if(api != API::LOGIN::NORMAL)return;
+        QMessageBox::warning(this, "错误", msg);
+    });
+}
+
+LoginWidget::~LoginWidget()
+{
+    delete ui;
+}
+
+void LoginWidget::on_loginButton_clicked()
+{
+
+    //获取用户输入的账号密码，用QJsonValue临时保存
+    QString secret_id = ui->idLineEdit->text().trimmed();
+    QString secret_key = ui->ketLineEdit->text().trimmed();
+
+    QJsonObject secret_obj;
+    secret_obj["secretId"] = secret_id;
+    secret_obj["secretKey"] = secret_key;
+
+    //使用send发送
+    Gateway::instance()->send(API::LOGIN::NORMAL, secret_obj);
+
 }
