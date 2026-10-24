@@ -14,3 +14,4 @@ enable_testing()
 add_subdirectory(qosbrowser)
 # 添加测试
 add_subdirectory(tests/testfilehelper)
+add_subdirectory(tests/testexceptions)
