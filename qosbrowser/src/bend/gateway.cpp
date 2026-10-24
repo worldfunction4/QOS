@@ -4,19 +4,13 @@
 #include "config/loggerproxy.h"
 #include "middle/signals/mansignals.h"
 #include "config/apis.h"
+#include "middle/manglobal.h"
 
-#include <QGlobalStatic>
 #include <QtConcurrent>
 #include <QString>
 
-Q_GLOBAL_STATIC(Gateway, ins);
 Gateway::Gateway()
 {}
-
-Gateway *Gateway::instance()
-{
-    return ins();
-}
 
 void Gateway::send(int api, const QJsonValue &value)
 {
@@ -31,14 +25,14 @@ void Gateway::send(int api, const QJsonValue &value)
         {
             //得到BaseException类型的异常。生成日志，发送error信号
             MERROR(e.msg());
-            emit ManSignals::instance()->error(api, e.msg());
+            emit MG->mSignal->error(api, e.msg());
         }
         catch(...)
         {
             //如果是未知异常使用BaseException兜底，生成日志，发送error信号
             BaseException e = BaseException(EC_100000, "未知错误");
             MERROR(e.msg());
-            emit ManSignals::instance()->error(api, e.msg());
+            emit MG->mSignal->error(api, e.msg());
         }
     });
 }
@@ -70,5 +64,5 @@ void Gateway::apiLogin(const QJsonValue &value)
     //TODO:接入ManCloud登录腾讯云,当前没有校验账号密码，只要不为空就能通过
 
 
-    emit ManSignals::instance()->loginSuccess();
+    emit MG->mSignal->loginSuccess();
 }

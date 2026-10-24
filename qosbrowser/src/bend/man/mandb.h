@@ -11,7 +11,6 @@ class ManDB : public QObject
     Q_OBJECT
 public:
     explicit ManDB(QObject *parent = nullptr);
-    static ManDB* instance();
     void init();
 
     //保存登录信息

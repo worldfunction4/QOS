@@ -2,6 +2,7 @@
 #define LOGGERPROXY_H
 
 #include <QObject>
+#include "src/middle/manglobal.h"
 
 class BasicLogger;
 
@@ -11,8 +12,6 @@ class LoggerProxy : public QObject
 public:
     explicit LoggerProxy(QObject *parent = nullptr);
     ~LoggerProxy();
-    //使用单例
-    static LoggerProxy* instance();
 
     //设置安装的日志系统
     void setLogger(BasicLogger* logger);
@@ -47,7 +46,7 @@ private:
 };
 
 //定义宏
-#define LP LoggerProxy::instance()
+#define LP MG->mLog
 #define MDEBUG LP->reset(QT_MESSAGELOG_FILE, QT_MESSAGELOG_LINE, QT_MESSAGELOG_FUNC).debug
 #define MINFO LP->reset(QT_MESSAGELOG_FILE, QT_MESSAGELOG_LINE, QT_MESSAGELOG_FUNC).info
 #define MWARNING LP->reset(QT_MESSAGELOG_FILE, QT_MESSAGELOG_LINE, QT_MESSAGELOG_FUNC).warning

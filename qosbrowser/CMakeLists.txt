@@ -41,6 +41,8 @@ qt_add_executable(qosbrowser
     src/config/exceptions.h src/config/exceptions.cpp
     src/middle/signals/mansignals.h src/middle/signals/mansignals.cpp
     src/bend/gateway.h src/bend/gateway.cpp
+    src/middle/manglobal.h
+    src/middle/manglobal.cpp
 )
 
 target_include_directories(${PROJECT_NAME} PRIVATE

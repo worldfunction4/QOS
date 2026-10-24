@@ -1,27 +1,18 @@
 #include "mancloud.h"
 #include <plugins/manplugin.h>
-
-Q_GLOBAL_STATIC(ManCloud, ins);
+#include "middle/manglobal.h"
 
 ManCloud::ManCloud(QObject* parent)
     :QObject(parent)
 {
-    // 确保没有父对象，防止生命周期被外部接管
-    Q_ASSERT(parent == nullptr);
-
     model_ = new QStandardItemModel(this);
-    // 目前使用 Mock 数据源
-    dao_ = ManPlugin::instance()->clouds();
-}
-
-ManCloud *ManCloud::instance()
-{
-    // 返回 Q_GLOBAL_STATIC 内部创建的单例指针
-    return ins();
 }
 
 void ManCloud::setManBucket()
 {
+    // 目前使用 Mock 数据源
+    dao_ = MG->mPlugin->clouds();
+
     // 通过接口获取存储桶列表，不关心数据来自哪里
     QList<Bucket> bucket_lists = dao_->buckets();
 

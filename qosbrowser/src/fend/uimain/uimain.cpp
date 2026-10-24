@@ -2,6 +2,7 @@
 #include "ui_uimain.h"
 #include "src/fend/uilogin/loginwidget.h"
 #include "src/middle/signals/mansignals.h"
+#include "src/middle/manglobal.h"
 
 UiMain::UiMain(QWidget *parent)
     : QWidget(parent)
@@ -39,7 +40,7 @@ void UiMain::showLoginWidget()
     {
         login_ = new LoginWidget;
         //显示主窗口
-        connect(ManSignals::instance(), &ManSignals::loginSuccess, this, &UiMain::show);
+        connect(MG->mSignal, &ManSignals::loginSuccess, this, &UiMain::show);
     }
     login_ -> show();
 }

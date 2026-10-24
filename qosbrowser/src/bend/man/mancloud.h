@@ -9,10 +9,8 @@ class ManCloud : public QObject
 {
     Q_OBJECT
 public:
-    // 构造函数需要公有，供 Q_GLOBAL_STATIC 创建单例
+    // 构造函数需要公有，由 ManGlobal 创建并管理
     explicit ManCloud(QObject* parent=nullptr);
-    // 获取单例指针
-    static ManCloud* instance();
     // 从数据源读取存储桶，填充到 model
     void setManBucket();
 

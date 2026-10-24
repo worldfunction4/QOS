@@ -3,18 +3,10 @@
 
 #include <QDateTime>
 
-Q_GLOBAL_STATIC(ManDB, ins)
-
-
 ManDB::ManDB(QObject *parent)
     : QObject{parent}
 {
     daologininfo_ = new DaoLoginInfoSqlite;
-}
-
-ManDB *ManDB::instance()
-{
-    return ins();
 }
 
 void ManDB::init()

@@ -5,12 +5,10 @@
 #include "bend/dao/config/version.h"
 #include <QObject>
 
-//设置为单例模式
 class ManPlugin : public QObject
 {
     Q_OBJECT
 public:
-    static ManPlugin* instance();
 signals:
 
 public:

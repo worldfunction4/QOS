@@ -3,6 +3,7 @@
 #include "config/apis.h"
 #include "src/bend/man/mandb.h"
 #include "middle/signals/mansignals.h"
+#include "middle/manglobal.h"
 #include "ui_loginwidget.h"
 
 #include <QFile>
@@ -27,7 +28,7 @@ LoginWidget::LoginWidget(QWidget *parent)
     ui->loginNameLabel->setProperty("style", "h5");
 
     //添加登录信息的下拉框
-    QCompleter* completer = new QCompleter(ManDB::instance()->loginInfoNames(), this);
+    QCompleter* completer = new QCompleter(MG->mDb->loginInfoNames(), this);
 
     //选择不区分大小写
     completer->setCaseSensitivity(Qt::CaseInsensitive);
@@ -48,7 +49,7 @@ LoginWidget::LoginWidget(QWidget *parent)
     //选择登录名时自动填充
     connect(completer, QOverload<const QString&>::of(&QCompleter::activated), this, [=](const QString& name){
         LoginInfo info;
-        if(ManDB::instance()->loginInfoByName(name, &info))
+        if(MG->mDb->loginInfoByName(name, &info))
         {
             ui->loginNameLineEdit->setText(info.name);
             ui->idLineEdit->setText(info.secretId);
@@ -59,11 +60,11 @@ LoginWidget::LoginWidget(QWidget *parent)
     });
 
     //成功槽根据复选框保存或删除登录信息，然后关闭窗口。
-    connect(ManSignals::instance(), &ManSignals::loginSuccess, this, [=]{
+    connect(MG->mSignal, &ManSignals::loginSuccess, this, [=]{
         if(ui->checkBox->isChecked())
         {
             //那么就保存登录信息
-            ManDB::instance()->saveLoginInfo(
+            MG->mDb->saveLoginInfo(
                 ui->loginNameLineEdit->text(),
                 ui->idLineEdit->text(),
                 ui->ketLineEdit->text(),
@@ -73,12 +74,12 @@ LoginWidget::LoginWidget(QWidget *parent)
         else
         {
             //不然就删除登录信息(不保存，一次性登录)
-            ManDB::instance()->removeLoginInfo(ui->idLineEdit->text());
+            MG->mDb->removeLoginInfo(ui->idLineEdit->text());
         }
         this->close();
     });
     //失败槽不是登录接口就 return；是的话就弹出警告框，显示错误原因。
-    connect(ManSignals::instance(), &ManSignals::error, this, [=](int api, const QString& msg){
+    connect(MG->mSignal, &ManSignals::error, this, [=](int api, const QString& msg){
         if(api != API::LOGIN::NORMAL)return;
         QMessageBox::warning(this, "错误", msg);
     });
@@ -101,6 +102,6 @@ void LoginWidget::on_loginButton_clicked()
     secret_obj["secretKey"] = secret_key;
 
     //使用send发送
-    Gateway::instance()->send(API::LOGIN::NORMAL, secret_obj);
+    MG->mGate->send(API::LOGIN::NORMAL, secret_obj);
 
 }

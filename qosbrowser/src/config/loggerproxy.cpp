@@ -3,8 +3,6 @@
 #include <bend/dao/logs/basiclogger.h>
 #include <config/global.h>
 
-Q_GLOBAL_STATIC(LoggerProxy, ins);
-
 LoggerProxy::LoggerProxy(QObject *parent)
     : QObject{parent}
 {}
@@ -12,11 +10,6 @@ LoggerProxy::LoggerProxy(QObject *parent)
 LoggerProxy::~LoggerProxy()
 {
     delete logger_;
-}
-
-LoggerProxy *LoggerProxy::instance()
-{
-    return ins();
 }
 
 void LoggerProxy::setLogger(BasicLogger *logger)

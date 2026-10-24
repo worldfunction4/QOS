@@ -7,8 +7,6 @@ class Gateway
 {
 public:
     Gateway();
-    //声明单例
-    static Gateway* instance();
 
     //界面调用
     void send(int api, const QJsonValue& value);

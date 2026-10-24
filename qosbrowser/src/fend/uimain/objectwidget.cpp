@@ -2,18 +2,19 @@
 #include "fend/uidelegate/bucketdelegate.h"
 #include "ui_objectwidget.h"
 #include "src/bend/man/mancloud.h"
+#include "src/middle/manglobal.h"
 
 ObjectWidget::ObjectWidget(QWidget *parent)
     : QWidget(parent)
     , ui(new Ui::ObjectWidget)
 {
     ui->setupUi(this);
-    ui->tableView->setModel(ManCloud::instance()->model());
+    ui->tableView->setModel(MG->mCloud->model());
     //ui->tableView->setItemDelegate(new BucketDelegate());
     ui->tableView->setItemDelegateForColumn(1, new BucketDelegate());
 
     //标题内容
-    QStandardItemModel* model = ManCloud::instance()->model();
+    QStandardItemModel* model = MG->mCloud->model();
     QStringList labels;
     labels << QString("桶名称")
            << QString("地区")

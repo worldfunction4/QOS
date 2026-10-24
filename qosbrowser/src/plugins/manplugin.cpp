@@ -4,9 +4,8 @@
 #include "bend/dao/config/versionjson.h"
 #include "src/config/global.h"
 #include "src/config/loggerproxy.h"
+#include "src/middle/manglobal.h"
 #include "src/bend/dao/logs/loggerdebug.h"
-
-Q_GLOBAL_STATIC(ManPlugin, ins);
 
 ManPlugin::ManPlugin(QObject *parent)
     : QObject{parent}
@@ -18,15 +17,10 @@ ManPlugin::~ManPlugin()
     delete version_;
 }
 
-ManPlugin *ManPlugin::instance()
-{
-    return ins();
-}
-
 void ManPlugin::installPlugins(int argc, char *argv[])
 {
     //添加日志系统
-    LoggerProxy::instance()->setLogger(new LoggerDebug);
+    MG->mLog->setLogger(new LoggerDebug);
     MINFO("日志系统安装完毕");
 
     //增加判断：命令行参数如果有效就使用，反之就使用配置文件
