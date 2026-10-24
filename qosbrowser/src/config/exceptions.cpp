@@ -81,7 +81,7 @@ QString BaseException::msg() const
 
     if(!msg_.isEmpty())
     {
-        text += "。\n详情：" + msg_;
+        text += "\n详情：" + msg_;
     }
     return text;
 }
