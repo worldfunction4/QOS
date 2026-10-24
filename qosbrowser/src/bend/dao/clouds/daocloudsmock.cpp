@@ -1,4 +1,6 @@
 #include "daocloudsmock.h"
+#include "config/errorcode.h"
+#include "config/exceptions.h"
 #include "src/helper/filehelper.h"
 #include <QJsonArray>
 
@@ -23,4 +25,15 @@ QList<Bucket> DaoCloudsMock::buckets()
                  << bucket.createDate;
     }
     return res;
+}
+
+QList<Bucket> DaoCloudsMock::login(const QString& secretId, const QString& secretKey)
+{
+    QJsonArray users = mock_["users"].toArray();
+    for(const QJsonValue& u : users)
+    {
+        if(secretId == u["secretId"].toString() && secretKey == u["secretKey"].toString())
+            return buckets();          //找到匹配成功
+    }
+    throw BaseException(EC_211100, "SecretId 或 SecretKey 不正确");  //都不匹配
 }

@@ -44,3 +44,9 @@ QStandardItemModel *ManCloud::model() const
 {
     return model_;
 }
+
+void ManCloud::login(const QString &secretId, const QString &secretKey)
+{
+    dao_ = MG->mPlugin->clouds();
+    dao_->login(secretId, secretKey);
+}

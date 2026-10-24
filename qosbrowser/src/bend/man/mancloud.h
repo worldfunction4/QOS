@@ -17,6 +17,10 @@ public:
     // 获取私有的model
     QStandardItemModel* model()const;
 
+    //登录转发
+    void login(const QString& secretId,
+               const QString& secretKey);
+
     // 禁用拷贝与赋值
     ManCloud(const ManCloud&) = delete;
     ManCloud& operator=(const ManCloud&) = delete;

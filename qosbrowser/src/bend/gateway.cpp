@@ -1,4 +1,5 @@
 #include "gateway.h"
+#include "bend/man/mancloud.h"
 #include "config/exceptions.h"
 #include "config/errorcode.h"
 #include "config/loggerproxy.h"
@@ -61,8 +62,9 @@ void Gateway::apiLogin(const QJsonValue &value)
     {
         throw BaseException(EC_211100, "账号或密码为空，请重新输入");
     }
+
+    MG->mCloud->login(secretid, secretkey);
+    emit MG->mSignal->loginSuccess();
     //TODO:接入ManCloud登录腾讯云,当前没有校验账号密码，只要不为空就能通过
 
-
-    emit MG->mSignal->loginSuccess();
 }
