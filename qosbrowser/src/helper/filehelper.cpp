@@ -2,7 +2,8 @@
 
 #include <QDir>
 #include <QFile>
-//在Qt6中已经不用#include <QRegExp>
+#include <QTextStream>
+//Qt6不用QRegExp
 #include <QRegularExpression>
 
 QString FileHelper::readAllText(const QString &file_path)
@@ -25,6 +26,25 @@ QVariant FileHelper::readAllJson(const QString &file_path)
     return doc.toVariant();
 }
 
+QList<QStringList> FileHelper::readAllCsv(const QString &file_path)
+{
+    QList<QStringList> file_csv;
+
+    //读取整个文本
+    QString data = readAllText(file_path);
+    //按\r?\n切成行，跳过空行
+    QStringList lines = data.split(QRegularExpression("\r?\n"),Qt::SkipEmptyParts);
+    //遍历每一行
+    for(const QString& line : lines)
+    {
+        //每行按逗号切成列
+        QStringList row = line.split(",");
+
+        file_csv.append(row);
+    }
+    return file_csv;
+}
+
 QString FileHelper::joinPath(const QString &path1, const QString &path2)
 {
     QString path = path1 + "/" + path2;
@@ -39,6 +59,24 @@ QString FileHelper::joinPath(const QString &path1, const QString &path2)
 bool FileHelper::makePath(const QString &path)
 {
     return QDir().mkpath(path);
+}
+
+void FileHelper::writeFile(const QStringList &lines, const QString &file_path)
+{
+    //以只写方式打开文件
+    QFile file(file_path);
+    if(file.open(QIODevice::WriteOnly))
+    {
+        QTextStream stream(&file);
+        for(const QString& line : lines)
+        {
+            //每个元素写成一行
+            stream << line << "\n";
+        }
+        file.close();
+        return;
+    }
+    throw "写入文件失败";
 }
 
 

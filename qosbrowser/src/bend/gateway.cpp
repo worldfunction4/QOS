@@ -14,7 +14,7 @@ Gateway::Gateway()
 
 void Gateway::send(int api, const QJsonValue &value)
 {
-    //放进线程池，然后自己直接返回,(void)告诉编译器就是故意不等结果的
+    //放进线程池，然后自己直接返回,(void)告诉编译器就是不等结果
     (void)QtConcurrent::run([=]{
         //子线程里，调用dispatch，传入相应的api和参数
         try
