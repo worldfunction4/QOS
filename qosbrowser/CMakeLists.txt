@@ -2,6 +2,9 @@ project(qosbrowser LANGUAGES CXX)
 
 set(CMAKE_AUTORCC ON)
 
+# 添加cosSDK
+set(COS_SDK_ROOT ${CMAKE_CURRENT_SOURCE_DIR}/third/cos)
+
 qt_add_executable(qosbrowser
     WIN32 MACOSX_BUNDLE
     main.cpp
@@ -48,6 +51,13 @@ qt_add_executable(qosbrowser
 target_include_directories(${PROJECT_NAME} PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}
     ${CMAKE_CURRENT_SOURCE_DIR}/src
+    ${COS_SDK_ROOT}/include
+    ${COS_SDK_ROOT}/third_party/include
+)
+target_link_directories(qosbrowser PRIVATE
+    ${COS_SDK_ROOT}/lib
+    ${COS_SDK_ROOT}/third_party/lib/x64/poco
+    ${COS_SDK_ROOT}/third_party/lib/x64/openssl
 )
 
 target_link_libraries(qosbrowser
@@ -56,6 +66,23 @@ target_link_libraries(qosbrowser
         Qt::Widgets
         Qt::Sql
         Qt::Concurrent
+        # cos SDK
+        cossdk
+        # poco
+        PocoNetSSL PocoNet PocoCrypto PocoUtil PocoJSON PocoXML PocoFoundation
+        # openSSL
+        libssl libcrypto
+        # win系统库
+        ws2_32 iphlpapi crypt32
+)
+
+
+# copy runtime DLLs next to the exe
+add_custom_command(TARGET qosbrowser POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E copy_directory
+        "${COS_SDK_ROOT}/third_party/lib/x64/poco" "$<TARGET_FILE_DIR:qosbrowser>"
+    COMMAND ${CMAKE_COMMAND} -E copy_directory
+        "${COS_SDK_ROOT}/third_party/lib/x64/openssl" "$<TARGET_FILE_DIR:qosbrowser>"
 )
 
 install(TARGETS qosbrowser

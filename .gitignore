@@ -17,3 +17,9 @@ temp/
 
 # codegraph文件
 .codegraph/
+
+# 忽略 cos SDK 的所有文件，只保留目录结构和说明
+qosbrowser/third/cos/**
+!qosbrowser/third/cos/**/
+!qosbrowser/third/cos/README.md
+!qosbrowser/third/cos/**/.gitkeep
