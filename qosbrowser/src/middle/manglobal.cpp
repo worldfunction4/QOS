@@ -51,8 +51,8 @@ void ManGlobal::init(int argc, char *argv[])
     qApp->setStyleSheet(qss_str);
     //启动插件
     MG->mPlugin->installPlugins(argc, argv);
-    //调用
-    MG->mCloud->setManBucket();
+    //模块都创建
+    connect(MG->mSignal, &ManSignals::bucketsSuccess, mCloud, &ManCloud::setManBucket);
     //连接数据库
     MG->mDb->init();
 }

@@ -4,6 +4,7 @@
 #include "bend/dao/clouds/daoclouds.h"
 #include <QObject>
 #include <QStandardItemModel>
+#include <QList>
 
 class ManCloud : public QObject
 {
@@ -12,7 +13,7 @@ public:
     // 构造函数需要公有，由 ManGlobal 创建并管理
     explicit ManCloud(QObject* parent=nullptr);
     // 从数据源读取存储桶，填充到 model
-    void setManBucket();
+    void setManBucket(const QList<Bucket>& buckets);
 
     // 获取私有的model
     QStandardItemModel* model()const;
