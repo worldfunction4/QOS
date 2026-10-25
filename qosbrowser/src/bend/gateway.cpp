@@ -28,6 +28,13 @@ void Gateway::send(int api, const QJsonValue &value)
             MERROR(e.msg());
             emit MG->mSignal->error(api, e.msg());
         }
+        //出现位置错误了...
+        catch(const std::exception& e)
+        {
+            BaseException ex(EC_100000, QString::fromLocal8Bit(e.what()));
+            MERROR(ex.msg());
+            emit MG->mSignal->error(api, ex.msg());
+        }
         catch(...)
         {
             //如果是未知异常使用BaseException兜底，生成日志，发送error信号
