@@ -86,7 +86,7 @@ void DaoCloudsCos::putBucket(const QString &bucketName, const QString &location)
     qcloud_cos::CosResult result = cos.PutBucket(req, &resp);
     //已经是自己的桶，当作创建成功
     if(result.IsSucc() || result.GetErrorCode() == "BucketAlreadyOwnedByYou") return;
-    throw BaseException(EC_331300, QString::fromStdString(result.GetErrorMsg()));
+    throw BaseException(EC_331100, QString::fromStdString(result.GetErrorMsg()));
 }
 
 void DaoCloudsCos::deleteBucket(const QString &bucketName, const QString &location)
