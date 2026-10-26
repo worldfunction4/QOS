@@ -22,6 +22,7 @@ private slots:
     void test_putBucket();
     void test_putBucketAgain();
     void test_deleteBucket();
+    void test_isBucketExists();
 private:
     DaoCloudsCos cos_;
     QString secretId_;

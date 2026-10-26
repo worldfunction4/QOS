@@ -83,3 +83,11 @@ void TestCos::test_deleteBucket()
     //然后再次进行删除操作，也应该会成功
     cos_.deleteBucket(TEST_BUCKET, TEST_REGION);
 }
+
+void TestCos::test_isBucketExists()
+{
+    //已有存储桶存储在？
+    QVERIFY(cos_.isBucketExists("file-2026-1320342190"));
+    //硬编码一个随机值应当不存在
+    QVERIFY(!cos_.isBucketExists("file-exist-1320342199"));
+}
