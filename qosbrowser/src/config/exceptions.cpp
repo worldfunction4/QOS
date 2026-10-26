@@ -72,7 +72,11 @@ void BaseException::generateErrorCodeFile(const QString &csvPath, const QString 
 QString BaseException::msg() const
 {
     //第一次调用就生成
-    static ErrorMap map = BaseException::parseErrorCode(":/resource/static/docs/errorcode.csv");
+    //错误码表读取失败也不能再抛异常，否则原始错误会被吞掉
+    static ErrorMap map = []{
+        try { return BaseException::parseErrorCode(":/resource/static/docs/errorcode.csv"); }
+        catch (...) { return ErrorMap{}; }
+    }();
 
     //使用value函数，代表查到就返回对应的值，查不到就返回第二个参数
     QString desc = map.value(code_, "未知错误");
