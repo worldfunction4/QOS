@@ -1,19 +1,5 @@
-#include <QTest>
+#include "tst_testexceptions.h"
 #include "src/config/exceptions.h"
-
-// add necessary includes here
-
-class TestExceptions : public QObject
-{
-    Q_OBJECT
-
-public:
-    TestExceptions();
-    ~TestExceptions() override;
-
-private slots:
-    void test_case1();
-};
 
 TestExceptions::TestExceptions() {}
 
@@ -25,7 +11,3 @@ void TestExceptions::test_case1()
         QOS_DIR "/resource/static/docs/errorcode.csv",
         QOS_DIR "/src/config/errorcode.h");
 }
-
-QTEST_APPLESS_MAIN(TestExceptions)
-
-#include "tst_testexceptions.moc"

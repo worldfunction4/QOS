@@ -1,24 +1,5 @@
-#include <QTest>
+#include "tst_testhelper.h"
 #include "src/helper/filehelper.h"
-
-// add necessary includes here
-
-class TestHelper : public QObject
-{
-    Q_OBJECT
-
-public:
-    TestHelper();
-    ~TestHelper() override;
-
-private slots:
-    void initTestCase();
-    void init();
-    void cleanupTestCase();
-    void cleanup();
-    void test_readAllText();
-    void test_jionPath();
-};
 
 TestHelper::TestHelper() {}
 
@@ -53,7 +34,3 @@ void TestHelper::test_jionPath()
 {
     QCOMPARE(FileHelper::joinPath("c:/a/b", "c"), "c:/a/b/c");
 }
-
-QTEST_APPLESS_MAIN(TestHelper)
-
-#include "tst_testhelper.moc"

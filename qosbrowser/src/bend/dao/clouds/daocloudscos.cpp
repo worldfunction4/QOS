@@ -2,6 +2,13 @@
 #include "config/errorcode.h"
 #include "config/exceptions.h"
 #include "cos_api.h"
+#include "cos_sys_config.h"
+
+DaoCloudsCos::DaoCloudsCos()
+{
+    //关掉SDK日志以免造成XML读取失败以及账号密码安全
+    qcloud_cos::CosSysConfig::SetLogOutType(qcloud_cos::COS_LOG_NULL);
+}
 
 QList<Bucket> DaoCloudsCos::buckets()
 {

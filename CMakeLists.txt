@@ -15,7 +15,6 @@ enable_testing()
 set(COS_SDK_ROOT ${CMAKE_CURRENT_SOURCE_DIR}/qosbrowser/third/cos)
 
 add_subdirectory(qosbrowser)
-# 添加测试
-add_subdirectory(tests/testfilehelper)
-add_subdirectory(tests/testexceptions)
-add_subdirectory(tests/testcos)
+
+# 添加测试文件夹
+add_subdirectory(tests)

@@ -7,7 +7,7 @@
 class DaoCloudsCos : public DaoClouds
 {
 public:
-    DaoCloudsCos() = default;
+    DaoCloudsCos();
     QList<Bucket> buckets()override;
     QList<Bucket> login(const QString& secretId,
                         const QString& secretKey) override;
