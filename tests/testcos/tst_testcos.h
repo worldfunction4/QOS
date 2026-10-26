@@ -19,7 +19,9 @@ private slots:
     void cleanup();
     void test_buckets();
     void test_loginError();
-
+    void test_putBucket();
+    void test_putBucketAgain();
+    void test_deleteBucket();
 private:
     DaoCloudsCos cos_;
     QString secretId_;

@@ -1,10 +1,13 @@
 #include "tst_testcos.h"
 #include "config/exceptions.h"
-//关闭SDK日志
-#include "cos_sys_config.h"
+
 #include <QFile>
 #include <QJsonDocument>
 #include <QJsonObject>
+
+//加俩常量进行测试用
+static const QString TEST_BUCKET = "qos-test-1320342190";
+static const QString TEST_REGION = "ap-chongqing";
 
 TestCos::TestCos() {}
 
@@ -32,7 +35,13 @@ void TestCos::init()
 
 void TestCos::cleanupTestCase()
 {
-    // code to be executed after the last test function
+    //兜底处理，测试失败过程清除测试桶
+    try
+    {
+        cos_.deleteBucket(TEST_BUCKET, TEST_REGION);
+    }
+    catch(...)
+    {}
 }
 
 void TestCos::cleanup()
@@ -52,5 +61,25 @@ void TestCos::test_loginError()
     //新建，和cos_保持独立
     DaoCloudsCos cos;
     //写一个错误的key，看看能否被正确处理
-    QVERIFY_EXCEPTION_THROWN(cos.login(secretId_, "wrong_key"),BaseException);
+    QVERIFY_THROWS_EXCEPTION(BaseException, cos.login(secretId_, "wrong_key"));
+}
+
+void TestCos::test_putBucket()
+{
+    cos_.putBucket(TEST_BUCKET, TEST_REGION);
+    QVERIFY(cos_.isBucketExists(TEST_BUCKET));
+}
+
+void TestCos::test_putBucketAgain()
+{
+    //重复创建测试，应该是成功
+    cos_.putBucket(TEST_BUCKET, TEST_REGION);
+}
+
+void TestCos::test_deleteBucket()
+{
+    cos_.deleteBucket(TEST_BUCKET, TEST_REGION);
+    QVERIFY(!cos_.isBucketExists(TEST_BUCKET));
+    //然后再次进行删除操作，也应该会成功
+    cos_.deleteBucket(TEST_BUCKET, TEST_REGION);
 }
