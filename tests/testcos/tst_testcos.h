@@ -25,6 +25,7 @@ private slots:
     void test_isBucketExists();
     void test_getObjects_data();
     void test_getObjects();
+    void test_getObjectError();
 
 private:
     DaoCloudsCos cos_;

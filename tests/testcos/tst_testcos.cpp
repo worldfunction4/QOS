@@ -130,3 +130,10 @@ void TestCos::test_getObjects()
         QCOMPARE(obj.dir, dir);
     }
 }
+
+void TestCos::test_getObjectError()
+{
+    //访问不存在的桶，getObjects应该抛出 BaseException（错误码 331200）
+    QVERIFY_THROWS_EXCEPTION(BaseException,
+                             cos_.getObjects("not-exist-1320342190", TEST_REGION, ""));
+}
