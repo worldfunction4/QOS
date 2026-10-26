@@ -44,6 +44,7 @@ qt_add_executable(qosbrowser
     src/middle/manglobal.h
     src/middle/manglobal.cpp
     src/bend/dao/clouds/daocloudscos.h src/bend/dao/clouds/daocloudscos.cpp
+    src/middle/models/cloudobject.h
 )
 
 target_include_directories(${PROJECT_NAME} PRIVATE

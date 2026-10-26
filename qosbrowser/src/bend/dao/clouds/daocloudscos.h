@@ -4,7 +4,11 @@
 #include "daoclouds.h"
 #include <QString>
 
-namespace qcloud_cos { class CosConfig; }
+namespace qcloud_cos
+{
+    class CosConfig;
+    class GetBucketResp;
+}
 
 class DaoCloudsCos : public DaoClouds
 {
@@ -17,9 +21,16 @@ public:
     bool isBucketExists(const QString& bucketName)override;
     void putBucket(const QString& bucketName, const QString& location)override;
     void deleteBucket(const QString& bucketName, const QString& location)override;
+    QList<CloudObject> getObjects(const QString& bucketName,
+                                 const QString& location,
+                                 const QString& dir)override;
 private:
     //生成访问配置，密钥和地域统一在这里设置
     qcloud_cos::CosConfig makeConfig(const QString& region);
+    //添加辅助函数：拿到子目录和文件
+    QList<CloudObject> dirList(qcloud_cos::GetBucketResp& resp, const QString& dir);
+    QList<CloudObject> fileList(qcloud_cos::GetBucketResp& resp, const QString& dir);
+
     QString secretId_;
     QString secretKey_;
 };

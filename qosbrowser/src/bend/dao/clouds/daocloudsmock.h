@@ -15,6 +15,9 @@ public:
     bool isBucketExists(const QString& bucketName)override;
     void putBucket(const QString& bucketName, const QString& location)override;
     void deleteBucket(const QString& bucketName, const QString& location)override;
+    QList<CloudObject> getObjects(const QString& bucketName,
+                                 const QString& location,
+                                 const QString& dir)override;
 private:
     //mock路径
     QJsonValue mock_;

@@ -3,6 +3,7 @@
 
 #include <QList>
 #include "src/middle/models/bucket.h"
+#include "src/middle/models/cloudobject.h"
 
 //对云的接口进行抽象
 class DaoClouds
@@ -20,6 +21,10 @@ public:
     virtual void putBucket(const QString& bucketName, const QString& location) = 0;
     //删除存储桶
     virtual void deleteBucket(const QString& bucketName, const QString& location) = 0;
+    //列出目录下子目录以及文件
+    virtual QList<CloudObject> getObjects(const QString& bucketName,
+                                         const QString& location,
+                                         const QString& dir) = 0;
 };
 
 #endif // DAOCLOUDS_H

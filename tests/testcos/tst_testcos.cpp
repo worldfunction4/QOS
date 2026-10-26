@@ -9,6 +9,9 @@
 static const QString TEST_BUCKET = "qos-test-1320342190";
 static const QString TEST_REGION = "ap-chongqing";
 
+//列一个对象用的真实桶
+static const QString OBJ_BUCKET = "file-2026-1320342190";
+
 TestCos::TestCos() {}
 
 TestCos::~TestCos() = default;
@@ -66,8 +69,16 @@ void TestCos::test_loginError()
 
 void TestCos::test_putBucket()
 {
-    cos_.putBucket(TEST_BUCKET, TEST_REGION);
-    QVERIFY(cos_.isBucketExists(TEST_BUCKET));
+    try
+    {
+        cos_.putBucket(TEST_BUCKET, TEST_REGION);
+        QVERIFY(cos_.isBucketExists(TEST_BUCKET));
+    }
+    catch (const BaseException& e)
+    {
+        //把错误码和云端返回的信息打印到测试报告里
+        QFAIL(qPrintable(e.msg()));
+    }
 }
 
 void TestCos::test_putBucketAgain()
@@ -90,4 +101,32 @@ void TestCos::test_isBucketExists()
     QVERIFY(cos_.isBucketExists("file-2026-1320342190"));
     //硬编码一个随机值应当不存在
     QVERIFY(!cos_.isBucketExists("file-exist-1320342199"));
+}
+
+void TestCos::test_getObjects_data()
+{
+    QTest::addColumn<QString>("dir");
+    QTest::addColumn<int>("expected");
+
+    //一行为一组用例
+    QTest::newRow("root") << "" << 4;
+    //如果有子文件夹
+    //QTest::newRow("subdir") << "test/" << 0;
+
+}
+
+void TestCos::test_getObjects()
+{
+    QFETCH(QString, dir);
+    QFETCH(int, expected);
+
+    QList<CloudObject> list = cos_.getObjects(OBJ_BUCKET, TEST_REGION, dir);
+    QCOMPARE(list.size(), expected);
+
+    //每一个对象都不能为空名字，需要属于此目录
+    for(const CloudObject& obj : list)
+    {
+        QVERIFY(!obj.name.isEmpty());
+        QCOMPARE(obj.dir, dir);
+    }
 }

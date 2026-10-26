@@ -75,6 +75,44 @@ qcloud_cos::CosConfig DaoCloudsCos::makeConfig(const QString &region)
     return config;
 }
 
+QList<CloudObject> DaoCloudsCos::dirList(qcloud_cos::GetBucketResp &resp, const QString &dir)
+{
+    QList<CloudObject> res;
+    //CommonPrefixes就是被 '/' 折叠起来的子目录
+    for(const std::string& prefix : resp.GetCommonPrefixes())
+    {
+        CloudObject obj;
+        obj.dir = dir;
+        //mid截取函数，比如mid(5)代表从第5个字符开始截取
+        //比如 "test/bll/" 就是mid(5)，得到 "bll/"
+        obj.name = QString::fromStdString(prefix).mid(dir.size());
+        obj.lastModified = "-";
+        res.append(obj);
+    }
+    return res;
+}
+
+QList<CloudObject> DaoCloudsCos::fileList(qcloud_cos::GetBucketResp &resp, const QString &dir)
+{
+    QList<CloudObject> res;
+    for(const qcloud_cos::Content& content : resp.GetContents())
+    {
+        //拿到完整对象名
+        QString key = QString::fromStdString(content.m_key);
+        //在控制台建目录会生成一个和目录同名的空对象，跳过它
+        if(key == dir)
+            continue;
+        CloudObject obj;
+        obj.dir = dir;
+        obj.name = key.mid(dir.size());
+        //COS返回的字符串
+        obj.lastModified = QString::fromStdString(content.m_last_modified);
+        obj.size = QString::fromStdString(content.m_size).toULongLong();
+        res.append(obj);
+    }
+    return res;
+}
+
 void DaoCloudsCos::putBucket(const QString &bucketName, const QString &location)
 {
     //直接创建，不先查是否存在，只发一次请求
@@ -101,4 +139,26 @@ void DaoCloudsCos::deleteBucket(const QString &bucketName, const QString &locati
     //桶本来就不存在，当作删除成功，其他错误照常抛出
     if(result.IsSucc() || result.GetErrorCode() == "NoSuchBucket") return;
     throw BaseException(EC_331300, QString::fromStdString(result.GetErrorMsg()));
+}
+
+QList<CloudObject> DaoCloudsCos::getObjects(const QString &bucketName, const QString &location, const QString &dir)
+{
+    qcloud_cos::GetBucketReq req(bucketName.toStdString());
+    //列出当前这一行
+    if(!dir.isEmpty())
+    {
+        req.SetPrefix(dir.toStdString());
+    }
+    //如果后面还有'/'就折叠起来
+    req.SetDelimiter("/");
+
+    qcloud_cos::CosConfig config = makeConfig(location);
+    qcloud_cos::CosAPI cos(config);
+    qcloud_cos::GetBucketResp resp;
+    qcloud_cos::CosResult result = cos.GetBucket(req, &resp);
+    if(!result.IsSucc())
+    {
+        throw BaseException(EC_331200, QString::fromStdString(result.GetErrorMsg()));
+    }
+    return dirList(resp, dir) + fileList(resp, dir);
 }

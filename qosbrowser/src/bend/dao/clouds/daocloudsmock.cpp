@@ -52,3 +52,9 @@ void DaoCloudsMock::deleteBucket(const QString &bucketName, const QString &locat
 {
     return;
 }
+
+QList<CloudObject> DaoCloudsMock::getObjects(const QString &bucketName, const QString &location, const QString &dir)
+{
+    QList<CloudObject> res;
+    return res;
+}
