@@ -23,3 +23,6 @@ qosbrowser/third/cos/**
 !qosbrowser/third/cos/**/
 !qosbrowser/third/cos/README.md
 !qosbrowser/third/cos/**/.gitkeep
+
+# 忽略测试项目账号密码配置文件
+tests/testcos/secret.json

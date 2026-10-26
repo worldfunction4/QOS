@@ -2,9 +2,6 @@ project(qosbrowser LANGUAGES CXX)
 
 set(CMAKE_AUTORCC ON)
 
-# 添加cosSDK
-set(COS_SDK_ROOT ${CMAKE_CURRENT_SOURCE_DIR}/third/cos)
-
 qt_add_executable(qosbrowser
     WIN32 MACOSX_BUNDLE
     main.cpp

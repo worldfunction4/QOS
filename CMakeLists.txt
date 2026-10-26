@@ -11,7 +11,11 @@ find_package(Qt6 6.5 REQUIRED COMPONENTS Core Widgets Sql Test Concurrent)
 qt_standard_project_setup()
 enable_testing()
 
+# 添加SDK
+set(COS_SDK_ROOT ${CMAKE_CURRENT_SOURCE_DIR}/qosbrowser/third/cos)
+
 add_subdirectory(qosbrowser)
 # 添加测试
 add_subdirectory(tests/testfilehelper)
 add_subdirectory(tests/testexceptions)
+add_subdirectory(tests/testcos)
