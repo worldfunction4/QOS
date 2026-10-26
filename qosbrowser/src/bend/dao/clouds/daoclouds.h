@@ -14,7 +14,12 @@ public:
     virtual QList<Bucket> buckets() = 0;
     //登录校验
     virtual QList<Bucket> login(const QString& secretId, const QString& secretKey)=0;
-
+    //查询桶是否存在
+    virtual bool isBucketExists(const QString& bucketName) = 0;
+    //创建存储桶
+    virtual void putBucket(const QString& bucketName, const QString& location) = 0;
+    //删除存储桶
+    virtual void deleteBucket(const QString& bucketName, const QString& location) = 0;
 };
 
 #endif // DAOCLOUDS_H

@@ -37,3 +37,18 @@ QList<Bucket> DaoCloudsMock::login(const QString& secretId, const QString& secre
     }
     throw BaseException(EC_211100, "SecretId 或 SecretKey 不正确");  //都不匹配
 }
+
+bool DaoCloudsMock::isBucketExists(const QString &bucketName)
+{
+    return false;
+}
+
+void DaoCloudsMock::putBucket(const QString &bucketName, const QString &location)
+{
+    return;
+}
+
+void DaoCloudsMock::deleteBucket(const QString &bucketName, const QString &location)
+{
+    return;
+}
