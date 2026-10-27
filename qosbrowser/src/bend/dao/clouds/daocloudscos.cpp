@@ -181,7 +181,7 @@ void DaoCloudsCos::putObject(const QString &bucketName, const QString &location,
     {
         req.SetTransferProgressCallback(callback);
     }
-
+    //SDK客户端对象
     qcloud_cos::CosConfig config = makeConfig(location);
     qcloud_cos::CosAPI cos(config);
 
@@ -193,6 +193,29 @@ void DaoCloudsCos::putObject(const QString &bucketName, const QString &location,
     if (!result.IsSucc())
     {
         throw BaseException(EC_332400,QString::fromStdString(result.GetErrorMsg()));
+    }
+
+}
+
+void DaoCloudsCos::getObject(const QString &bucketName, const QString &location, const QString &key, const QString &localPath, const TransProgressCallBack &callback)
+{
+    //前面创建config、CosAPI的写法和putObject一样
+    qcloud_cos::AsyncGetObjectReq req(bucketName.toStdString(),
+                                      key.toStdString(),
+                                      localPath.toStdString());
+    if (callback)
+    {
+        req.SetTransferProgressCallback(callback);
+    }
+    //SDK客户端对象
+    qcloud_cos::CosConfig config = makeConfig(location);
+    qcloud_cos::CosAPI cos(config);
+
+    qcloud_cos::SharedAsyncContext context = cos.AsyncGetObject(req);
+    context->WaitUntilFinish();
+    if (!context->GetResult().IsSucc())
+    {
+        throw BaseException(EC_332500, QString::fromStdString(context->GetResult().GetErrorMsg()));
     }
 
 }

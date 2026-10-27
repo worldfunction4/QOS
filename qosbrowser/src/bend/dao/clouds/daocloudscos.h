@@ -34,6 +34,10 @@ public:
                    const QString& key,
                    const QString& localPath,
                    const TransProgressCallBack& callback)override;
+    void getObject(const QString& bucketName, const QString& location,
+                   const QString& key, const QString& localPath,
+                   const TransProgressCallBack& callback=nullptr)override;
+
 private:
     //生成访问配置，密钥和地域统一在这里设置
     qcloud_cos::CosConfig makeConfig(const QString& region);

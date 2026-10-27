@@ -41,6 +41,11 @@ public:
                            const QString& key,
                            const QString& localPath,
                            const TransProgressCallBack& callback)=0;
+
+    //与上传对应，也需要下载函数,callback默认不需要进度
+    virtual void getObject(const QString& bucketName, const QString& location,
+                           const QString& key, const QString& localPath,
+                           const TransProgressCallBack& callback=nullptr) = 0;
 };
 
 #endif // DAOCLOUDS_H

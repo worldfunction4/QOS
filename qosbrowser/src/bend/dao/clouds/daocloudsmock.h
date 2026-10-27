@@ -28,6 +28,11 @@ public:
                    const QString& key,
                    const QString& localPath,
                    const TransProgressCallBack& callback)override;
+
+    void getObject(const QString& bucketName, const QString& location,
+                   const QString& key, const QString& localPath,
+                   const TransProgressCallBack& callback=nullptr)override;
+
 private:
     //mock路径
     QJsonValue mock_;

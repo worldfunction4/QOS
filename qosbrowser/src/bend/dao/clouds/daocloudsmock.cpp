@@ -68,3 +68,8 @@ void DaoCloudsMock::putObject(const QString &bucketName, const QString &location
 {
     return;
 }
+
+void DaoCloudsMock::getObject(const QString &bucketName, const QString &location, const QString &key, const QString &localPath, const TransProgressCallBack &callback)
+{
+    return;
+}
