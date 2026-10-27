@@ -1,5 +1,6 @@
 #include "basedialog.h"
 #include "ui_basedialog.h"
+#include "src/config/global.h"'
 
 #include <QMouseEvent>
 #include <QKeyEvent>
@@ -17,7 +18,7 @@ BaseDialog::BaseDialog(QWidget *parent)
     ui->labelLogo->setFixedSize(24, 24);
 
     // 关闭按钮：换成图片，点击 = reject()，等于关闭对话框
-    addCloseButton(":/resource/static/imgs/Close-1.png", ":/resource/static/imgs/Close-2.png");
+    addCloseButton(GLOBAL::IMG::CLOSE, GLOBAL::IMG::CLOSE_HOVER);
     connect(ui->buttonClose, &QPushButton::clicked, this, &BaseDialog::reject);
     setAllButtonSize();
 }
@@ -35,6 +36,15 @@ void BaseDialog::setTitle(const QString &title)
 void BaseDialog::setLogo(const QString &path)
 {
     ui->labelLogo->setStyleSheet(QString("border-image: url(\"%1\");").arg(path));
+}
+
+void BaseDialog::addTitleLine(int w)
+{
+    //用一个固定宽度灰色标签充当竖线
+    QLabel* line = new QLabel;
+    line->setFixedSize(w, 15);
+    line->setStyleSheet("QLabel{background-color: lightgray;}");
+    addWidget(line);
 }
 
 void BaseDialog::addMinButton(const QString &path, const QString &hoverPath)

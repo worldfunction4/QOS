@@ -14,18 +14,35 @@ namespace GLOBAL
         inline const QString TEMP = FileHelper::joinPath(WORK, "temp");
         inline const QString LOG_DIR = FileHelper::joinPath(WORK, "logs");
     }
+
+    namespace IMG
+    {
+        inline const QString LOGO        = ":/resource/static/imgs/logo.png";
+        inline const QString CLOSE       = ":/resource/static/imgs/Close-1.png";
+        inline const QString CLOSE_HOVER = ":/resource/static/imgs/Close-2.png";
+        inline const QString MIN         = ":/resource/static/imgs/Minimize-1.png";
+        inline const QString MIN_HOVER   = ":/resource/static/imgs/Minimize-2.png";
+        inline const QString MAX         = ":/resource/static/imgs/Maximize-1.png";
+        inline const QString MAX_HOVER   = ":/resource/static/imgs/Maximize-2.png";
+        inline const QString NORMAL      = ":/resource/static/imgs/Maximize-3.png";
+        inline const QString NORMAL_HOVER= ":/resource/static/imgs/Maximize-4.png";
+    }
+
     namespace SQLITE
     {
         inline const QString NAME = FileHelper::joinPath(PATH::TEMP, "cos.db");
     }
+
     namespace SQL
     {
         inline const QString LOGIN_INFO_PATH = ":/resource/static/sql/login_info.sql";
     }
+
     namespace TABLE
     {
         inline const QString LOGIN_INFO_NAME = "login_info";
     }
+
     namespace VERSION
     {
             inline const QString MAJOR_CUSTOM = "custom";

@@ -21,6 +21,7 @@ public:
     void setTitle(const QString &title);   // 设置标题文字
     void setLogo(const QString &path);     // 设置左上角 logo
 
+    void addTitleLine(int w = 2); // 标题栏竖分割线
     void addMinButton(const QString &path, const QString &hoverPath);   // 最小化按钮
     void addMaxButton(const QString &maxPath, const QString &maxHover,
                       const QString &normalPath, const QString &normalHover); // 最大化/还原按钮
