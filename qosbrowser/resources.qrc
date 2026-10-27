@@ -1,11 +1,20 @@
 <RCC>
     <qresource prefix="/">
         <file>resource/static/imgs/logo.png</file>
+        <file>resource/static/imgs/qtlogo.png</file>
         <file>resource/static/qss/default.qss</file>
         <file>resource/static/sql/login_info.sql</file>
         <file>resource/static/versions/config_default.json</file>
         <file>resource/static/tests/business.json</file>
         <file>resource/static/tests/custom.json</file>
         <file>resource/static/docs/errorcode.csv</file>
+        <file>resource/static/imgs/Close-1.png</file>
+        <file>resource/static/imgs/Close-2.png</file>
+        <file>resource/static/imgs/Maximize-1.png</file>
+        <file>resource/static/imgs/Maximize-2.png</file>
+        <file>resource/static/imgs/Maximize-3.png</file>
+        <file>resource/static/imgs/Maximize-4.png</file>
+        <file>resource/static/imgs/Minimize-1.png</file>
+        <file>resource/static/imgs/Minimize-2.png</file>
     </qresource>
 </RCC>

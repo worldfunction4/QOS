@@ -45,6 +45,7 @@ qt_add_executable(qosbrowser
     src/middle/manglobal.cpp
     src/bend/dao/clouds/daocloudscos.h src/bend/dao/clouds/daocloudscos.cpp
     src/middle/models/cloudobject.h
+    src/fend/uicom/basedialog.h src/fend/uicom/basedialog.cpp src/fend/uicom/basedialog.ui
 )
 
 target_include_directories(${PROJECT_NAME} PRIVATE
