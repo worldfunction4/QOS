@@ -18,6 +18,16 @@ public:
     QList<CloudObject> getObjects(const QString& bucketName,
                                  const QString& location,
                                  const QString& dir)override;
+
+    bool isObjectExists(const QString& bucketName,
+                                const QString& location,
+                                const QString& key)override;
+
+    void putObject(const QString& bucketName,
+                   const QString& location,
+                   const QString& key,
+                   const QString& localPath,
+                   const TransProgressCallBack& callback)override;
 private:
     //mock路径
     QJsonValue mock_;

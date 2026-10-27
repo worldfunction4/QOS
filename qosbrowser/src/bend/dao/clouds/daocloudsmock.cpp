@@ -58,3 +58,13 @@ QList<CloudObject> DaoCloudsMock::getObjects(const QString &bucketName, const QS
     QList<CloudObject> res;
     return res;
 }
+
+bool DaoCloudsMock::isObjectExists(const QString &bucketName, const QString &location, const QString &key)
+{
+    return false;
+}
+
+void DaoCloudsMock::putObject(const QString &bucketName, const QString &location, const QString &key, const QString &localPath, const TransProgressCallBack &callback)
+{
+    return;
+}

@@ -162,3 +162,37 @@ QList<CloudObject> DaoCloudsCos::getObjects(const QString &bucketName, const QSt
     }
     return dirList(resp, dir) + fileList(resp, dir);
 }
+
+bool DaoCloudsCos::isObjectExists(const QString &bucketName, const QString &location, const QString &key)
+{
+    qcloud_cos::CosConfig config = makeConfig(location);
+    qcloud_cos::CosAPI cos(config);
+    return cos.IsObjectExist(bucketName.toStdString(), key.toStdString());
+}
+
+void DaoCloudsCos::putObject(const QString &bucketName, const QString &location, const QString &key, const QString &localPath, const TransProgressCallBack &callback)
+{
+    //异步上传请求:桶，云端key，本地文件
+    qcloud_cos::AsyncPutObjectReq req(bucketName.toStdString(),
+                                      key.toStdString(),
+                                      localPath.toStdString());
+    //调用方传回调才会进行设置
+    if(callback)
+    {
+        req.SetTransferProgressCallback(callback);
+    }
+
+    qcloud_cos::CosConfig config = makeConfig(location);
+    qcloud_cos::CosAPI cos(config);
+
+    //发起上传，并等它传完，当前在工作线程里，阻塞没关系
+    qcloud_cos::SharedAsyncContext context = cos.AsyncPutObject(req);
+    context->WaitUntilFinish();
+
+    qcloud_cos::CosResult result = context->GetResult();
+    if (!result.IsSucc())
+    {
+        throw BaseException(EC_332400,QString::fromStdString(result.GetErrorMsg()));
+    }
+
+}

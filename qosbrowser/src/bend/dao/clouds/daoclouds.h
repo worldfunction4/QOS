@@ -5,6 +5,12 @@
 #include "src/middle/models/bucket.h"
 #include "src/middle/models/cloudobject.h"
 
+#include <functional>
+
+//使用回调函数
+using TransProgressCallBack = std::function<void(uint64_t trans_size, uint64_t total_size, void*)>;
+
+
 //对云的接口进行抽象
 class DaoClouds
 {
@@ -25,6 +31,16 @@ public:
     virtual QList<CloudObject> getObjects(const QString& bucketName,
                                          const QString& location,
                                          const QString& dir) = 0;
+    //判断桶中是否存在某个对象？key为完整路径
+    virtual bool isObjectExists(const QString& bucketName,
+                                const QString& location,
+                                const QString& key) = 0;
+    //上传本地文件到桶里，key为完整路径
+    virtual void putObject(const QString& bucketName,
+                           const QString& location,
+                           const QString& key,
+                           const QString& localPath,
+                           const TransProgressCallBack& callback)=0;
 };
 
 #endif // DAOCLOUDS_H
