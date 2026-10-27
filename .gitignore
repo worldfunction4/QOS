@@ -30,3 +30,5 @@ tests/testcos/secret.json
 # 忽略测试上传用的临时文件
 tests/testcos/qos_upload_test.txt
 
+# 忽略测试下载用的临时文件
+tests/testcos/qos_download_test.txt

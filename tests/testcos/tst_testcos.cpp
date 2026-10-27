@@ -25,6 +25,12 @@ static QString uploadLocal()
     return QString(TESTCOS_DIR) + "/qos_upload_test.txt";
 }
 
+//下载保存到本地文件，目录放在测试文件夹内
+static QString downloadLocal()
+{
+    return QString(TESTCOS_DIR) + "/qos_download_test.txt";
+}
+
 static const QString UPLOAD_KEY   = "qos_upload_test.txt";
 
 TestCos::TestCos() {}
@@ -79,6 +85,9 @@ void TestCos::cleanupTestCase()
 
     //清除
     QFile::remove(uploadLocal());
+
+    //清理下载产生的文件
+    QFile::remove(downloadLocal());
 }
 
 void TestCos::cleanup()
@@ -179,6 +188,23 @@ void TestCos::test_putObject()
         //回调传空
         cos_.putObject(OBJ_BUCKET, TEST_REGION, UPLOAD_KEY, uploadLocal(), nullptr);
         QVERIFY(cos_.isObjectExists(OBJ_BUCKET, TEST_REGION, UPLOAD_KEY));
+    }
+    catch(const BaseException& e)
+    {
+        QFAIL(qPrintable(e.msg()));
+    }
+
+}
+
+void TestCos::test_getObject()
+{
+    //删除上次留下的文件
+    QFile::remove(downloadLocal());
+
+    try
+    {
+        cos_.getObject(OBJ_BUCKET, TEST_REGION, UPLOAD_KEY, downloadLocal());
+        QVERIFY(QFile::exists(downloadLocal()));
     }
     catch(const BaseException& e)
     {
