@@ -4,10 +4,6 @@
 #include "src/middle/signals/mansignals.h"
 #include "src/middle/manglobal.h"
 
-#include <QJsonObject>
-#include "src/bend/gateway.h"
-#include "src/config/apis.h"
-
 UiMain::UiMain(QWidget *parent)
     : QWidget(parent)
     , ui(new Ui::UiMain)
