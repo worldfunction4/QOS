@@ -1,9 +1,13 @@
 #include "tst_testcos.h"
 #include "config/exceptions.h"
+#include "helper/filehelper.h"
 
 #include <QFile>
 #include <QJsonDocument>
 #include <QJsonObject>
+#include <QDir>
+
+#include <QDebug>
 
 //加俩常量进行测试用
 static const QString TEST_BUCKET = "qos-test-1320342190";
@@ -11,6 +15,17 @@ static const QString TEST_REGION = "ap-chongqing";
 
 //列一个对象用的真实桶
 static const QString OBJ_BUCKET = "file-2026-1320342190";
+
+//上传本地临时文件，以及在云端的key
+//static const QString UPLOAD_LOCAL = QDir::tempPath() + "/qos_upload_test.txt";
+
+//上传用的本地临时文件，用到时再算路径，避免全局变量初始化时 Qt 还没准备好
+static QString uploadLocal()
+{
+    return QString(TESTCOS_DIR) + "/qos_upload_test.txt";
+}
+
+static const QString UPLOAD_KEY   = "qos_upload_test.txt";
 
 TestCos::TestCos() {}
 
@@ -27,8 +42,24 @@ void TestCos::initTestCase()
     secretId_= obj["secretId"].toString();
     secretKey_ = obj["secretKey"].toString();
 
-    //测试登录
-    cos_.login(secretId_, secretKey_);
+    try
+    {
+        //尝试登录
+        cos_.login(secretId_, secretKey_);
+        //打印路径
+        qDebug() << "文件上传的路径:" << uploadLocal();
+        //准备上传用的本地文件
+        FileHelper::writeFile(QStringList() << "abc" << "def", uploadLocal());
+    }
+    catch (const BaseException& e)
+    {
+        QFAIL(qPrintable(e.msg()));
+    }
+    catch (const char* s)
+    {
+        //FileHelper 目前抛的是字符串，先在这里接住
+        QFAIL(qPrintable(QString::fromUtf8(s)));
+    }
 }
 
 void TestCos::init()
@@ -45,6 +76,9 @@ void TestCos::cleanupTestCase()
     }
     catch(...)
     {}
+
+    //清除
+    QFile::remove(uploadLocal());
 }
 
 void TestCos::cleanup()
@@ -109,7 +143,7 @@ void TestCos::test_getObjects_data()
     QTest::addColumn<int>("expected");
 
     //一行为一组用例
-    QTest::newRow("root") << "" << 4;
+    QTest::newRow("root") << "" << 5;
     //如果有子文件夹
     //QTest::newRow("subdir") << "test/" << 0;
 
@@ -136,4 +170,19 @@ void TestCos::test_getObjectError()
     //访问不存在的桶，getObjects应该抛出 BaseException（错误码 331200）
     QVERIFY_THROWS_EXCEPTION(BaseException,
                              cos_.getObjects("not-exist-1320342190", TEST_REGION, ""));
+}
+
+void TestCos::test_putObject()
+{
+    try
+    {
+        //回调传空
+        cos_.putObject(OBJ_BUCKET, TEST_REGION, UPLOAD_KEY, uploadLocal(), nullptr);
+        QVERIFY(cos_.isObjectExists(OBJ_BUCKET, TEST_REGION, UPLOAD_KEY));
+    }
+    catch(const BaseException& e)
+    {
+        QFAIL(qPrintable(e.msg()));
+    }
+
 }
