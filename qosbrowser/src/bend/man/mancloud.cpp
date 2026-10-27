@@ -1,5 +1,7 @@
 #include "mancloud.h"
 #include <plugins/manplugin.h>
+#include "config/errorcode.h"
+#include "config/exceptions.h"
 #include "middle/manglobal.h"
 #include "middle/signals/mansignals.h"
 
@@ -51,4 +53,57 @@ void ManCloud::login(const QString &secretId, const QString &secretKey)
     dao_ = MG->mPlugin->clouds();
     QList<Bucket> buckets = dao_->login(secretId, secretKey);
     emit MG->mSignal->bucketsSuccess(buckets);
+}
+
+void ManCloud::getBuckets()
+{
+    emit MG->mSignal->bucketsSuccess(dao()->buckets());
+}
+
+void ManCloud::putBucket(const QString &bucketName, const QString &location)
+{
+    dao()->putBucket(bucketName, location);
+    //自动刷新
+    getBuckets();
+}
+
+void ManCloud::deleteBucket(const QString &bucketName, const QString &location)
+{
+    dao()->deleteBucket(bucketName, location);
+    getBuckets();
+}
+
+void ManCloud::getObjects(const QString &bucketName, const QString &location, const QString &dir)
+{
+    emit MG->mSignal->objectsSuccess(dao()->getObjects(bucketName, location, dir));
+}
+
+void ManCloud::getObject(const QString &workId, const QString &bucketName, const QString &location, const QString &key, const QString &localPath)
+{
+    //进度回调：SDK每传一块调用一次，转成信号发给界面
+    auto callback = [workId](long long transferred, long long total, void*)
+    {
+        emit MG->mSignal->downloadProcess(workId, transferred, total);
+    };
+    dao()->getObject(bucketName, location, key, localPath, callback);
+    emit MG->mSignal->downloadSuccess(workId);
+}
+
+void ManCloud::putObject(const QString &workId, const QString &bucketName, const QString &location, const QString &key, const QString &localPath)
+{
+    auto callback = [workId](uint64_t transferred, uint64_t total, void*) {
+        emit MG->mSignal->uploadProcess(workId, transferred, total);
+    };
+    dao()->putObject(bucketName, location, key, localPath, callback);
+    emit MG->mSignal->uploadSuccess(workId);
+}
+
+DaoClouds *ManCloud::dao() const
+{
+    //没有dao说明还没登录
+    if(!dao_)
+    {
+        throw BaseException(EC_100000, "需要先登录");
+    }
+    return dao_;
 }

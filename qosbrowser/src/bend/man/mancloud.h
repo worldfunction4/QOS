@@ -22,13 +22,27 @@ public:
     void login(const QString& secretId,
                const QString& secretKey);
 
+    //桶
+    void getBuckets();
+    void putBucket(const QString& bucketName, const QString& location);
+    void deleteBucket(const QString& bucketName, const QString& location);
+
+    //对象
+    void getObjects(const QString& bucketName, const QString& location, const QString& dir = "");
+    void getObject(const QString& workId, const QString& bucketName, const QString& location,
+                   const QString& key, const QString& localPath);
+    void putObject(const QString& workId, const QString& bucketName, const QString& location,
+                   const QString& key, const QString& localPath);
+
     // 禁用拷贝与赋值
     ManCloud(const ManCloud&) = delete;
     ManCloud& operator=(const ManCloud&) = delete;
 private:
-    QStandardItemModel* model_ = nullptr;
     // 云存储接口，具体实现可以是 Mock 或真实的云
     DaoClouds* dao_ = nullptr;
+    QStandardItemModel* model_ = nullptr;
+    //拿到dao,保护作用，防止没登录就调用导致直接空指针崩溃
+    DaoClouds* dao()const;
 };
 
 #endif // MANCLOUD_H

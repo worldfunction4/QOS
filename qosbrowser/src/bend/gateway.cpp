@@ -53,6 +53,27 @@ void Gateway::dispatch(int api, const QJsonValue &value)
         case API::LOGIN::NORMAL:
             apiLogin(value);
             break;
+        //桶
+        case API::BUCKET::LIST:
+            apiGetBucket(value);
+            break;
+        case API::BUCKET::PUT:
+            apiPutBucket(value);
+            break;
+        case API::BUCKET::DEL:
+            apiDeleteBucket(value);
+            break;
+        //对象
+        case API::OBJECT::LIST:
+            apiGetObjcets(value);
+            break;
+        case API::OBJECT::GET:
+            apiGetObjcet(value);
+            break;
+        case API::OBJECT::PUT:
+            apiPutObject(value);
+            break;
+
         //误匹配接口函数抛出异常，防止界面一直等死
         default:
             throw BaseException(EC_100000, "未知接口，无法找到对应处理函数");
@@ -74,4 +95,46 @@ void Gateway::apiLogin(const QJsonValue &value)
     emit MG->mSignal->loginSuccess();
     //TODO:接入ManCloud登录腾讯云,当前没有校验账号密码，只要不为空就能通过
 
+}
+
+void Gateway::apiGetBucket(const QJsonValue &value)
+{
+    MG->mCloud->getBuckets();
+}
+
+void Gateway::apiPutBucket(const QJsonValue &value)
+{
+    MG->mCloud->putBucket(value["bucketName"].toString(),
+                          value["location"].toString());
+}
+
+void Gateway::apiDeleteBucket(const QJsonValue &value)
+{
+    MG->mCloud->deleteBucket(value["bucketName"].toString(),
+                             value["location"].toString());
+}
+
+void Gateway::apiGetObjcets(const QJsonValue &value)
+{
+    MG->mCloud->getObjects(value["bucketName"].toString(),
+                           value["location"].toString(),
+                           value["dir"].toString());
+}
+
+void Gateway::apiGetObjcet(const QJsonValue &value)
+{
+    MG->mCloud->getObject(value["workId"].toString(),
+                          value["bucketName"].toString(),
+                          value["location"].toString(),
+                          value["key"].toString(),
+                          value["localPath"].toString());
+}
+
+void Gateway::apiPutObject(const QJsonValue &value)
+{
+    MG->mCloud->putObject(value["workId"].toString(),
+                          value["bucketName"].toString(),
+                          value["location"].toString(),
+                          value["key"].toString(),
+                          value["localPath"].toString());
 }

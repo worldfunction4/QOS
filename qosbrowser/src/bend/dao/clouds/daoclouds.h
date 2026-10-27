@@ -7,7 +7,7 @@
 
 #include <functional>
 
-//使用回调函数
+//使用回调函数，void* 用不着，但为了和SDK规定前面一致，必须加入
 using TransProgressCallBack = std::function<void(uint64_t trans_size, uint64_t total_size, void*)>;
 
 
