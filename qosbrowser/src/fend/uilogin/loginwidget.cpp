@@ -14,18 +14,25 @@
 #include <QString>
 
 LoginWidget::LoginWidget(QWidget *parent)
-    : QDialog(parent)
-    , ui(new Ui::LoginWidget)
+    : QosDialog(parent)
+    , ui_login(new Ui::LoginWidget)
 {
-    ui->setupUi(this);
-    this->setWindowIcon(QIcon(":/resource/static/imgs/logo.png"));
+    ui_login->setupUi(body());
+    setTitle("登录");
 
+    ui_login->loginButton->setDefault(true);
+    connect(ui_login->loginButton, &QPushButton::clicked,
+            this, &LoginWidget::onLoginButtonClicked);
+    connect(MG->mSignal, &ManSignals::loginSuccess, this, &LoginWidget::onLoginSuccess);
+    connect(MG->mSignal, &ManSignals::error, this, &LoginWidget::onLoginError);
+
+    resize(400, 450);
     //设置样式
-    ui->loginButton->setProperty("style", "h5");
-    ui->keyLabel->setProperty("style", "h5");
-    ui->idLabel->setProperty("style", "h5");
-    ui->markLabel->setProperty("style", "h5");
-    ui->loginNameLabel->setProperty("style", "h5");
+    ui_login->loginButton->setProperty("style", "h5");
+    ui_login->keyLabel->setProperty("style", "h5");
+    ui_login->idLabel->setProperty("style", "h5");
+    ui_login->markLabel->setProperty("style", "h5");
+    ui_login->loginNameLabel->setProperty("style", "h5");
 
     //添加登录信息的下拉框
     QCompleter* completer = new QCompleter(MG->mDb->loginInfoNames(), this);
@@ -45,39 +52,8 @@ LoginWidget::LoginWidget(QWidget *parent)
         "}"
         );
 
-    ui->loginNameLineEdit->setCompleter(completer);
-    //选择登录名时自动填充
-    connect(completer, QOverload<const QString&>::of(&QCompleter::activated), this, [=](const QString& name){
-        LoginInfo info;
-        if(MG->mDb->loginInfoByName(name, &info))
-        {
-            ui->loginNameLineEdit->setText(info.name);
-            ui->idLineEdit->setText(info.secretId);
-            ui->ketLineEdit->setText(info.secretKey);
-            ui->markLineEdit->setText(info.remark);
-            ui->checkBox->setChecked(true);
-        }
-    });
+    ui_login->loginNameLineEdit->setCompleter(completer);
 
-    //成功槽根据复选框保存或删除登录信息，然后关闭窗口。
-    connect(MG->mSignal, &ManSignals::loginSuccess, this, [=]{
-        if(ui->checkBox->isChecked())
-        {
-            //那么就保存登录信息
-            MG->mDb->saveLoginInfo(
-                ui->loginNameLineEdit->text(),
-                ui->idLineEdit->text(),
-                ui->ketLineEdit->text(),
-                ui->markLineEdit->text()
-                );
-        }
-        else
-        {
-            //不然就删除登录信息(不保存，一次性登录)
-            MG->mDb->removeLoginInfo(ui->idLineEdit->text());
-        }
-        this->close();
-    });
     //失败槽不是登录接口就 return；是的话就弹出警告框，显示错误原因。
     connect(MG->mSignal, &ManSignals::error, this, [=](int api, const QString& msg){
         if(api != API::LOGIN::NORMAL)return;
@@ -87,15 +63,15 @@ LoginWidget::LoginWidget(QWidget *parent)
 
 LoginWidget::~LoginWidget()
 {
-    delete ui;
+    delete ui_login;
 }
 
-void LoginWidget::on_loginButton_clicked()
+void LoginWidget::onLoginButtonClicked()
 {
 
     //获取用户输入的账号密码，用QJsonValue临时保存
-    QString secret_id = ui->idLineEdit->text().trimmed();
-    QString secret_key = ui->ketLineEdit->text().trimmed();
+    QString secret_id = ui_login->idLineEdit->text().trimmed();
+    QString secret_key = ui_login->ketLineEdit->text().trimmed();
 
     QJsonObject secret_obj;
     secret_obj["secretId"] = secret_id;
@@ -104,4 +80,31 @@ void LoginWidget::on_loginButton_clicked()
     //使用send发送
     MG->mGate->send(API::LOGIN::NORMAL, secret_obj);
 
+}
+
+void LoginWidget::onLoginSuccess()
+{
+    if (ui_login->checkBox->isChecked())
+    {
+        //勾选了记住会话：保存登录信息
+        MG->mDb->saveLoginInfo(
+            ui_login->loginNameLineEdit->text(),
+            ui_login->idLineEdit->text(),
+            ui_login->ketLineEdit->text(),
+            ui_login->markLineEdit->text());
+    }
+    else
+    {
+        //没勾选：删除登录信息，只登录这一次
+        MG->mDb->removeLoginInfo(ui_login->idLineEdit->text());
+    }
+    //关闭对话框并返回Accepted
+    accept();
+}
+
+void LoginWidget::onLoginError(int api, const QString &msg)
+{
+
+    if (api != API::LOGIN::NORMAL) return;   //不是登录接口的错误就不管
+    QMessageBox::warning(this, "登录失败", msg);
 }
