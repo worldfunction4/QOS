@@ -26,6 +26,7 @@ namespace GLOBAL
         inline const QString MAX_HOVER   = ":/resource/static/imgs/Maximize-2.png";
         inline const QString NORMAL      = ":/resource/static/imgs/Maximize-3.png";
         inline const QString NORMAL_HOVER= ":/resource/static/imgs/Maximize-4.png";
+        inline const QString RIGHT       = "://resource/static/imgs/right.png";
     }
 
     namespace SQLITE

@@ -27,11 +27,7 @@
     <number>0</number>
    </property>
    <item>
-    <widget class="QPushButton" name="pushButton">
-     <property name="text">
-      <string>存储桶</string>
-     </property>
-    </widget>
+    <widget class="QListView" name="listView"/>
    </item>
    <item>
     <spacer name="horizontalSpacer">

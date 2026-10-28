@@ -16,5 +16,6 @@
         <file>resource/static/imgs/Maximize-4.png</file>
         <file>resource/static/imgs/Minimize-1.png</file>
         <file>resource/static/imgs/Minimize-2.png</file>
+        <file>resource/static/imgs/right.png</file>
     </qresource>
 </RCC>

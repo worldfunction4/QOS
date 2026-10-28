@@ -142,7 +142,7 @@
       <item>
        <widget class="QLineEdit" name="markLineEdit">
         <property name="placeholderText">
-         <string>保存时的备注信息(可选)</string>
+         <string>保存登录信息时的备注信息(可选)</string>
         </property>
        </widget>
       </item>
