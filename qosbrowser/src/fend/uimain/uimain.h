@@ -27,6 +27,8 @@ private slots:
     void onTransferClicked();
     //退出登录
     void onQuitClicked();
+    //通知所有模块退出登录
+    void onUnLogin();
 
 private:
     Ui::UiMain *ui_main;

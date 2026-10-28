@@ -22,6 +22,9 @@ public:
     void login(const QString& secretId,
                const QString& secretKey);
 
+    //退出登录时各模块清理数据
+    void onUnLogin();
+
     //桶
     void getBuckets();
     void putBucket(const QString& bucketName, const QString& location);

@@ -55,6 +55,15 @@ void ManCloud::login(const QString &secretId, const QString &secretKey)
     emit MG->mSignal->bucketsSuccess(buckets);
 }
 
+void ManCloud::onUnLogin()
+{
+    //删除数据行
+    model_->setRowCount(0);
+
+    //清除dao
+    dao_ = nullptr;
+}
+
 void ManCloud::getBuckets()
 {
     emit MG->mSignal->bucketsSuccess(dao()->buckets());

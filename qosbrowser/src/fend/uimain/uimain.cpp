@@ -57,6 +57,9 @@ UiMain::UiMain(QWidget *parent)
 
     //登录成功->主界面
     connect(MG->mSignal, &ManSignals::loginSuccess, this, &UiMain::show);
+
+    //退出登录时主界面复位
+    connect(MG->mSignal, &ManSignals::unLogin, this, &UiMain::onUnLogin);
 }
 
 UiMain::~UiMain()
@@ -85,6 +88,14 @@ void UiMain::onTransferClicked()
 
 void UiMain::onQuitClicked()
 {
+    emit MG->mSignal->unLogin();
+}
+
+void UiMain::onUnLogin()
+{
+    //回到桶列表页
+    ui_main->stackedWidget->setCurrentIndex(0);
+
     //隐藏主界面
     hide();
     showLoginWidget();

@@ -4,6 +4,7 @@
 #include "ui_buckettablewidget.h"
 #include "src/bend/man/mancloud.h"
 #include "src/middle/manglobal.h"
+#include "src/middle/signals/mansignals.h"
 
 #include <QStandardItemModel>
 
@@ -39,6 +40,11 @@ BucketTableWidget::BucketTableWidget(QWidget *parent)
 
     //点表头可以排序
     ui->tableView->setSortingEnabled(true);
+
+    //退出登录时翻页回到初始状态
+    connect(MG->mSignal, &ManSignals::unLogin, this, [this]{
+        ui->widgetPage->setTotalRow(0);
+    });
 }
 
 BucketTableWidget::~BucketTableWidget()

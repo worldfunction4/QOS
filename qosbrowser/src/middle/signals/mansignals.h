@@ -28,7 +28,8 @@ signals:
     void uploadProcess(const QString& workId, long long transferred, long long total);
     //上传成功信号
     void uploadSuccess(const QString& workId);
-
+    //退出登录信号
+    void unLogin();
 };
 
 #endif // MANSIGNALS_H

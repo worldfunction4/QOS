@@ -55,4 +55,6 @@ void ManGlobal::init(int argc, char *argv[])
     connect(MG->mSignal, &ManSignals::bucketsSuccess, mCloud, &ManCloud::setManBucket);
     //连接数据库
     MG->mDb->init();
+    //退出登录时清理后端数据
+    connect(MG->mSignal, &ManSignals::unLogin, mCloud, &ManCloud::onUnLogin);
 }
