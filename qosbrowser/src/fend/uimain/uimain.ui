@@ -25,22 +25,10 @@
      <property name="orientation">
       <enum>Qt::Orientation::Horizontal</enum>
      </property>
-     <widget class="BucketsWidget" name="widget" native="true"/>
-     <widget class="QWidget" name="layoutWidget">
-      <layout class="QVBoxLayout" name="verticalLayout" stretch="0,0,1,0">
-       <item>
-        <widget class="ToolBarWidget" name="widgetToolBar" native="true"/>
-       </item>
-       <item>
-        <widget class="BreadWidget" name="widgetBread" native="true"/>
-       </item>
-       <item>
-        <widget class="ObjectWidget" name="widgetObject" native="true"/>
-       </item>
-       <item>
-        <widget class="PageWidget" name="widgetPage" native="true"/>
-       </item>
-      </layout>
+     <widget class="BucketsWidget" name="widgetBuckets" native="true"/>
+     <widget class="QStackedWidget" name="stackedWidget">
+      <widget class="BucketTableWidget" name="pageBuckets"/>
+      <widget class="ObjectsTableWidget" name="pageObjects"/>
      </widget>
     </widget>
    </item>
@@ -54,27 +42,15 @@
    <container>1</container>
   </customwidget>
   <customwidget>
-   <class>ToolBarWidget</class>
+   <class>BucketTableWidget</class>
    <extends>QWidget</extends>
-   <header>src/fend/uimain/toolbarwidget.h</header>
+   <header>src/fend/uimain/buckettablewidget.h</header>
    <container>1</container>
   </customwidget>
   <customwidget>
-   <class>ObjectWidget</class>
+   <class>ObjectsTableWidget</class>
    <extends>QWidget</extends>
-   <header>src/fend/uimain/objectwidget.h</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
-   <class>BreadWidget</class>
-   <extends>QWidget</extends>
-   <header>src/fend/uicom/breadwidget.h</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
-   <class>PageWidget</class>
-   <extends>QWidget</extends>
-   <header>src/fend/uicom/pagewidget.h</header>
+   <header>src/fend/uimain/objectstablewidget.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

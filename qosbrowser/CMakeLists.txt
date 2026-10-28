@@ -8,9 +8,9 @@ qt_add_executable(qosbrowser
 
     src/fend/uimain/uimain.h src/fend/uimain/uimain.cpp src/fend/uimain/uimain.ui
     src/fend/uimain/bucketswidget.h src/fend/uimain/bucketswidget.cpp src/fend/uimain/bucketswidget.ui
-    src/fend/uimain/toolbarwidget.h src/fend/uimain/toolbarwidget.cpp src/fend/uimain/toolbarwidget.ui
+
     src/fend/uicom/breadwidget.h src/fend/uicom/breadwidget.cpp src/fend/uicom/breadwidget.ui
-    src/fend/uimain/objectwidget.h src/fend/uimain/objectwidget.cpp src/fend/uimain/objectwidget.ui
+
     src/fend/uicom/pagewidget.h src/fend/uicom/pagewidget.cpp src/fend/uicom/pagewidget.ui
     src/fend/uilogin/loginwidget.h src/fend/uilogin/loginwidget.cpp src/fend/uilogin/loginwidget.ui
     src/helper/filehelper.h src/helper/filehelper.cpp
@@ -48,6 +48,8 @@ qt_add_executable(qosbrowser
     src/fend/uicom/basedialog.h src/fend/uicom/basedialog.cpp src/fend/uicom/basedialog.ui
     src/fend/uicom/qosdialog.h src/fend/uicom/qosdialog.cpp src/fend/uicom/qosdialog.ui
     src/fend/uicom/comboline.h src/fend/uicom/comboline.cpp
+    src/fend/uimain/buckettablewidget.h src/fend/uimain/buckettablewidget.cpp src/fend/uimain/buckettablewidget.ui
+    src/fend/uimain/objectstablewidget.h src/fend/uimain/objectstablewidget.cpp src/fend/uimain/objectstablewidget.ui
 )
 
 target_include_directories(${PROJECT_NAME} PRIVATE

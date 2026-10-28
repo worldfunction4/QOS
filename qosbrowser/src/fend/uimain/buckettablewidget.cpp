@@ -1,12 +1,15 @@
-#include "objectwidget.h"
+#include "buckettablewidget.h"
 #include "fend/uidelegate/bucketdelegate.h"
-#include "ui_objectwidget.h"
+#include "middle/manglobal.h"
+#include "ui_buckettablewidget.h"
 #include "src/bend/man/mancloud.h"
 #include "src/middle/manglobal.h"
 
-ObjectWidget::ObjectWidget(QWidget *parent)
+#include <QStandardItemModel>
+
+BucketTableWidget::BucketTableWidget(QWidget *parent)
     : QWidget(parent)
-    , ui(new Ui::ObjectWidget)
+    , ui(new Ui::BucketTableWidget)
 {
     ui->setupUi(this);
     ui->tableView->setModel(MG->mCloud->model());
@@ -34,11 +37,11 @@ ObjectWidget::ObjectWidget(QWidget *parent)
     //隐藏垂直标题
     ui->tableView->verticalHeader()->setHidden(true);
 
-    //设置鼠标点击排序
-    ui->tableView->setShortcutEnabled(true);
+    //点表头可以排序
+    ui->tableView->setSortingEnabled(true);
 }
 
-ObjectWidget::~ObjectWidget()
+BucketTableWidget::~BucketTableWidget()
 {
     delete ui;
 }

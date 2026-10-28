@@ -19,10 +19,9 @@ UiMain::UiMain(QWidget *parent)
 
     //添加logo图标
     this->setWindowIcon(QIcon(":/resource/static/imgs/logo.png"));
-    connect(ui->widgetToolBar, &ToolBarWidget::loginout, this, [=]{
-        this->hide();
-        showLoginWidget();
-    });
+
+    //默认显示桶列表
+    ui->stackedWidget->setCurrentIndex(0);
 }
 
 UiMain::~UiMain()
