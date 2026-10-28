@@ -18,15 +18,26 @@ namespace GLOBAL
     namespace IMG
     {
         inline const QString LOGO        = ":/resource/static/imgs/logo.png";
+
         inline const QString CLOSE       = ":/resource/static/imgs/Close-1.png";
         inline const QString CLOSE_HOVER = ":/resource/static/imgs/Close-2.png";
+
         inline const QString MIN         = ":/resource/static/imgs/Minimize-1.png";
         inline const QString MIN_HOVER   = ":/resource/static/imgs/Minimize-2.png";
+
         inline const QString MAX         = ":/resource/static/imgs/Maximize-1.png";
         inline const QString MAX_HOVER   = ":/resource/static/imgs/Maximize-2.png";
+
         inline const QString NORMAL      = ":/resource/static/imgs/Maximize-3.png";
         inline const QString NORMAL_HOVER= ":/resource/static/imgs/Maximize-4.png";
-        inline const QString RIGHT       = "://resource/static/imgs/right.png";
+
+        inline const QString RIGHT       = ":/resource/static/imgs/right.png";
+
+        inline const QString TRANS       = ":/resource/static/imgs/Trans-1.png";
+        inline const QString TRANS_HOVER = ":/resource/static/imgs/Trans-2.png";
+
+        inline const QString QUIT        = ":/resource/static/imgs/Quit-1.png";
+        inline const QString QUIT_HOVER  = ":/resource/static/imgs/Quit-2.png";
     }
 
     namespace SQLITE

@@ -17,5 +17,9 @@
         <file>resource/static/imgs/Minimize-1.png</file>
         <file>resource/static/imgs/Minimize-2.png</file>
         <file>resource/static/imgs/right.png</file>
+        <file>resource/static/imgs/Quit-1.png</file>
+        <file>resource/static/imgs/Quit-2.png</file>
+        <file>resource/static/imgs/Trans-1.png</file>
+        <file>resource/static/imgs/Trans-2.png</file>
     </qresource>
 </RCC>
