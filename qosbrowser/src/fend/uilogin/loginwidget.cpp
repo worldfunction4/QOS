@@ -34,25 +34,21 @@ LoginWidget::LoginWidget(QWidget *parent)
     ui_login->markLabel->setProperty("style", "h5");
     ui_login->loginNameLabel->setProperty("style", "h5");
 
-    //添加登录信息的下拉框
-    QCompleter* completer = new QCompleter(MG->mDb->loginInfoNames(), this);
+    //设置登录名的提示列表
+    ui_login->loginNameLineEdit->setWords(MG->mDb->loginInfoNames());
 
-    //选择不区分大小写
-    completer->setCaseSensitivity(Qt::CaseInsensitive);
-    //设置包含匹配
-    completer->setFilterMode(Qt::MatchContains);
-
-    //避免全局样式把高度压为0
-    completer->popup()->setStyleSheet(
-        "QAbstractItemView {"
-        "  background: #ffffff;"
-        "  border: 1px solid #00bcd4;"
-        "  min-height: 30px;"
-        "  outline: 0;"
-        "}"
-        );
-
-    ui_login->loginNameLineEdit->setCompleter(completer);
+    //选中某个登录名时自动填充其他信息
+    connect(ui_login->loginNameLineEdit, &ComboLine::itemSelected, this, [=](const QString &name){
+        LoginInfo info;
+        if (MG->mDb->loginInfoByName(name, &info))
+        {
+            ui_login->loginNameLineEdit->setText(info.name);
+            ui_login->idLineEdit->setText(info.secretId);
+            ui_login->ketLineEdit->setText(info.secretKey);
+            ui_login->markLineEdit->setText(info.remark);
+            ui_login->checkBox->setChecked(true);
+        }
+    });
 
     //失败槽不是登录接口就 return；是的话就弹出警告框，显示错误原因。
     connect(MG->mSignal, &ManSignals::error, this, [=](int api, const QString& msg){

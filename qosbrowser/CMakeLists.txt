@@ -47,6 +47,7 @@ qt_add_executable(qosbrowser
     src/middle/models/cloudobject.h
     src/fend/uicom/basedialog.h src/fend/uicom/basedialog.cpp src/fend/uicom/basedialog.ui
     src/fend/uicom/qosdialog.h src/fend/uicom/qosdialog.cpp src/fend/uicom/qosdialog.ui
+    src/fend/uicom/comboline.h src/fend/uicom/comboline.cpp
 )
 
 target_include_directories(${PROJECT_NAME} PRIVATE

@@ -53,7 +53,7 @@
        </widget>
       </item>
       <item>
-       <widget class="QLineEdit" name="loginNameLineEdit">
+       <widget class="ComboLine" name="loginNameLineEdit">
         <property name="placeholderText">
          <string>登陆名(可选)</string>
         </property>
@@ -191,6 +191,13 @@
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>ComboLine</class>
+   <extends>QLineEdit</extends>
+   <header>src/fend/uicom/comboline.h</header>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>
