@@ -21,6 +21,8 @@ BucketsWidget::BucketsWidget(QWidget *parent)
         params["location"] = index.siblingAtColumn(1).data().toString();
         MG->mGate->send(API::OBJECT::LIST, params);
     });
+
+    //每页可选
 }
 
 BucketsWidget::~BucketsWidget()

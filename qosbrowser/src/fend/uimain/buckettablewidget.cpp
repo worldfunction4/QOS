@@ -44,9 +44,21 @@ BucketTableWidget::BucketTableWidget(QWidget *parent)
     //点表头可以排序
     ui->tableView->setSortingEnabled(true);
 
+    //每页可选
+    ui->widgetPage->setMaxRowList({10, 50, 100});
+
+    //隐藏不在这一页的行
+    connect(ui->widgetPage, &PageWidget::pageNumChanged,
+            this, &BucketTableWidget::onPageNumChanged);
+
     //连接双击信号
     connect(ui->tableView, &QTableView::doubleClicked,
             this, &BucketTableWidget::onTableViewDoubleClicked);
+
+    //桶列表到了，更新页数
+    connect(MG->mSignal, &ManSignals::bucketsSuccess, this, [this]{
+        ui->widgetPage->setTotalRow(MG->mCloud->modelBuckets()->rowCount());
+    });
 
     //退出登录时翻页回到初始状态
     connect(MG->mSignal, &ManSignals::unLogin, this, [this]{
@@ -70,4 +82,15 @@ void BucketTableWidget::onTableViewDoubleClicked(const QModelIndex &index)
     object["bucketName"] = bucketName;
     object["location"] = location;
     MG->mGate->send(API::OBJECT::LIST, object);
+}
+
+void BucketTableWidget::onPageNumChanged(int start, int len)
+{
+    QStandardItemModel* model = MG->mCloud->modelBuckets();
+    // 一行一行看：在 [start, start+len) 范围外的就藏起来
+    for (int i = 0; i < model->rowCount(); ++i)
+    {
+        bool hidden = (i < start || i >= start + len);
+        ui->tableView->setRowHidden(i, hidden);
+    }
 }

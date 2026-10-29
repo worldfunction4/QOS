@@ -38,6 +38,9 @@ ObjectsTableWidget::ObjectsTableWidget(QWidget *parent)
     connect(MG->mSignal, &ManSignals::objectsSuccess, this, [this]{
         QString path = MG->mCloud->currentBucket() + "/" + MG->mCloud->currentDir();
         ui->widgetBread->setPath(path);
+
+        //告诉翻页空间一共几条
+        ui->widgetPage->setTotalRow(MG->mCloud->modelObjects()->rowCount());
     });
 
     //双击表格
@@ -54,6 +57,14 @@ ObjectsTableWidget::ObjectsTableWidget(QWidget *parent)
     connect(ui->buttonBuckets, &QPushButton::clicked, this, []{
         MG->mGate->send(API::BUCKET::LIST, QJsonValue());
     });
+
+    //设置每页可以选择几条
+    ui->widgetPage->setMaxRowList({5, 10, 20});
+
+    //翻页时就隐藏不在这一页的行
+    connect(ui->widgetPage, &PageWidget::pageNumChanged,
+            this, &ObjectsTableWidget::onPageNumChanged);
+
 }
 
 ObjectsTableWidget::~ObjectsTableWidget()
@@ -95,4 +106,17 @@ void ObjectsTableWidget::onPathChanged(const QString &path)
     params["location"] = MG->mCloud->currentLocation();
     params["dir"] = dir;
     MG->mGate->send(API::OBJECT::LIST, params);
+}
+
+void ObjectsTableWidget::onPageNumChanged(int start, int len)
+{
+    QStandardItemModel* model = MG->mCloud->modelObjects();
+
+    for(int i=0; i < model->rowCount(); ++i)
+    {
+
+        bool hidden = (i < start || i >= start + len);
+        ui->tableView->setRowHidden(i, hidden);
+    }
+
 }

@@ -19,6 +19,9 @@ private slots:
     //双击桶->获取相应对象列表
     void onTableViewDoubleClicked(const QModelIndex& index);
 
+    //和对象列表一样显示从 start 的 len 行
+    void onPageNumChanged(int start, int len);
+
 private:
     Ui::BucketTableWidget *ui;
 };

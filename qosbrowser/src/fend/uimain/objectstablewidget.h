@@ -20,6 +20,8 @@ private slots:
     void onTableViewDoubleClicked(const QModelIndex& index);
     //面包屑跳转或刷新->按路径重新取对象
     void onPathChanged(const QString& path);
+    //翻页显示从 start 开始的 len 行
+    void onPageNumChanged(int start, int len);
 
 private:
     Ui::ObjectsTableWidget *ui;
