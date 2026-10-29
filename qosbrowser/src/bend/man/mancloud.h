@@ -66,6 +66,9 @@ private:
 
     //拿到dao,保护作用，防止没登录就调用导致直接空指针崩溃
     DaoClouds* dao()const;
+
+    //桶列表到达：清空当前位置，再通知界面
+    void bucketsAlready(const QList<Bucket>& buckets);
 };
 
 #endif // MANCLOUD_H

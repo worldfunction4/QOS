@@ -4,16 +4,33 @@
 #include "config/exceptions.h"
 #include "middle/manglobal.h"
 #include "middle/signals/mansignals.h"
+#include "src/helper/bytehelper.h"
 
 #include <QMetaType>
 #include <QVariant>
 #include <QList>
+#include <QDateTime>
+
+//把云端的 UTC 时间转成本地时间，转不了就原样返回
+static QString toLocalTimeStr(const QString& utc)
+{
+    //按 ISO 格式解析，Z 结尾会被认作 UTC
+    QDateTime dt = QDateTime::fromString(utc, Qt::ISODate);
+    if (!dt.isValid())
+        return utc;
+    //转成电脑本地时区，再换成好读的格式
+    return dt.toLocalTime().toString("yyyy-MM-dd hh:mm:ss");
+}
 
 ManCloud::ManCloud(QObject* parent)
     :QObject(parent)
 {
     modelBuckets_ = new QStandardItemModel(this);
     modelObjects_ = new QStandardItemModel(this);
+
+    //排序不看显示文字
+    modelObjects_->setSortRole(Qt::UserRole + 1);
+
 
     //运行时只注册元类型系统，排队连接才能复制这个参数
     //qt6可以省略
@@ -40,7 +57,7 @@ void ManCloud::setBuckets(const QList<Bucket>& buckets)
         modelBuckets_->setData(index1, bucket.location);
 
         QModelIndex index2 = modelBuckets_->index(row, 2);
-        modelBuckets_->setData(index2, bucket.createDate);
+        modelBuckets_->setData(index2, toLocalTimeStr(bucket.createDate));
 
         ++row;
     }
@@ -59,18 +76,26 @@ void ManCloud::setObjects(const QList<CloudObject> &objects)
 
     for(const CloudObject& object : objects)
     {
-        // 名称
+        //名称
         QModelIndex index0 = modelObjects_->index(row, 0);
         modelObjects_->setData(index0, object.name);
         modelObjects_->setData(index0, QVariant::fromValue(object), Qt::UserRole);
 
-        // 大小
-        QModelIndex index1 = modelObjects_->index(row, 1);
-        modelObjects_->setData(index1, object.isDir()? QString("-") : QString::number(object.size));
+        //排序依据
+        modelObjects_->setData(index0, object.name, Qt::UserRole + 1);
 
-        // 修改时间
+        //大小
+        QModelIndex index1 = modelObjects_->index(row, 1);
+        modelObjects_->setData(index1, object.isDir()? QString("-") : ByteHelper::toBeautifulStr(object.size));
+
+        //排序采取原始字节数
+        modelObjects_->setData(index1, object.isDir()? int64_t(-1) : int64_t(object.size), Qt::UserRole + 1);
+
+        //修改时间
         QModelIndex index2 = modelObjects_->index(row, 2);
-        modelObjects_->setData(index2, object.lastModified);
+        modelObjects_->setData(index2, toLocalTimeStr(object.lastModified));
+        //排序依据：修改时间
+        modelObjects_->setData(index2, toLocalTimeStr(object.lastModified), Qt::UserRole + 1);
 
         ++row;
     }
@@ -90,7 +115,7 @@ void ManCloud::login(const QString &secretId, const QString &secretKey)
 {
     dao_ = MG->mPlugin->clouds();
     QList<Bucket> buckets = dao_->login(secretId, secretKey);
-    emit MG->mSignal->bucketsSuccess(buckets);
+    bucketsAlready(buckets);
 }
 
 void ManCloud::onUnLogin()
@@ -99,13 +124,18 @@ void ManCloud::onUnLogin()
     modelBuckets_->setRowCount(0);
     modelObjects_->setRowCount(0);
 
+    //清空当前位置
+    currentBucket_.clear();
+    currentLocation_.clear();
+    currentDir_.clear();
+
     //清除dao
     dao_ = nullptr;
 }
 
 void ManCloud::getBuckets()
 {
-    emit MG->mSignal->bucketsSuccess(dao()->buckets());
+    bucketsAlready(dao()->buckets());
 }
 
 void ManCloud::putBucket(const QString &bucketName, const QString &location)
@@ -132,7 +162,7 @@ void ManCloud::getObjects(const QString &bucketName, const QString &location, co
     currentDir_ = dir;
 
     //然后再发信号通知界面
-    emit MG->mSignal->objectsSuccess(dao()->getObjects(bucketName, location, dir));
+    emit MG->mSignal->objectsSuccess(objects);
 }
 
 void ManCloud::getObject(const QString &workId, const QString &bucketName, const QString &location, const QString &key, const QString &localPath)
@@ -178,4 +208,14 @@ DaoClouds *ManCloud::dao() const
         throw BaseException(EC_100000, "需要先登录");
     }
     return dao_;
+}
+
+void ManCloud::bucketsAlready(const QList<Bucket> &buckets)
+{
+    //回到桶列表，就不在任何桶里了
+    currentBucket_.clear();
+    currentLocation_.clear();
+    currentDir_.clear();
+
+    emit MG->mSignal->bucketsSuccess(buckets);
 }

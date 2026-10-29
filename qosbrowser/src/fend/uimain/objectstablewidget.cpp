@@ -22,6 +22,12 @@ ObjectsTableWidget::ObjectsTableWidget(QWidget *parent)
     //设置表头大小时间等信息
     model->setHorizontalHeaderLabels({"名称", "大小", "修改时间"});
 
+    //名称列宽一些，大小列适中， 最后一列自动拉伸
+    ui->tableView->setColumnWidth(0, 200);
+    ui->tableView->setColumnWidth(1, 120);
+    //点表头就能排序
+    ui->tableView->setSortingEnabled(true);
+
     //隐藏左侧的行号
     ui->tableView->verticalHeader()->setHidden(true);
 
