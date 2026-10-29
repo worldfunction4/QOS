@@ -6,46 +6,83 @@
 #include "middle/signals/mansignals.h"
 
 #include <QMetaType>
+#include <QVariant>
 
 ManCloud::ManCloud(QObject* parent)
     :QObject(parent)
 {
-    model_ = new QStandardItemModel(this);
+    modelBuckets_ = new QStandardItemModel(this);
+    modelObjects_ = new QStandardItemModel(this);
+
     //运行时只注册元类型系统，排队连接才能复制这个参数
     //qt6可以省略
     qRegisterMetaType<QList<Bucket>>("QList<Bucket>");
+    qRegisterMetaType<QList<CloudObject>>("QList<CloudObject>");
 }
 
-void ManCloud::setManBucket(const QList<Bucket>& buckets)
+void ManCloud::setBuckets(const QList<Bucket>& buckets)
 {
 
-    model_->setRowCount(buckets.size());
+    modelBuckets_->setRowCount(buckets.size());
     // 设置列数：名称、地域、创建时间
-    model_->setColumnCount(3);
+    modelBuckets_->setColumnCount(3);
     // 行计数器
     int row = 0;
     // 遍历存储桶，逐行写入 model
     for(const Bucket& bucket: buckets)
     {
-        QModelIndex index0 = model_->index(row, 0);
-        model_->setData(index0, bucket.name);
-        model_->setData(index0, QString("存储桶名称：%1").arg(bucket.name), Qt::ToolTipRole);
+        QModelIndex index0 = modelBuckets_->index(row, 0);
+        modelBuckets_->setData(index0, bucket.name);
+        modelBuckets_->setData(index0, QString("存储桶名称：%1").arg(bucket.name), Qt::ToolTipRole);
 
-        QModelIndex index1 = model_->index(row, 1);
-        model_->setData(index1, bucket.location);
+        QModelIndex index1 = modelBuckets_->index(row, 1);
+        modelBuckets_->setData(index1, bucket.location);
 
-        QModelIndex index2 = model_->index(row, 2);
-        model_->setData(index2, bucket.createDate);
+        QModelIndex index2 = modelBuckets_->index(row, 2);
+        modelBuckets_->setData(index2, bucket.createDate);
 
         ++row;
     }
     // 按创建时间降序排列
-    model_->sort(2, Qt::DescendingOrder);
+    modelBuckets_->sort(2, Qt::DescendingOrder);
 }
 
-QStandardItemModel *ManCloud::model() const
+void ManCloud::setObjects(const QList<CloudObject> &objects)
 {
-    return model_;
+    // 列:名称，大小，修改时间
+    modelObjects_->setRowCount(objects.size());
+    modelObjects_->setColumnCount(3);
+
+    // 行计数器
+    int row = 0;
+
+    for(const CloudObject& object : objects)
+    {
+        // 名称
+        QModelIndex index0 = modelObjects_->index(row, 0);
+        modelObjects_->setData(index0, object.name);
+        modelObjects_->setData(index0, QVariant::fromValue(object), Qt::UserRole);
+
+        // 大小
+        QModelIndex index1 = modelObjects_->index(row, 1);
+        modelObjects_->setData(index1, object.isDir()? QString("-") : QString::number(object.size));
+
+        // 修改时间
+        QModelIndex index2 = modelObjects_->index(row, 2);
+        modelObjects_->setData(index2, object.lastModified);
+
+        ++row;
+    }
+}
+
+QStandardItemModel *ManCloud::modelBuckets() const
+{
+    return modelBuckets_;
+}
+
+QStandardItemModel *ManCloud::modelObjects() const
+{
+    return modelObjects_;
 }
 
 void ManCloud::login(const QString &secretId, const QString &secretKey)
@@ -58,7 +95,8 @@ void ManCloud::login(const QString &secretId, const QString &secretKey)
 void ManCloud::onUnLogin()
 {
     //删除数据行
-    model_->setRowCount(0);
+    modelBuckets_->setRowCount(0);
+    modelObjects_->setRowCount(0);
 
     //清除dao
     dao_ = nullptr;

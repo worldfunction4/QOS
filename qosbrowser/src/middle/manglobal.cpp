@@ -51,8 +51,10 @@ void ManGlobal::init(int argc, char *argv[])
     qApp->setStyleSheet(qss_str);
     //启动插件
     MG->mPlugin->installPlugins(argc, argv);
-    //模块都创建
-    connect(MG->mSignal, &ManSignals::bucketsSuccess, mCloud, &ManCloud::setManBucket);
+    //桶列表交给 ManCloud 装进桶 model
+    connect(MG->mSignal, &ManSignals::bucketsSuccess, mCloud, &ManCloud::setBuckets);
+    //对象列表交给 ManCloud 装进对象 model
+    connect(MG->mSignal, &ManSignals::objectsSuccess, mCloud, &ManCloud::setObjects);
     //连接数据库
     MG->mDb->init();
     //退出登录时清理后端数据

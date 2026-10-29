@@ -8,8 +8,7 @@ BucketsWidget::BucketsWidget(QWidget *parent)
     , ui(new Ui::BucketsWidget)
 {
     ui->setupUi(this);
-    ui->listView->setModel(MG->mCloud->model());
-
+    ui->listView->setModel(MG->mCloud->modelBuckets());
 }
 
 BucketsWidget::~BucketsWidget()

@@ -5,20 +5,23 @@
 #include "src/bend/man/mancloud.h"
 #include "src/middle/manglobal.h"
 #include "src/middle/signals/mansignals.h"
+#include "src/bend/gateway.h"
+#include "src/config/apis.h"
 
 #include <QStandardItemModel>
+#include <QJsonObject>
 
 BucketTableWidget::BucketTableWidget(QWidget *parent)
     : QWidget(parent)
     , ui(new Ui::BucketTableWidget)
 {
     ui->setupUi(this);
-    ui->tableView->setModel(MG->mCloud->model());
+    ui->tableView->setModel(MG->mCloud->modelBuckets());
     //ui->tableView->setItemDelegate(new BucketDelegate());
     ui->tableView->setItemDelegateForColumn(1, new BucketDelegate());
 
     //标题内容
-    QStandardItemModel* model = MG->mCloud->model();
+    QStandardItemModel* model = MG->mCloud->modelBuckets();
     QStringList labels;
     labels << QString("桶名称")
            << QString("地区")
@@ -41,6 +44,10 @@ BucketTableWidget::BucketTableWidget(QWidget *parent)
     //点表头可以排序
     ui->tableView->setSortingEnabled(true);
 
+    //连接双击信号
+    connect(ui->tableView, &QTableView::doubleClicked,
+            this, &BucketTableWidget::onTableViewDoubleClicked);
+
     //退出登录时翻页回到初始状态
     connect(MG->mSignal, &ManSignals::unLogin, this, [this]{
         ui->widgetPage->setTotalRow(0);
@@ -50,4 +57,17 @@ BucketTableWidget::BucketTableWidget(QWidget *parent)
 BucketTableWidget::~BucketTableWidget()
 {
     delete ui;
+}
+
+void BucketTableWidget::onTableViewDoubleClicked(const QModelIndex &index)
+{
+    //桶本身的信息->桶名，地域
+    QString bucketName = index.siblingAtColumn(0).data().toString();
+    QString location = index.siblingAtColumn(1).data().toString();
+
+    //打包参数，交给网关
+    QJsonObject object;
+    object["bucketName"] = bucketName;
+    object["location"] = location;
+    MG->mGate->send(API::OBJECT::LIST, object);
 }

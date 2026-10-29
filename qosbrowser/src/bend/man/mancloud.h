@@ -12,11 +12,17 @@ class ManCloud : public QObject
 public:
     // 构造函数需要公有，由 ManGlobal 创建并管理
     explicit ManCloud(QObject* parent=nullptr);
-    // 从数据源读取存储桶，填充到 model
-    void setManBucket(const QList<Bucket>& buckets);
+    // 从数据源读取存储桶，填充到 modelBuckets
+    void setBuckets(const QList<Bucket>& buckets);
 
-    // 获取私有的model
-    QStandardItemModel* model()const;
+    // 对象列表填充到 modelObjects
+    void setObjects(const QList<CloudObject>& objects);
+
+    // 获取私有的modelBuckets
+    QStandardItemModel* modelBuckets()const;
+
+    // 获取私有的modelObjects
+    QStandardItemModel* modelObjects()const;
 
     //登录转发
     void login(const QString& secretId,
@@ -43,7 +49,10 @@ public:
 private:
     // 云存储接口，具体实现可以是 Mock 或真实的云
     DaoClouds* dao_ = nullptr;
-    QStandardItemModel* model_ = nullptr;
+    //桶
+    QStandardItemModel* modelBuckets_ = nullptr;
+    //对象
+    QStandardItemModel* modelObjects_ = nullptr;
     //拿到dao,保护作用，防止没登录就调用导致直接空指针崩溃
     DaoClouds* dao()const;
 };

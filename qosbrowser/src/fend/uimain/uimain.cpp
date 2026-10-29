@@ -38,6 +38,11 @@ UiMain::UiMain(QWidget *parent)
 
     connect(quitButton, &QPushButton::clicked, this, &UiMain::onQuitClicked);
 
+    //对象列表数据到了，切换到对象页
+    connect(MG->mSignal, &ManSignals::objectsSuccess, this, [this]{
+        ui_main->stackedWidget->setCurrentIndex(1);
+    });
+
     //分割线
     addTitleLine();
 
