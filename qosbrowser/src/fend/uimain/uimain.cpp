@@ -60,6 +60,11 @@ UiMain::UiMain(QWidget *parent)
     //默认显示桶列表
     ui_main->stackedWidget->setCurrentIndex(0);
 
+    //桶列表数据到了，切换到桶页
+    connect(MG->mSignal, &ManSignals::bucketsSuccess, this, [this]{
+        ui_main->stackedWidget->setCurrentIndex(0);
+    });
+
     //登录成功->主界面
     connect(MG->mSignal, &ManSignals::loginSuccess, this, &UiMain::show);
 

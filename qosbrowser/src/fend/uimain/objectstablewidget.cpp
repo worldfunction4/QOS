@@ -49,6 +49,11 @@ ObjectsTableWidget::ObjectsTableWidget(QWidget *parent)
             this, &ObjectsTableWidget::onPathChanged);
     connect(ui->widgetBread, &BreadWidget::refresh,
             this, &ObjectsTableWidget::onPathChanged);
+
+    //"桶列表"按钮：重新请求桶列表，数据到了 UiMain 会切回桶页
+    connect(ui->buttonBuckets, &QPushButton::clicked, this, []{
+        MG->mGate->send(API::BUCKET::LIST, QJsonValue());
+    });
 }
 
 ObjectsTableWidget::~ObjectsTableWidget()

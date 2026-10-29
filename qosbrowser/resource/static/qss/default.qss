@@ -129,6 +129,18 @@ QTableView {
     selection-color: #263238;
 }
 
+/* 格子：悬停浅青，选中更深一点的青色 */
+QListView::item:hover,
+QTableView::item:hover {
+    background-color: #e0f7fa;
+}
+QListView::item:selected,
+QTableView::item:selected {
+    background-color: #b2ebf2;
+    color: #263238;
+}
+
+
 QHeaderView::section {
     color: #455a64;
     background-color: #ffffff;
