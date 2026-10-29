@@ -15,6 +15,12 @@ public:
     explicit ObjectsTableWidget(QWidget *parent = nullptr);
     ~ObjectsTableWidget();
 
+private slots:
+    //双击对象->如果是目录->进入
+    void onTableViewDoubleClicked(const QModelIndex& index);
+    //面包屑跳转或刷新->按路径重新取对象
+    void onPathChanged(const QString& path);
+
 private:
     Ui::ObjectsTableWidget *ui;
 };

@@ -43,6 +43,11 @@ public:
     void putObject(const QString& workId, const QString& bucketName, const QString& location,
                    const QString& key, const QString& localPath);
 
+    //当前所在桶，地域，目录信息
+    QString currentBucket()const;
+    QString currentLocation()const;
+    QString currentDir()const;
+
     // 禁用拷贝与赋值
     ManCloud(const ManCloud&) = delete;
     ManCloud& operator=(const ManCloud&) = delete;
@@ -53,6 +58,12 @@ private:
     QStandardItemModel* modelBuckets_ = nullptr;
     //对象
     QStandardItemModel* modelObjects_ = nullptr;
+
+    //当前所在桶，地域，目录信息
+    QString currentBucket_;
+    QString currentLocation_;
+    QString currentDir_;
+
     //拿到dao,保护作用，防止没登录就调用导致直接空指针崩溃
     DaoClouds* dao()const;
 };

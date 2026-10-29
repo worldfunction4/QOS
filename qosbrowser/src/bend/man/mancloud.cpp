@@ -7,6 +7,7 @@
 
 #include <QMetaType>
 #include <QVariant>
+#include <QList>
 
 ManCloud::ManCloud(QObject* parent)
     :QObject(parent)
@@ -122,6 +123,15 @@ void ManCloud::deleteBucket(const QString &bucketName, const QString &location)
 
 void ManCloud::getObjects(const QString &bucketName, const QString &location, const QString &dir)
 {
+    //取数据，失败抛出异常
+    QList<CloudObject> objects = dao()->getObjects(bucketName, location, dir);
+
+    //然后记住当前位置
+    currentBucket_ = bucketName;
+    currentLocation_ = location;
+    currentDir_ = dir;
+
+    //然后再发信号通知界面
     emit MG->mSignal->objectsSuccess(dao()->getObjects(bucketName, location, dir));
 }
 
@@ -143,6 +153,21 @@ void ManCloud::putObject(const QString &workId, const QString &bucketName, const
     };
     dao()->putObject(bucketName, location, key, localPath, callback);
     emit MG->mSignal->uploadSuccess(workId);
+}
+
+QString ManCloud::currentBucket() const
+{
+    return currentBucket_;
+}
+
+QString ManCloud::currentLocation() const
+{
+    return currentLocation_;
+}
+
+QString ManCloud::currentDir() const
+{
+    return currentDir_;
 }
 
 DaoClouds *ManCloud::dao() const
