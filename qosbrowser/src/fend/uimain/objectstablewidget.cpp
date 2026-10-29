@@ -65,6 +65,10 @@ ObjectsTableWidget::ObjectsTableWidget(QWidget *parent)
     connect(ui->widgetPage, &PageWidget::pageNumChanged,
             this, &ObjectsTableWidget::onPageNumChanged);
 
+    //刷新.按面包屑当前路径重新取一遍
+    connect(ui->buttonRefresh, &QPushButton::clicked, this, [this]{
+        onPathChanged(ui->widgetBread->currentPath());
+    });
 }
 
 ObjectsTableWidget::~ObjectsTableWidget()

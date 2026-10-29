@@ -60,6 +60,11 @@ BucketTableWidget::BucketTableWidget(QWidget *parent)
         ui->widgetPage->setTotalRow(MG->mCloud->modelBuckets()->rowCount());
     });
 
+    //刷新采取重新请求桶列表
+    connect(ui->buttonRefresh, &QPushButton::clicked, this, []{
+        MG->mGate->send(API::BUCKET::LIST, QJsonValue());
+    });
+
     //退出登录时翻页回到初始状态
     connect(MG->mSignal, &ManSignals::unLogin, this, [this]{
         ui->widgetPage->setTotalRow(0);
