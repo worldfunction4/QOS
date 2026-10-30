@@ -51,6 +51,7 @@ qt_add_executable(qosbrowser
     src/fend/uimain/buckettablewidget.h src/fend/uimain/buckettablewidget.cpp src/fend/uimain/buckettablewidget.ui
     src/fend/uimain/objectstablewidget.h src/fend/uimain/objectstablewidget.cpp src/fend/uimain/objectstablewidget.ui
     src/helper/bytehelper.h src/helper/bytehelper.cpp
+    src/fend/uimain/createbucketdialog.h src/fend/uimain/createbucketdialog.cpp src/fend/uimain/createbucketdialog.ui
 )
 
 target_include_directories(${PROJECT_NAME} PRIVATE

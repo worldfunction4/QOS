@@ -7,9 +7,13 @@
 #include "src/middle/signals/mansignals.h"
 #include "src/bend/gateway.h"
 #include "src/config/apis.h"
+#include "src/fend/uimain/createbucketdialog.h"
 
 #include <QStandardItemModel>
 #include <QJsonObject>
+#include <QAction>
+#include <QMessageBox>
+#include <QMenu>
 
 BucketTableWidget::BucketTableWidget(QWidget *parent)
     : QWidget(parent)
@@ -63,6 +67,60 @@ BucketTableWidget::BucketTableWidget(QWidget *parent)
     //刷新采取重新请求桶列表
     connect(ui->buttonRefresh, &QPushButton::clicked, this, []{
         MG->mGate->send(API::BUCKET::LIST, QJsonValue());
+    });
+
+    //创建桶
+    connect(ui->buttonCreateBucket, &QPushButton::clicked, this, [this]{
+        CreateBucketDialog create_dialog(this);
+
+        //等到窗口关闭
+        if(create_dialog.exec() != QDialog::Accepted)return;
+
+        Bucket b = create_dialog.bucket();
+
+        //二道保险，检查是否为空
+        if(b.name.isEmpty() || b.location.isEmpty())
+        {
+            return;
+        }
+        QJsonObject obj;
+        obj["bucketName"] = b.name;
+        obj["location"] = b.location;
+
+        MG->mGate->send(API::BUCKET::PUT, obj);
+    });
+
+    //右键：按照鼠标的位置寻找格子位置
+    ui->tableView->setContextMenuPolicy(Qt::CustomContextMenu);
+    connect(ui->tableView, &QTableView::customContextMenuRequested, this, [this](const QPoint& pos){
+        //获取鼠标的位置
+        QModelIndex index = ui->tableView->indexAt(pos);
+        if(!index.isValid())return;
+
+        QString name = index.siblingAtColumn(0).data().toString();
+        QString location = index.siblingAtColumn(1).data().toString();
+
+        //弹出删除菜单
+        QMenu menu(this);
+        QAction* delete_action = menu.addAction("删除");
+
+        //用 viewport 表示真正放格子的区域，pos 为相对坐标
+        if(menu.exec(ui->tableView->viewport()->mapToGlobal(pos)) != delete_action)
+            return;
+
+        //再次确认
+        QMessageBox box(QMessageBox::Question, "删除桶",
+                        QString("确认删除桶【%1】吗？").arg(name),
+                        QMessageBox::Yes|QMessageBox::No, this);
+        box.button(QMessageBox::Yes)->setText("确认");
+        box.button(QMessageBox::No)->setText("不了");
+
+        if(box.exec() != QMessageBox::Yes)return;
+
+        QJsonObject obj;
+        obj["bucketName"] = name;
+        obj["location"] = location;
+        MG->mGate->send(API::BUCKET::DEL, obj);
     });
 
     //退出登录时翻页回到初始状态
