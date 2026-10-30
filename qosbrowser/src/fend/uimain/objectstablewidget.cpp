@@ -1,5 +1,6 @@
 #include "objectstablewidget.h"
 #include "bend/man/mancloud.h"
+#include "helper/filehelper.h"
 #include "ui_objectstablewidget.h"
 #include "src/middle/manglobal.h"
 #include "src/middle/signals/mansignals.h"
@@ -8,6 +9,10 @@
 #include "src/config/apis.h"
 
 #include <QJsonObject>
+#include <QFileDialog>
+#include <QFileInfo>
+#include <QUuid>
+#include <QMessageBox>
 
 ObjectsTableWidget::ObjectsTableWidget(QWidget *parent)
     : QWidget(parent)
@@ -74,6 +79,78 @@ ObjectsTableWidget::ObjectsTableWidget(QWidget *parent)
     //刷新.按面包屑当前路径重新取一遍
     connect(ui->buttonRefresh, &QPushButton::clicked, this, [this]{
         onPathChanged(ui->widgetBread->currentPath());
+    });
+
+    //上传。选择本地文件->上传到当前桶的当前目录
+    connect(ui->buttonUpload, &QPushButton::clicked, this, [this]{
+        //记住上次打开的文件夹
+        static QString last_dir = "./";
+
+        //拿到需要的路径
+        QString file_path = QFileDialog::getOpenFileName(this, "上传文件", last_dir);
+
+        //取消或选择的不是文件
+        QFileInfo info(file_path);
+        if(!info.isFile())return;
+
+        //每一个上传任务唯一编号，用QUuid生成一个几乎不会重复的随机编号
+        QString workId = QUuid::createUuid().toString();
+        QJsonObject obj;
+        obj["workId"] = workId;
+        obj["bucketName"] = MG->mCloud->currentBucket();
+        obj["location"] = MG->mCloud->currentLocation();
+
+        //云名字=当前目录+文件名
+        obj["key"] = MG->mCloud->currentDir() + info.fileName();
+        obj["localPath"] = file_path;
+
+        MG->mGate->send(API::OBJECT::PUT, obj);
+        last_dir = info.dir().absolutePath();
+    });
+
+    //上传成功->刷新当前的目录->弹出提示
+    connect(MG->mSignal, &ManSignals::uploadSuccess, this, [this]{
+        onPathChanged(ui->widgetBread->currentPath());
+        QMessageBox::information(this, "提示", "上传文件成功");
+    });
+
+    //下载，选择表格一个文件->选择保存位置
+    connect(ui->buttonDownload, &QPushButton::clicked, this, [this]{
+        QModelIndex index = ui->tableView->currentIndex();
+        if(!index.isValid())
+        {
+            QMessageBox::information(this, "下载文件", "请先选择下载的文件...");
+            return;
+        }
+
+        //取出第0列存的整个对象
+        CloudObject obj = index.siblingAtColumn(0).data(Qt::UserRole).value<CloudObject>();
+        if(obj.isDir())
+        {
+            QMessageBox::information(this, "下载文件", "抱歉，只能下载文件不能下载文件夹哦？");
+            return;
+        }
+
+        static QString last_dir = "./";
+        QString file_path = QFileDialog::getSaveFileName(this, "下载文件", FileHelper::joinPath(last_dir, obj.name));
+
+        //点击取消
+        if(file_path.isEmpty())return;
+
+        QJsonObject params;
+        params["workId"] = QUuid::createUuid().toString();
+        params["bucketName"] = MG->mCloud->currentBucket();
+        params["location"] = MG->mCloud->currentLocation();
+        params["key"] = obj.dir + obj.name;
+        params["localPath"] = file_path;
+        MG->mGate->send(API::OBJECT::GET, params);
+        last_dir = QFileInfo(file_path).dir().absolutePath();
+    });
+
+    //下载成功
+    connect(MG->mSignal, &ManSignals::downloadSuccess, this, [this]{
+        onPathChanged(ui->widgetBread->currentPath());
+        QMessageBox::information(this, "下载任务", "下载文件成功");
     });
 }
 
