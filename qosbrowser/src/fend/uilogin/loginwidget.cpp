@@ -8,6 +8,7 @@
 
 #include <QFile>
 #include <QCompleter>
+#include "src/fend/uicom/qosmessagebox.h"
 #include <QAbstractItemView>
 #include <QJsonValue>
 #include <QJsonObject>
@@ -28,11 +29,13 @@ LoginWidget::LoginWidget(QWidget *parent)
 
     resize(400, 450);
     //设置样式
-    ui_login->loginButton->setProperty("style", "h5");
-    ui_login->keyLabel->setProperty("style", "h5");
-    ui_login->idLabel->setProperty("style", "h5");
-    ui_login->markLabel->setProperty("style", "h5");
-    ui_login->loginNameLabel->setProperty("style", "h5");
+    //登录按钮用主按钮样式
+    ui_login->loginButton->setProperty("style_button", "main");
+    ui_login->loginButton->setProperty("style_font", "h5");
+    ui_login->keyLabel->setProperty("style_font", "h5");
+    ui_login->idLabel->setProperty("style_font", "h5");
+    ui_login->markLabel->setProperty("style_font", "h5");
+    ui_login->loginNameLabel->setProperty("style_font", "h5");
 
     //设置登录名的提示列表
     ui_login->loginNameLineEdit->setWords(MG->mDb->loginInfoNames());
@@ -48,12 +51,6 @@ LoginWidget::LoginWidget(QWidget *parent)
             ui_login->markLineEdit->setText(info.remark);
             ui_login->checkBox->setChecked(true);
         }
-    });
-
-    //失败槽不是登录接口就 return；是的话就弹出警告框，显示错误原因。
-    connect(MG->mSignal, &ManSignals::error, this, [=](int api, const QString& msg){
-        if(api != API::LOGIN::NORMAL)return;
-        QMessageBox::warning(this, "错误", msg);
     });
 }
 
@@ -102,5 +99,5 @@ void LoginWidget::onLoginError(int api, const QString &msg)
 {
 
     if (api != API::LOGIN::NORMAL) return;   //不是登录接口的错误就不管
-    QMessageBox::warning(this, "登录失败", msg);
+    QosMessageBox(this).showMessage("登录失败", msg);
 }

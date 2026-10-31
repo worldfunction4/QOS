@@ -12,13 +12,15 @@
 #include <QFileDialog>
 #include <QFileInfo>
 #include <QUuid>
-#include <QMessageBox>
+#include "src/fend/uicom/qosmessagebox.h"
 
 ObjectsTableWidget::ObjectsTableWidget(QWidget *parent)
     : QWidget(parent)
     , ui(new Ui::ObjectsTableWidget)
 {
     ui->setupUi(this);
+    //返回桶列表按钮用主按钮样式
+    ui->buttonBuckets->setProperty("style_button", "main");
 
     //显示对象 model 数据
     QStandardItemModel* model = MG->mCloud->modelObjects();
@@ -114,7 +116,7 @@ ObjectsTableWidget::ObjectsTableWidget(QWidget *parent)
     //上传成功->刷新当前的目录->弹出提示
     connect(MG->mSignal, &ManSignals::uploadSuccess, this, [this]{
         onPathChanged(ui->widgetBread->currentPath());
-        QMessageBox::information(this, "提示", "上传文件成功");
+        QosMessageBox(this).showMessage("提示", "上传文件成功");
     });
 
     //下载，选择表格一个文件->选择保存位置
@@ -122,7 +124,7 @@ ObjectsTableWidget::ObjectsTableWidget(QWidget *parent)
         QModelIndex index = ui->tableView->currentIndex();
         if(!index.isValid())
         {
-            QMessageBox::information(this, "下载文件", "请先选择下载的文件...");
+            QosMessageBox(this).showMessage("下载文件", "请先选择下载的文件...");
             return;
         }
 
@@ -130,7 +132,7 @@ ObjectsTableWidget::ObjectsTableWidget(QWidget *parent)
         CloudObject obj = index.siblingAtColumn(0).data(Qt::UserRole).value<CloudObject>();
         if(obj.isDir())
         {
-            QMessageBox::information(this, "下载文件", "抱歉，只能下载文件不能下载文件夹哦？");
+            QosMessageBox(this).showMessage("下载文件", "抱歉，只能下载文件不能下载文件夹哦？");
             return;
         }
 
@@ -157,7 +159,7 @@ ObjectsTableWidget::ObjectsTableWidget(QWidget *parent)
     //下载成功
     connect(MG->mSignal, &ManSignals::downloadSuccess, this, [this]{
         onPathChanged(ui->widgetBread->currentPath());
-        QMessageBox::information(this, "下载任务", "下载文件成功");
+        QosMessageBox(this).showMessage("下载任务", "下载文件成功");
     });
 }
 

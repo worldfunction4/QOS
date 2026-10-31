@@ -12,14 +12,17 @@
 #include <QStandardItemModel>
 #include <QJsonObject>
 #include <QAction>
-#include <QMessageBox>
 #include <QMenu>
+
+#include <fend/uicom/qosmessagebox.h>
 
 BucketTableWidget::BucketTableWidget(QWidget *parent)
     : QWidget(parent)
     , ui(new Ui::BucketTableWidget)
 {
     ui->setupUi(this);
+    //创建桶按钮用主按钮样式
+    ui->buttonCreateBucket->setProperty("style_button", "main");
     ui->tableView->setModel(MG->mCloud->modelBuckets());
     //ui->tableView->setItemDelegate(new BucketDelegate());
     ui->tableView->setItemDelegateForColumn(1, new BucketDelegate());
@@ -108,14 +111,12 @@ BucketTableWidget::BucketTableWidget(QWidget *parent)
         if(menu.exec(ui->tableView->viewport()->mapToGlobal(pos)) != delete_action)
             return;
 
-        //再次确认
-        QMessageBox box(QMessageBox::Question, "删除桶",
-                        QString("确认删除桶【%1】吗？").arg(name),
-                        QMessageBox::Yes|QMessageBox::No, this);
-        box.button(QMessageBox::Yes)->setText("确认");
-        box.button(QMessageBox::No)->setText("不了");
-
-        if(box.exec() != QMessageBox::Yes)return;
+        //再次确认：用自己的提示框，按钮文字就是返回值
+        QString ret = QosMessageBox(this).showMessage("删除桶",
+                                                      QString("确认删除桶【%1】吗？").arg(name),
+                                                      {"确认", "不了"});
+        //只有点了"确认"才删除；点"不了"或关闭窗口都返回别的
+        if(ret != "确认") return;
 
         QJsonObject obj;
         obj["bucketName"] = name;
