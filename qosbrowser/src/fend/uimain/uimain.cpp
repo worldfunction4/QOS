@@ -5,6 +5,8 @@
 #include "src/middle/signals/mansignals.h"
 #include "src/middle/manglobal.h"
 #include "src/config/global.h"
+#include "src/fend/uicom/qosmessagebox.h"
+#include "src/config/apis.h"
 
 #include <QWidget>
 #include <QPushButton>
@@ -54,6 +56,9 @@ UiMain::UiMain(QWidget *parent)
     connect(MG->mSignal, &ManSignals::objectsSuccess, this, [this]{
         ui_main->stackedWidget->setCurrentIndex(1);
     });
+
+    //后台出错->弹窗提示
+    connect(MG->mSignal, &ManSignals::error, this, &UiMain::onError);
 
     //分割线
     addTitleLine();
@@ -121,4 +126,17 @@ void UiMain::onUnLogin()
     //隐藏主界面
     hide();
     showLoginWidget();
+}
+
+void UiMain::onError(int api, const QString &msg, const QJsonValue&)
+{
+    //req不需要，所以不加形参
+    //主界面无显示...不弹出
+    if(!isVisible())return;
+
+    //处理桶和对象错误
+    if(api <= API::BUCKET::BASE)return;
+
+    //diy 提示框
+    QosMessageBox(this).showMessage("错误", msg);
 }

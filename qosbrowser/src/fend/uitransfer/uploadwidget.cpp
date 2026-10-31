@@ -3,8 +3,9 @@
 #include "ui_uploadwidget.h"
 
 #include <middle/signals/mansignals.h>
-
+#include <config/apis.h>
 #include <fend/uicom/progresswidget.h>
+
 
 UploadWidget::UploadWidget(QWidget *parent)
     : QWidget(parent)
@@ -21,6 +22,9 @@ UploadWidget::UploadWidget(QWidget *parent)
 
     //成功标记完成
     connect(MG->mSignal, &ManSignals::uploadSuccess, this, &UploadWidget::onUploadSuccess);
+
+    //失败标记出错
+    connect(MG->mSignal, &ManSignals::error, this, &UploadWidget::onUploadError);
 }
 
 UploadWidget::~UploadWidget()
@@ -63,6 +67,22 @@ void UploadWidget::onUploadSuccess(const QString &workId)
     ProgressWidget* bar = getProgress(workId);
     if(!bar)return;
     bar->setFinished("上传成功^^");
+}
+
+void UploadWidget::onUploadError(int api, const QString &msg, const QJsonValue &req)
+{
+    //非上传问题不管
+    if(api != API::OBJECT::PUT)return;
+
+    //拿到 workid
+    ProgressWidget* bar = getProgress(req["workId"].toString());
+    if(!bar)return;
+
+    //进度条会显示是啊比
+    bar->setError("上传失败");
+
+    //悬停显示原因
+    bar->setToolTip(msg);
 }
 
 ProgressWidget *UploadWidget::getProgress(const QString &workId)

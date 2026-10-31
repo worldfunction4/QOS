@@ -26,21 +26,21 @@ void Gateway::send(int api, const QJsonValue &value)
         {
             //得到BaseException类型的异常。生成日志，发送error信号
             MERROR(e.msg());
-            emit MG->mSignal->error(api, e.msg());
+            emit MG->mSignal->error(api, e.msg(), value);
         }
         //出现位置错误了...
         catch(const std::exception& e)
         {
-            BaseException ex(EC_100000, QString::fromLocal8Bit(e.what()));
+            BaseException ex(EC_100000, QString::fromUtf8(e.what()));
             MERROR(ex.msg());
-            emit MG->mSignal->error(api, ex.msg());
+            emit MG->mSignal->error(api, ex.msg(), value);
         }
         catch(...)
         {
             //如果是未知异常使用BaseException兜底，生成日志，发送error信号
             BaseException e = BaseException(EC_100000, "未知错误");
             MERROR(e.msg());
-            emit MG->mSignal->error(api, e.msg());
+            emit MG->mSignal->error(api, e.msg(), value);
         }
     });
 }

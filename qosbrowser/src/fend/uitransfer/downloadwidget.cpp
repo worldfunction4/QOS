@@ -3,7 +3,7 @@
 #include "ui_downloadwidget.h"
 
 #include <middle/signals/mansignals.h>
-
+#include <config/apis.h>
 #include <fend/uicom/progresswidget.h>
 
 DownloadWidget::DownloadWidget(QWidget *parent)
@@ -21,6 +21,9 @@ DownloadWidget::DownloadWidget(QWidget *parent)
 
     //成功标记完成
     connect(MG->mSignal, &ManSignals::downloadSuccess, this, &DownloadWidget::onDownloadSuccess);
+
+    //失败标记出错
+    connect(MG->mSignal, &ManSignals::error, this, &DownloadWidget::onDownloadError);
 }
 
 DownloadWidget::~DownloadWidget()
@@ -60,6 +63,21 @@ void DownloadWidget::onDownloadSuccess(const QString &workId)
     if(!bar)return;
     bar->setFinished("下载成功^^");
 }
+
+void DownloadWidget::onDownloadError(int api, const QString &msg, const QJsonValue &req)
+{
+    //不是上传的错误就不管
+    if(api != API::OBJECT::GET) return;
+    //从请求里取出这次任务的workId
+    ProgressWidget* bar = getProgress(req["workId"].toString());
+    if(!bar) return;
+    //进度条显示失败
+    bar->setError("下载失败");
+    //鼠标悬停显示具体原因
+    bar->setToolTip(msg);
+}
+
+
 
 ProgressWidget *DownloadWidget::getProgress(const QString &workId)
 {

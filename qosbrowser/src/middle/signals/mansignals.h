@@ -4,6 +4,7 @@
 #include "middle/models/bucket.h"
 #include "middle/models/cloudobject.h"
 #include <QObject>
+#include <QJsonValue>
 
 class ManSignals : public QObject
 {
@@ -13,7 +14,8 @@ public:
 signals:
     //登录信号，error可以为通用信号
     void loginSuccess();
-    void error(int api, const QString& msg);
+    //出错信号：api 是哪个接口，msg 是原因，req 是当时 send 的参数（用来找到是哪个任务）
+    void error(int api, const QString& msg, const QJsonValue& req);
     void bucketsSuccess(const QList<Bucket>& buckets);
 
     //对象信号

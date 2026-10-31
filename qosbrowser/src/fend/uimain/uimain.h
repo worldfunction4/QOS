@@ -2,7 +2,7 @@
 #define UIMAIN_H
 
 #include <QDialog>
-
+#include <QJsonValue>
 #include <fend/uicom/qosdialog.h>
 
 namespace Ui {
@@ -30,6 +30,8 @@ private slots:
     void onQuitClicked();
     //通知所有模块退出登录
     void onUnLogin();
+    //出错，桶和对象相关的错误弹窗提示
+    void onError(int api, const QString& msg, const QJsonValue& req);
 
 private:
     Ui::UiMain *ui_main;

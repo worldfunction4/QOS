@@ -2,6 +2,7 @@
 #define DOWNLOADWIDGET_H
 
 #include <QWidget>
+#include <QJsonValue>
 
 namespace Ui {
 class DownloadWidget;
@@ -25,6 +26,10 @@ private slots:
     void onDownloadProcess(const QString& workId, long long transferred, long long);
     //下载成功：标记完成
     void onDownloadSuccess(const QString& workId);
+
+    //下载失败
+    void onDownloadError(int api, const QString& msg, const QJsonValue& req);
+
 private:
     //workid 寻找进度条
     ProgressWidget* getProgress(const QString& workId);

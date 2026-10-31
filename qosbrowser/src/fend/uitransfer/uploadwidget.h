@@ -2,6 +2,7 @@
 #define UPLOADWIDGET_H
 
 #include <QWidget>
+#include <QJsonValue>
 
 namespace Ui {
 class UploadWidget;
@@ -31,6 +32,10 @@ private slots:
 
     //上传成功
     void onUploadSuccess(const QString& workId);
+
+    //上传失败
+    void onUploadError(int api, const QString& msg, const QJsonValue& req);
+
 private:
     //获取进度条->返回指针类型
     ProgressWidget* getProgress(const QString& workId);
