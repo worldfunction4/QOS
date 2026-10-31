@@ -104,6 +104,9 @@ ObjectsTableWidget::ObjectsTableWidget(QWidget *parent)
         obj["key"] = MG->mCloud->currentDir() + info.fileName();
         obj["localPath"] = file_path;
 
+        //先通知传输列表加一行，最后一个参数是本地文件大小
+        emit MG->mSignal->startUpload(obj["workId"].toString(), obj["key"].toString(), file_path, info.size());
+
         MG->mGate->send(API::OBJECT::PUT, obj);
         last_dir = info.dir().absolutePath();
     });
@@ -138,11 +141,15 @@ ObjectsTableWidget::ObjectsTableWidget(QWidget *parent)
         if(file_path.isEmpty())return;
 
         QJsonObject params;
-        params["workId"] = QUuid::createUuid().toString();
+        //存入一个变量
+        QString workId = QUuid::createUuid().toString();
+        params["workId"] = workId;
         params["bucketName"] = MG->mCloud->currentBucket();
         params["location"] = MG->mCloud->currentLocation();
         params["key"] = obj.dir + obj.name;
         params["localPath"] = file_path;
+        //通知传输列表新增一行下载任务
+        emit MG->mSignal->startDownload(workId, obj.dir+obj.name, file_path, obj.size);
         MG->mGate->send(API::OBJECT::GET, params);
         last_dir = QFileInfo(file_path).dir().absolutePath();
     });

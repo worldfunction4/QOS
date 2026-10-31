@@ -175,7 +175,8 @@ void DaoCloudsCos::putObject(const QString &bucketName, const QString &location,
     //异步上传请求:桶，云端key，本地文件
     qcloud_cos::AsyncPutObjectReq req(bucketName.toStdString(),
                                       key.toStdString(),
-                                      localPath.toStdString());
+                                      localPath.toLocal8Bit().toStdString());  //本地路径先转为 win 的本地编码（GBK），修复中文路径 SDK 打不开的问题
+
     //调用方传回调才会进行设置
     if(callback)
     {
@@ -202,7 +203,8 @@ void DaoCloudsCos::getObject(const QString &bucketName, const QString &location,
     //前面创建config、CosAPI的写法和putObject一样
     qcloud_cos::AsyncGetObjectReq req(bucketName.toStdString(),
                                       key.toStdString(),
-                                      localPath.toStdString());
+                                      localPath.toLocal8Bit().toStdString());  //本地路径先转为 win 的本地编码（GBK），修复中文路径 SDK 打不开的问题
+
     if (callback)
     {
         req.SetTransferProgressCallback(callback);

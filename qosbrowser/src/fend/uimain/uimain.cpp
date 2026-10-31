@@ -1,6 +1,7 @@
 #include "uimain.h"
 #include "ui_uimain.h"
 #include "src/fend/uilogin/loginwidget.h"
+#include "src/fend/uitransfer/transferdialog.h"
 #include "src/middle/signals/mansignals.h"
 #include "src/middle/manglobal.h"
 #include "src/config/global.h"
@@ -25,6 +26,17 @@ UiMain::UiMain(QWidget *parent)
 
     //设置默认宽与高1000*700
     this->resize(1000, 700);
+
+    //先创建传输列表
+    transfer_ = new TransferDialog(this);
+
+    //开始上传或下载时自动跳转
+    connect(MG->mSignal, &ManSignals::startUpload, transfer_, [this]{
+        transfer_->showPage(0);
+    });
+    connect(MG->mSignal, &ManSignals::startDownload, transfer_, [this]{
+        transfer_->showPage(1);
+    });
 
     //传输列表按钮
     QPushButton* transButton = addButton(GLOBAL::IMG::TRANS,
@@ -92,8 +104,8 @@ void UiMain::showLoginWidget()
 
 void UiMain::onTransferClicked()
 {
-    //占位
-    qDebug() << "打开传输列表";
+    //显示
+    transfer_->show();
 }
 
 void UiMain::onQuitClicked()

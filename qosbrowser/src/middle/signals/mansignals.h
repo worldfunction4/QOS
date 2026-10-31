@@ -30,6 +30,10 @@ signals:
     void uploadSuccess(const QString& workId);
     //退出登录信号
     void unLogin();
+    //传输列表开始上传信号
+    void startUpload(const QString& workId, const QString& key, const QString& localPath, long long total);
+    //传输列表开始下载信号
+    void startDownload(const QString& workId, const QString& key, const QString& localPath, long long total);
 };
 
 #endif // MANSIGNALS_H

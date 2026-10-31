@@ -10,6 +10,7 @@ class UiMain;
 }
 
 class LoginWidget;
+class TransferDialog;
 
 class UiMain : public QosDialog
 {
@@ -34,6 +35,8 @@ private:
     Ui::UiMain *ui_main;
     //声明一个窗口
     LoginWidget* login_ = nullptr;
+    //传输窗口
+    TransferDialog* transfer_ = nullptr;
 };
 
 #endif // UIMAIN_H

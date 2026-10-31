@@ -52,6 +52,10 @@ qt_add_executable(qosbrowser
     src/fend/uimain/objectstablewidget.h src/fend/uimain/objectstablewidget.cpp src/fend/uimain/objectstablewidget.ui
     src/helper/bytehelper.h src/helper/bytehelper.cpp
     src/fend/uimain/createbucketdialog.h src/fend/uimain/createbucketdialog.cpp src/fend/uimain/createbucketdialog.ui
+    src/fend/uicom/progresswidget.h src/fend/uicom/progresswidget.cpp src/fend/uicom/progresswidget.ui
+    src/fend/uitransfer/uploadwidget.h src/fend/uitransfer/uploadwidget.cpp src/fend/uitransfer/uploadwidget.ui
+    src/fend/uitransfer/downloadwidget.h src/fend/uitransfer/downloadwidget.cpp src/fend/uitransfer/downloadwidget.ui
+    src/fend/uitransfer/transferdialog.h src/fend/uitransfer/transferdialog.cpp src/fend/uitransfer/transferdialog.ui
 )
 
 target_include_directories(${PROJECT_NAME} PRIVATE
