@@ -63,9 +63,48 @@ BucketsWidget::BucketsWidget(QWidget *parent)
     connect(ui->buttonSearch, &QPushButton::clicked, this, [this]{
         emit ui->lineSearch->itemSelected(ui->lineSearch->text().trimmed());
     });
+
+
+    //对象列表到了->记住当前桶，并在左边选中它
+    connect(MG->mSignal, &ManSignals::objectsSuccess, this, [this]{
+        //记下当前打开的桶
+        lastBucket_ = MG->mCloud->currentBucket();
+        //按名字选中
+        selectBucket(lastBucket_);
+    });
+
+    //桶列表重新到了（返回桶列表/刷新）->按记住的名字恢复左边选中
+    connect(MG->mSignal, &ManSignals::bucketsSuccess, this, [this]{
+        selectBucket(lastBucket_);
+    });
+
+    //退出登录->忘掉上次的桶，并且清除选中
+    connect(MG->mSignal, &ManSignals::unLogin, this, [this]{
+        lastBucket_.clear();
+        ui->listView->clearSelection();
+    });
 }
 
 BucketsWidget::~BucketsWidget()
 {
     delete ui;
+}
+
+void BucketsWidget::selectBucket(const QString &name)
+{
+    //先清掉旧的选中
+    ui->listView->clearSelection();
+    //没有记住的桶就什么都不选
+    if(name.isEmpty()) return;
+    QStandardItemModel* model = MG->mCloud->modelBuckets();
+    //遍历找到同名的那一行
+    for(int i = 0; i < model->rowCount(); ++i)
+    {
+        if(model->index(i, 0).data().toString() == name)
+        {
+            //设为当前行并选中
+            ui->listView->setCurrentIndex(model->index(i, 0));
+            break;
+        }
+    }
 }

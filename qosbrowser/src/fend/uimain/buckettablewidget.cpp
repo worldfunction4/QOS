@@ -146,6 +146,9 @@ void BucketTableWidget::onTableViewDoubleClicked(const QModelIndex &index)
     object["bucketName"] = bucketName;
     object["location"] = location;
     MG->mGate->send(API::OBJECT::LIST, object);
+
+    //打开桶后，清除表格的选中，回到桶列表时不残留高亮
+    ui->tableView->clearSelection();
 }
 
 void BucketTableWidget::onPageNumChanged(int start, int len)
