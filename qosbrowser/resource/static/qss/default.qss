@@ -7,23 +7,23 @@
 }
 
 /* 标题字体 */
-*[style="h1"] {
+*[style_font="h1"] {
     color: #111111;
     font: bold 25pt;
 }
-*[style="h2"] {
+*[style_font="h2"] {
     color: #222222;
     font: bold 22pt;
 }
-*[style="h3"] {
+*[style_font="h3"] {
     color: #333333;
     font: bold 20pt;
 }
-*[style="h4"] {
+*[style_font="h4"] {
     color: #444444;
     font: bold 16pt;
 }
-*[style="h5"] {
+*[style_font="h5"] {
     color: #455a64;
     font: bold 12pt;
 }
@@ -75,20 +75,26 @@ QPushButton:pressed {
     background-color: #0097a7;
 }
 
-/* 登录主按钮 */
-QPushButton#loginButton {
+/* 主按钮：带 style_button="main" 标签的按钮 */
+QPushButton[style_button="main"] {
     color: #ffffff;
     background-color: #00bcd4;
     border-color: #00bcd4;
-    font: bold 12pt;
 }
-QPushButton#loginButton:hover {
+QPushButton[style_button="main"]:hover {
     background-color: #00acc1;
     border-color: #00acc1;
 }
-QPushButton#loginButton:pressed {
+QPushButton[style_button="main"]:pressed {
     background-color: #0097a7;
     border-color: #0097a7;
+}
+
+/* 按钮禁用时变灰 */
+QPushButton:disabled {
+    color: #b0bec5;
+    background-color: #eceff1;
+    border-color: #cfd8dc;
 }
 
 /* 左右分栏的拖动条 */

@@ -12,7 +12,7 @@ QosDialog::QosDialog(QWidget *parent)
     setLogo(GLOBAL::IMG::LOGO);
     setTitle("Qos");
     ui->labelLogo->setFixedSize(32, 24);       //按比例缩小
-    ui->labelTitle->setProperty("style", "h4"); //套用 qss 里的h4粗体样式
+    ui->labelTitle->setProperty("style_font", "h4"); //套用 qss 里的h4粗体样式
 }
 
 QosDialog::~QosDialog()
