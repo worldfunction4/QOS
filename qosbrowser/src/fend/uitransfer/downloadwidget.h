@@ -3,6 +3,7 @@
 
 #include <QWidget>
 #include <QJsonValue>
+#include <QLabel>
 
 namespace Ui {
 class DownloadWidget;
@@ -18,6 +19,10 @@ class DownloadWidget : public QWidget
 public:
     explicit DownloadWidget(QWidget *parent = nullptr);
     ~DownloadWidget();
+
+protected:
+    //监听可视区域自己的大小变化
+    bool eventFilter(QObject* obj, QEvent* event) override;
 
 private slots:
     //开始下载：新添一行
@@ -35,9 +40,13 @@ private:
     ProgressWidget* getProgress(const QString& workId);
     //设置表头
     void initHead();
+    //按行数决定是否隐藏
+    void updateEmptyTip();
 
 private:
     Ui::DownloadWidget *ui;
+    //提示文字
+    QLabel* labelEmpty_ = nullptr;
 };
 
 #endif // DOWNLOADWIDGET_H

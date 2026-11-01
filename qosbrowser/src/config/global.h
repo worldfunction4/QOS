@@ -24,12 +24,16 @@ namespace GLOBAL
 
     namespace IMG
     {
-        inline const QString LOGO        = ":/resource/static/imgs/logo.png";
+        // 主题图标所在的文件夹，换主题只改这一行
+        inline const QString THEME = ":/resource/static/imgs/imgs-cyan/";
+        inline const QString LOGO        = THEME + "logo.png";
+        // 对话框左上角的 logo
+        inline const QString QTLOGO      = THEME + "qtlogo.png";
 
-        inline const QString BUCKET      = ":/resource/static/imgs/bucket.png";
+        inline const QString BUCKET      = THEME + "bucket.png";
 
         inline const QString DIR         = ":/resource/static/imgs/dir.png";
-        inline const QString FILE        = ":/resource/static/imgs/file.png";
+        inline const QString FILE        = THEME + "file.png";
 
         inline const QString SEARCH      = ":/resource/static/imgs/Search.png";
 
@@ -47,11 +51,11 @@ namespace GLOBAL
 
         inline const QString RIGHT       = ":/resource/static/imgs/right.png";
 
-        inline const QString TRANS       = ":/resource/static/imgs/Trans-1.png";
-        inline const QString TRANS_HOVER = ":/resource/static/imgs/Trans-2.png";
+        inline const QString TRANS       = THEME + "Trans-1.png";
+        inline const QString TRANS_HOVER = THEME + "Trans-2.png";
 
-        inline const QString QUIT        = ":/resource/static/imgs/Quit-1.png";
-        inline const QString QUIT_HOVER  = ":/resource/static/imgs/Quit-2.png";
+        inline const QString QUIT        = THEME + "Quit-1.png";
+        inline const QString QUIT_HOVER  = THEME + "Quit-2.png";
 
     }
 

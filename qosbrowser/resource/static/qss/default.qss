@@ -269,3 +269,30 @@ QTabWidget::pane {
 *[style_font="tip"] {
     color: #999;
 }
+
+/* 子窗口：一圈细边框，和白色主窗口分开 */
+BaseDialog {
+    border: 1px solid #b2ebf2;
+    background-color: #ffffff;
+}
+
+/* 标签页：平时白底灰字 */
+QTabBar::tab {
+    min-width: 80px;
+    height: 32px;
+    padding: 0px 12px;
+    color: #455a64;
+    background-color: #ffffff;
+    border: none;
+    border-bottom: 2px solid transparent;
+}
+/* 悬停：浅青底 */
+QTabBar::tab:hover {
+    background-color: #e0f7fa;
+    color: #0097a7;
+}
+/* 选中：青色字加青色下划线 */
+QTabBar::tab:selected {
+    color: #00acc1;
+    border-bottom: 2px solid #00bcd4;
+}

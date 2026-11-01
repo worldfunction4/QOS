@@ -15,13 +15,21 @@ BaseDialog::BaseDialog(QWidget *parent)
     // 去掉系统标题栏，改用自己画的frameTitle
     setWindowFlags(Qt::FramelessWindowHint | Qt::Window);
 
-    setLogo(":/resource/static/imgs/qtlogo.png");
+    // 让qss的边框和背景能画到这个窗口上
+    setAttribute(Qt::WA_StyledBackground, true);
+
+    // 里面的控件往里缩 1px，露出 qss 画的边框
+    layout()->setContentsMargins(1, 1, 1, 1);
+
+    setLogo(GLOBAL::IMG::QTLOGO);
     ui->labelLogo->setFixedSize(24, 24);
 
     // 关闭按钮：换成图片，点击 = reject()，等于关闭对话框
     addCloseButton(GLOBAL::IMG::CLOSE, GLOBAL::IMG::CLOSE_HOVER);
     connect(ui->buttonClose, &QPushButton::clicked, this, &BaseDialog::reject);
     setAllButtonSize();
+
+
 }
 
 BaseDialog::~BaseDialog()
@@ -32,6 +40,9 @@ BaseDialog::~BaseDialog()
 void BaseDialog::setTitle(const QString &title)
 {
     ui->labelTitle->setText(title);
+
+    //任务栏和标题都改
+    setWindowTitle(title);
 }
 
 void BaseDialog::setLogo(const QString &path)

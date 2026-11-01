@@ -71,9 +71,6 @@ UiMain::UiMain(QWidget *parent)
     //esc或回车不能退出窗口
     setKeyDisabled();
 
-    //添加logo图标
-    this->setWindowIcon(QIcon(":/resource/static/imgs/logo.png"));
-
     //默认显示桶列表
     ui_main->stackedWidget->setCurrentIndex(0);
 

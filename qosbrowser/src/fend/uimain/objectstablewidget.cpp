@@ -125,7 +125,6 @@ ObjectsTableWidget::ObjectsTableWidget(QWidget *parent)
     //上传成功->刷新当前的目录->弹出提示
     connect(MG->mSignal, &ManSignals::uploadSuccess, this, [this]{
         onPathChanged(ui->widgetBread->currentPath());
-        QosMessageBox(this).showMessage("提示", "上传文件成功");
     });
 
     //下载，选择表格一个文件->选择保存位置
@@ -163,12 +162,6 @@ ObjectsTableWidget::ObjectsTableWidget(QWidget *parent)
         emit MG->mSignal->startDownload(workId, obj.dir+obj.name, file_path, obj.size);
         MG->mGate->send(API::OBJECT::GET, params);
         last_dir = QFileInfo(file_path).dir().absolutePath();
-    });
-
-    //下载成功
-    connect(MG->mSignal, &ManSignals::downloadSuccess, this, [this]{
-        onPathChanged(ui->widgetBread->currentPath());
-        QosMessageBox(this).showMessage("下载任务", "下载文件成功");
     });
 
     //右键删除一个文件

@@ -3,6 +3,7 @@
 
 #include <QWidget>
 #include <QJsonValue>
+#include <QLabel>
 
 namespace Ui {
 class UploadWidget;
@@ -17,6 +18,10 @@ class UploadWidget : public QWidget
 public:
     explicit UploadWidget(QWidget *parent = nullptr);
     ~UploadWidget();
+
+protected:
+    //监听可视区域自己的大小变化
+    bool eventFilter(QObject* obj, QEvent* event) override;
 
 private slots:
     //上传
@@ -41,9 +46,13 @@ private:
     ProgressWidget* getProgress(const QString& workId);
     //表头
     void initHead();
+    //行数决定提示还是隐藏
+    void updateEmptyTip();
 
 private:
     Ui::UploadWidget *ui;
+    //表格为空：显示文字
+    QLabel* labelEmpty_ = nullptr;
 };
 
 #endif // UPLOADWIDGET_H

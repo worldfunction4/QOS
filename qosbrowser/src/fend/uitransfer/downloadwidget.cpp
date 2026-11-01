@@ -15,6 +15,23 @@ DownloadWidget::DownloadWidget(QWidget *parent)
     initHead();
     ui->tableWidget->setItemDelegate(new TableItemDelegate(ui->tableWidget));
 
+    //提示文字挂在表格的可视区域上
+    labelEmpty_ = new QLabel("目前没有下载任务^^", ui->tableWidget->viewport());
+    //文字居中
+    labelEmpty_->setAlignment(Qt::AlignCenter);
+    //用 qss 里的灰色提示样式
+    labelEmpty_->setProperty("style_font", "tip");
+    //鼠标点击穿透到表格
+    labelEmpty_->setAttribute(Qt::WA_TransparentForMouseEvents);
+    //让本窗口接收可视区域的事件
+    ui->tableWidget->viewport()->installEventFilter(this);
+    //插入行时检查一次
+    connect(ui->tableWidget->model(), &QAbstractItemModel::rowsInserted, this, &DownloadWidget::updateEmptyTip);
+    //删除行时检查一次
+    connect(ui->tableWidget->model(), &QAbstractItemModel::rowsRemoved, this, &DownloadWidget::updateEmptyTip);
+    //启动时先算一次
+    updateEmptyTip();
+
     //开始->加入一行
     connect(MG->mSignal, &ManSignals::startDownload, this, &DownloadWidget::onStartDownload);
 
@@ -31,6 +48,15 @@ DownloadWidget::DownloadWidget(QWidget *parent)
 DownloadWidget::~DownloadWidget()
 {
     delete ui;
+}
+
+bool DownloadWidget::eventFilter(QObject *obj, QEvent *event)
+{
+    //可视区域大小变了，提示跟着铺满
+    if(obj == ui->tableWidget->viewport() && event->type() == QEvent::Resize)
+        updateEmptyTip();
+    //事件继续交给表格自己处理
+    return QWidget::eventFilter(obj, event);
 }
 
 void DownloadWidget::onStartDownload(const QString &workId, const QString &key, const QString &localPath, long long total)
@@ -109,4 +135,12 @@ void DownloadWidget::initHead()
     //路径列固定宽度，太长的显示省略号
     ui->tableWidget->setColumnWidth(0, 150);
     ui->tableWidget->setColumnWidth(1, 200);
+}
+
+void DownloadWidget::updateEmptyTip()
+{
+    //提示铺满表格的可视区域
+    labelEmpty_->resize(ui->tableWidget->viewport()->size());
+    //没有行才显示提示
+    labelEmpty_->setVisible(ui->tableWidget->rowCount() == 0);
 }
