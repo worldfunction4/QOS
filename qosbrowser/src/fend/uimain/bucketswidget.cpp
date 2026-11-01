@@ -5,16 +5,23 @@
 #include "src/bend/gateway.h"
 #include "src/config/apis.h"
 #include "src/middle/signals/mansignals.h"
+#include "src/config/global.h"
 
 #include <QStandardItemModel>
 #include <QJsonObject>
 #include <QLineEdit>
+#include <QIcon>
 
 BucketsWidget::BucketsWidget(QWidget *parent)
     : QWidget(parent)
     , ui(new Ui::BucketsWidget)
 {
     ui->setupUi(this);
+
+    //搜索按钮显示图标
+    ui->buttonSearch->setText("");
+    ui->buttonSearch->setIcon(QIcon(GLOBAL::IMG::SEARCH));
+
     ui->listView->setModel(MG->mCloud->modelBuckets());
 
     // 双击左边的桶，也去取它的对象
