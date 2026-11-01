@@ -19,6 +19,11 @@ namespace GLOBAL
     {
         inline const QString LOGO        = ":/resource/static/imgs/logo.png";
 
+        inline const QString BUCKET      = ":/resource/static/imgs/bucket.png";
+
+        inline const QString DIR         = ":/resource/static/imgs/dir.png";
+        inline const QString FILE        = ":/resource/static/imgs/file.png";
+
         inline const QString CLOSE       = ":/resource/static/imgs/Close-1.png";
         inline const QString CLOSE_HOVER = ":/resource/static/imgs/Close-2.png";
 
@@ -38,6 +43,7 @@ namespace GLOBAL
 
         inline const QString QUIT        = ":/resource/static/imgs/Quit-1.png";
         inline const QString QUIT_HOVER  = ":/resource/static/imgs/Quit-2.png";
+
     }
 
     namespace SQLITE

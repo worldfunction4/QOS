@@ -5,11 +5,13 @@
 #include "middle/manglobal.h"
 #include "middle/signals/mansignals.h"
 #include "src/helper/bytehelper.h"
+#include "src/config/global.h"
 
 #include <QMetaType>
 #include <QVariant>
 #include <QList>
 #include <QDateTime>
+#include <QIcon>
 
 //把云端的 UTC 时间转成本地时间，转不了就原样返回
 static QString toLocalTimeStr(const QString& utc)
@@ -53,6 +55,9 @@ void ManCloud::setBuckets(const QList<Bucket>& buckets)
         modelBuckets_->setData(index0, bucket.name);
         modelBuckets_->setData(index0, QString("存储桶名称：%1").arg(bucket.name), Qt::ToolTipRole);
 
+        //在左边显示桶图标
+        modelBuckets_->setData(index0, QIcon(GLOBAL::IMG::BUCKET), Qt::DecorationRole);
+
         QModelIndex index1 = modelBuckets_->index(row, 1);
         modelBuckets_->setData(index1, bucket.location);
 
@@ -80,6 +85,16 @@ void ManCloud::setObjects(const QList<CloudObject> &objects)
         QModelIndex index0 = modelObjects_->index(row, 0);
         modelObjects_->setData(index0, object.name);
         modelObjects_->setData(index0, QVariant::fromValue(object), Qt::UserRole);
+
+        //文件夹和文件使用两种图标
+        if(object.isDir())
+        {
+            modelObjects_->setData(index0, QIcon(GLOBAL::IMG::DIR), Qt::DecorationRole);
+        }
+        else
+        {
+            modelObjects_->setData(index0, QIcon(GLOBAL::IMG::FILE), Qt::DecorationRole);
+        }
 
         //排序依据
         modelObjects_->setData(index0, object.name, Qt::UserRole + 1);

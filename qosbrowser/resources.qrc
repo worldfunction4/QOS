@@ -21,5 +21,8 @@
         <file>resource/static/imgs/Quit-2.png</file>
         <file>resource/static/imgs/Trans-1.png</file>
         <file>resource/static/imgs/Trans-2.png</file>
+        <file>resource/static/imgs/bucket.png</file>
+        <file>resource/static/imgs/dir.png</file>
+        <file>resource/static/imgs/file.png</file>
     </qresource>
 </RCC>
