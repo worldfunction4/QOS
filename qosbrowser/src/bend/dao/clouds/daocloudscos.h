@@ -29,6 +29,10 @@ public:
                         const QString& location,
                         const QString& key)override;
 
+    void deleteObject(const QString& bucketName,
+                      const QString& location,
+                      const QString& key)override;
+
     void putObject(const QString& bucketName,
                    const QString& location,
                    const QString& key,

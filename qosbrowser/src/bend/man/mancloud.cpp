@@ -200,6 +200,12 @@ void ManCloud::putObject(const QString &workId, const QString &bucketName, const
     emit MG->mSignal->uploadSuccess(workId);
 }
 
+void ManCloud::deleteObject(const QString &bucketName, const QString &location, const QString &key)
+{
+    dao()->deleteObject(bucketName, location, key);
+    getObjects(bucketName, location, currentDir_);
+}
+
 QString ManCloud::currentBucket() const
 {
     return currentBucket_;

@@ -14,6 +14,8 @@
 #include <QFileDialog>
 #include <QFileInfo>
 #include <QUuid>
+#include <QMenu>
+#include <QAction>
 
 ObjectsTableWidget::ObjectsTableWidget(QWidget *parent)
     : QWidget(parent)
@@ -167,6 +169,41 @@ ObjectsTableWidget::ObjectsTableWidget(QWidget *parent)
     connect(MG->mSignal, &ManSignals::downloadSuccess, this, [this]{
         onPathChanged(ui->widgetBread->currentPath());
         QosMessageBox(this).showMessage("下载任务", "下载文件成功");
+    });
+
+    //右键删除一个文件
+    ui->tableView->setContextMenuPolicy(Qt::CustomContextMenu);
+    connect(ui->tableView, &QTableView::customContextMenuRequested, this, [this](const QPoint& pos){
+        //鼠标下面没有格子就不管
+        QModelIndex index = ui->tableView->indexAt(pos);
+        if(!index.isValid()) return;
+
+        //名称格的口袋里放着整个对象
+        CloudObject obj = index.siblingAtColumn(0).data(Qt::UserRole).value<CloudObject>();
+        //文件夹先不删
+        if(obj.isDir())
+        {
+            QosMessageBox(this).showMessage("删除文件", "这一步只能删文件");
+            return;
+        }
+
+        //弹出删除
+        QMenu menu(this);
+        QAction* deleteAction = menu.addAction("删除");
+        if(menu.exec(ui->tableView->viewport()->mapToGlobal(pos)) != deleteAction) return;
+
+        //点确认才继续
+        QString ret = QosMessageBox(this).showMessage("删除文件",
+                                                      QString("确认删除文件【%1】吗？").arg(obj.name),
+                                                      {"确认", "不了"});
+        if(ret != "确认") return;
+
+        //dir 加 name 才是桶里的完整路径
+        QJsonObject params;
+        params["bucketName"] = MG->mCloud->currentBucket();
+        params["location"] = MG->mCloud->currentLocation();
+        params["key"] = obj.dir + obj.name;
+        MG->mGate->send(API::OBJECT::DEL, params);
     });
 }
 

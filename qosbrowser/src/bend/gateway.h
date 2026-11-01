@@ -24,6 +24,7 @@ private:
     void apiGetObjcets(const QJsonValue& value);
     void apiGetObjcet(const QJsonValue& value);
     void apiPutObject(const QJsonValue& value);
+    void apiDeleteObject(const QJsonValue& value);
 };
 
 #endif // GATEWAY_H

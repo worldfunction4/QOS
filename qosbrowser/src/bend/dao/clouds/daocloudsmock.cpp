@@ -64,6 +64,11 @@ bool DaoCloudsMock::isObjectExists(const QString &bucketName, const QString &loc
     return false;
 }
 
+void DaoCloudsMock::deleteObject(const QString &bucketName, const QString &location, const QString &key)
+{
+    return;
+}
+
 void DaoCloudsMock::putObject(const QString &bucketName, const QString &location, const QString &key, const QString &localPath, const TransProgressCallBack &callback)
 {
     return;

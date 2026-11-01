@@ -170,6 +170,23 @@ bool DaoCloudsCos::isObjectExists(const QString &bucketName, const QString &loca
     return cos.IsObjectExist(bucketName.toStdString(), key.toStdString());
 }
 
+void DaoCloudsCos::deleteObject(const QString &bucketName, const QString &location, const QString &key)
+{
+    //地域根据调用方传入
+    qcloud_cos::CosConfig config = makeConfig(location);
+
+    //构造函数需要非const引用
+    qcloud_cos::CosAPI cos(config);
+
+    qcloud_cos::DeleteObjectReq req(bucketName.toStdString(), key.toStdString());
+    qcloud_cos::DeleteObjectResp resp;
+    qcloud_cos::CosResult res = cos.DeleteObject(req, &resp);
+
+    //文件不存在->删除成功
+    if(res.IsSucc() || res.GetErrorCode() == "NoSuchKey") return;
+    throw BaseException(EC_332300, QString::fromStdString(res.GetErrorMsg()));
+}
+
 void DaoCloudsCos::putObject(const QString &bucketName, const QString &location, const QString &key, const QString &localPath, const TransProgressCallBack &callback)
 {
     //异步上传请求:桶，云端key，本地文件

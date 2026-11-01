@@ -42,6 +42,9 @@ public:
                    const QString& key, const QString& localPath);
     void putObject(const QString& workId, const QString& bucketName, const QString& location,
                    const QString& key, const QString& localPath);
+    void deleteObject(const QString& bucketName,
+                      const QString& location,
+                      const QString& key);
 
     //当前所在桶，地域，目录信息
     QString currentBucket()const;

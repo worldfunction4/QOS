@@ -25,6 +25,7 @@ namespace API
         inline const int LIST = BASE + 1; //获取对象列表
         inline const int GET  = BASE + 2; //下载对象
         inline const int PUT  = BASE + 3; //上传对象
+        inline const int DEL  = BASE + 4; //删除对象
     }
 }
 

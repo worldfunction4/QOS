@@ -35,6 +35,12 @@ public:
     virtual bool isObjectExists(const QString& bucketName,
                                 const QString& location,
                                 const QString& key) = 0;
+
+    //删除桶里的一个文件，key为完整路径
+    virtual void deleteObject(const QString& bucketName,
+                              const QString& location,
+                              const QString& key)=0;
+
     //上传本地文件到桶里，key为完整路径
     virtual void putObject(const QString& bucketName,
                            const QString& location,

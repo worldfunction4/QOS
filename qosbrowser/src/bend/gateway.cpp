@@ -73,6 +73,9 @@ void Gateway::dispatch(int api, const QJsonValue &value)
         case API::OBJECT::PUT:
             apiPutObject(value);
             break;
+        case API::OBJECT::DEL:
+            apiDeleteObject(value);
+            break;
 
         //误匹配接口函数抛出异常，防止界面一直等死
         default:
@@ -137,4 +140,12 @@ void Gateway::apiPutObject(const QJsonValue &value)
                           value["location"].toString(),
                           value["key"].toString(),
                           value["localPath"].toString());
+}
+
+void Gateway::apiDeleteObject(const QJsonValue &value)
+{
+    //取出桶、地域和文件的完整路径
+    MG->mCloud->deleteObject(value["bucketName"].toString(),
+                             value["location"].toString(),
+                             value["key"].toString());
 }
