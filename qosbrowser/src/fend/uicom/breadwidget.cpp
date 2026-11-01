@@ -31,13 +31,16 @@ BreadWidget::BreadWidget(QWidget *parent)
     //不显示键盘焦点框
     ui->listView->setFocusPolicy(Qt::NoFocus);
 
-    //设置样式：去掉边框和背景，普通灰色，悬停稍深
-    ui->listView->setStyleSheet(
-        "QListView { border: none; background: transparent; }"
-        "QListView::item { color: #666666; border: none; padding: 0px; padding-right: 2px; }"
-        "QListView::item:hover { color: #333333; }"
-        "QListView::item:selected { color: #000000; background: transparent; border: none; }"
-        );
+    // //设置样式：去掉边框和背景，普通灰色，悬停稍深
+    // ui->listView->setStyleSheet(
+    //     "QListView { border: none; background: transparent; }"
+    //     "QListView::item { color: #666666; border: none; padding: 0px; padding-right: 2px; }"
+    //     "QListView::item:hover { color: #333333; }"
+    //     "QListView::item:selected { color: #000000; background: transparent; border: none; }"
+    //     );
+
+    //打上"面包屑"标签，样式写在 qss 里
+    ui->listView->setProperty("style_list", "bread");
 
     //点击格子时处理刷新或跳转
     connect(ui->listView, &QListView::clicked,
@@ -45,6 +48,9 @@ BreadWidget::BreadWidget(QWidget *parent)
 
     //固定高度为一行
     setFixedHeight(30);
+
+    //鼠标移动上去变为手型，表示可以点击
+    ui->listView->setCursor(Qt::PointingHandCursor);
 }
 
 BreadWidget::~BreadWidget()

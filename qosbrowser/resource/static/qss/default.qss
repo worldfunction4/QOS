@@ -133,6 +133,7 @@ QTableView {
     gridline-color: #eceff1;
     selection-background-color: #b2ebf2;
     selection-color: #263238;
+    outline: none;
 }
 
 /* 格子：悬停浅青，选中更深一点的青色 */
@@ -144,6 +145,33 @@ QListView::item:selected,
 QTableView::item:selected {
     background-color: #b2ebf2;
     color: #263238;
+}
+
+/* 列表每一行的高度（左边桶列表） */
+QListView::item {
+    height: 30px;
+    padding-left: 6px;
+}
+
+/* 面包屑：无边框、透明背景，只用文字颜色区分状态 */
+QListView[style_list="bread"] {
+    border: none;
+    background: transparent;
+}
+QListView[style_list="bread"]::item {
+    height: 28px;
+    color: #666666;
+    border: none;
+    padding: 0px;
+    padding-right: 2px;
+}
+QListView[style_list="bread"]::item:hover {
+    color: #333333;
+    background: transparent;
+}
+QListView[style_list="bread"]::item:selected {
+    color: #000000;
+    background: transparent;
 }
 
 
