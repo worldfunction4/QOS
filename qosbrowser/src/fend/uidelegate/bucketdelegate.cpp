@@ -1,5 +1,8 @@
 #include "bucketdelegate.h"
+#include "tableitemdelegate.h"
+
 #include <QComboBox>
+#include <QPoint>
 
 BucketDelegate::BucketDelegate(QObject* parent)
     :QStyledItemDelegate(parent)
@@ -34,4 +37,12 @@ void BucketDelegate::setModelData(QWidget *editor, QAbstractItemModel *model, co
 
         QComboBox* box = static_cast<QComboBox*>(editor);
         model->setData(index, box->currentData(), Qt::EditRole);
+}
+
+void BucketDelegate::paint(QPainter *painter,const QStyleOptionViewItem &option,const QModelIndex &index) const
+{
+    //拷贝一份，套上整行悬停
+    QStyleOptionViewItem opt = option;
+    TableItemDelegate::applyHover(&opt, index);
+    QStyledItemDelegate::paint(painter, opt, index);
 }

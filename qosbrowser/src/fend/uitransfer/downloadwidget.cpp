@@ -1,6 +1,7 @@
 #include "downloadwidget.h"
 #include "middle/manglobal.h"
 #include "ui_downloadwidget.h"
+#include "fend/uidelegate/tableitemdelegate.h"
 
 #include <middle/signals/mansignals.h>
 #include <config/apis.h>
@@ -12,6 +13,7 @@ DownloadWidget::DownloadWidget(QWidget *parent)
 {
     ui->setupUi(this);
     initHead();
+    ui->tableWidget->setItemDelegate(new TableItemDelegate(ui->tableWidget));
 
     //开始->加入一行
     connect(MG->mSignal, &ManSignals::startDownload, this, &DownloadWidget::onStartDownload);
@@ -76,8 +78,6 @@ void DownloadWidget::onDownloadError(int api, const QString &msg, const QJsonVal
     //鼠标悬停显示具体原因
     bar->setToolTip(msg);
 }
-
-
 
 ProgressWidget *DownloadWidget::getProgress(const QString &workId)
 {

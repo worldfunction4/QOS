@@ -8,6 +8,7 @@
 #include "src/bend/gateway.h"
 #include "src/config/apis.h"
 #include "src/fend/uimain/createbucketdialog.h"
+#include "fend/uidelegate/tableitemdelegate.h"
 
 #include <QStandardItemModel>
 #include <QJsonObject>
@@ -24,8 +25,11 @@ BucketTableWidget::BucketTableWidget(QWidget *parent)
     //创建桶按钮用主按钮样式
     ui->buttonCreateBucket->setProperty("style_button", "main");
     ui->tableView->setModel(MG->mCloud->modelBuckets());
-    //ui->tableView->setItemDelegate(new BucketDelegate());
-    ui->tableView->setItemDelegateForColumn(1, new BucketDelegate());
+
+    // 整表用整行悬停代理，父对象是表格，表格销毁时一起删掉
+    ui->tableView->setItemDelegate(new TableItemDelegate(ui->tableView));
+    // 地区列继续用下拉框代理
+    ui->tableView->setItemDelegateForColumn(1, new BucketDelegate(ui->tableView));
 
     //标题内容
     QStandardItemModel* model = MG->mCloud->modelBuckets();

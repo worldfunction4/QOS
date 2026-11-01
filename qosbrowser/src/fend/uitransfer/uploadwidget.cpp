@@ -1,6 +1,7 @@
 #include "uploadwidget.h"
 #include "middle/manglobal.h"
 #include "ui_uploadwidget.h"
+#include "fend/uidelegate/tableitemdelegate.h"
 
 #include <middle/signals/mansignals.h>
 #include <config/apis.h>
@@ -13,6 +14,7 @@ UploadWidget::UploadWidget(QWidget *parent)
 {
     ui->setupUi(this);
     initHead();
+    ui->tableWidget->setItemDelegate(new TableItemDelegate(ui->tableWidget));
 
     //开始->加入一行
     connect(MG->mSignal, &ManSignals::startUpload, this, &UploadWidget::onStartUpload);

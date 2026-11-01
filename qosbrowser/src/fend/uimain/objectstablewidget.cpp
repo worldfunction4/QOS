@@ -7,12 +7,13 @@
 #include "src/middle/manglobal.h"
 #include "src/bend/gateway.h"
 #include "src/config/apis.h"
+#include "src/fend/uicom/qosmessagebox.h"
+#include "fend/uidelegate/tableitemdelegate.h"
 
 #include <QJsonObject>
 #include <QFileDialog>
 #include <QFileInfo>
 #include <QUuid>
-#include "src/fend/uicom/qosmessagebox.h"
 
 ObjectsTableWidget::ObjectsTableWidget(QWidget *parent)
     : QWidget(parent)
@@ -25,6 +26,7 @@ ObjectsTableWidget::ObjectsTableWidget(QWidget *parent)
     //显示对象 model 数据
     QStandardItemModel* model = MG->mCloud->modelObjects();
     ui->tableView->setModel(model);
+    ui->tableView->setItemDelegate(new TableItemDelegate(ui->tableView));
 
     //设置表头大小时间等信息
     model->setHorizontalHeaderLabels({"名称", "大小", "修改时间"});
