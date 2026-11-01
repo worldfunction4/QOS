@@ -264,3 +264,8 @@ QProgressBar::chunk {
 QTabWidget::pane {
     border: none;
 }
+
+/* 提示文字：灰色，比如创建桶时输入框右边的账号编号 */
+*[style_font="tip"] {
+    color: #999;
+}

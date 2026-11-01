@@ -23,6 +23,7 @@ protected:
 
 private:
     Ui::CreateBucketDialog *ui_create;   //避免遮住父类的ui,更改名字
+    QString appId_; //账号编号->从现有桶借来
 };
 
 #endif //CREATEBUCKETDIALOG_H
