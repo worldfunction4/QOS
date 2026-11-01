@@ -58,6 +58,7 @@ qt_add_executable(qosbrowser
     src/fend/uitransfer/transferdialog.h src/fend/uitransfer/transferdialog.cpp src/fend/uitransfer/transferdialog.ui
     src/fend/uicom/qosmessagebox.h src/fend/uicom/qosmessagebox.cpp src/fend/uicom/qosmessagebox.ui
     src/fend/uidelegate/tableitemdelegate.h src/fend/uidelegate/tableitemdelegate.cpp
+    src/fend/uicom/pushbutton.h src/fend/uicom/pushbutton.cpp
 )
 
 target_include_directories(${PROJECT_NAME} PRIVATE

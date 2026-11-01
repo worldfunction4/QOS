@@ -167,7 +167,7 @@
        </widget>
       </item>
       <item>
-       <widget class="QPushButton" name="loginButton">
+       <widget class="PushButton" name="loginButton">
         <property name="text">
          <string>登录</string>
         </property>
@@ -196,6 +196,11 @@
    <class>ComboLine</class>
    <extends>QLineEdit</extends>
    <header>src/fend/uicom/comboline.h</header>
+  </customwidget>
+  <customwidget>
+   <class>PushButton</class>
+   <extends>QPushButton</extends>
+   <header>src/fend/uicom/pushbutton.h</header>
   </customwidget>
  </customwidgets>
  <resources/>

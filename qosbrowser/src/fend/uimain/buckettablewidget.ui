@@ -17,14 +17,14 @@
    <item>
     <layout class="QHBoxLayout" name="horizontalLayout">
      <item>
-      <widget class="QPushButton" name="buttonCreateBucket">
+      <widget class="PushButton" name="buttonCreateBucket">
        <property name="text">
         <string>创建桶</string>
        </property>
       </widget>
      </item>
      <item>
-      <widget class="QPushButton" name="buttonRefresh">
+      <widget class="PushButton" name="buttonRefresh">
        <property name="text">
         <string>刷新</string>
        </property>
@@ -63,6 +63,11 @@
    <extends>QWidget</extends>
    <header>src/fend/uicom/pagewidget.h</header>
    <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>PushButton</class>
+   <extends>QPushButton</extends>
+   <header>src/fend/uicom/pushbutton.h</header>
   </customwidget>
  </customwidgets>
  <resources/>

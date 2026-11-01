@@ -1,4 +1,5 @@
 #include "basedialog.h"
+#include "pushbutton.h"
 #include "ui_basedialog.h"
 #include "src/config/global.h"
 
@@ -72,7 +73,7 @@ void BaseDialog::addMaxButton(const QString &maxPath, const QString &maxHover,
 
 QPushButton *BaseDialog::addButton(const QString &path, const QString &hoverPath)
 {
-    QPushButton *btn = new QPushButton;
+    QPushButton *btn = new PushButton;
     btn->setFixedSize(m_size, m_size);
     setButtonImage(btn, path, hoverPath);
     addWidget(btn);   // 加进布局后，布局会把 frameTitle 设为它的父对象，所以不会内存泄漏

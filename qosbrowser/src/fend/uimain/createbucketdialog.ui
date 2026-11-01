@@ -57,14 +57,14 @@
       </spacer>
      </item>
      <item>
-      <widget class="QPushButton" name="buttonOk">
+      <widget class="PushButton" name="buttonOk">
        <property name="text">
         <string>确定</string>
        </property>
       </widget>
      </item>
      <item>
-      <widget class="QPushButton" name="buttonCancel">
+      <widget class="PushButton" name="buttonCancel">
        <property name="text">
         <string>取消</string>
        </property>
@@ -74,6 +74,13 @@
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>PushButton</class>
+   <extends>QPushButton</extends>
+   <header>src/fend/uicom/pushbutton.h</header>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>

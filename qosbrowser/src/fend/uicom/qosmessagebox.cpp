@@ -1,4 +1,5 @@
 #include "qosmessagebox.h"
+#include "pushbutton.h"
 #include "ui_qosmessagebox.h"
 
 #include <QPushButton>
@@ -36,8 +37,11 @@ void QosMessageBox::createButtons(const QStringList &buttonTexts)
 {
     for(const QString& text : buttonTexts)
     {
-        //每个文字创建一个按钮
-        QPushButton* button = new QPushButton(text, this);
+        //每个文字创建一个按钮，父控件是这个对话框
+        QPushButton* button = new PushButton(this);
+        //按钮上的字
+        button->setText(text);
+
         //点击：记下文字，然后关闭窗口
         connect(button, &QPushButton::clicked, this, [this, text]{
             clickedText_ = text;
