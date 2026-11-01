@@ -30,6 +30,7 @@ void ComboLine::setWords(const QStringList &words)
     //去掉弹出列表的滚动条
     com->popup()->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     com->popup()->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    com->popup()->setCursor(Qt::PointingHandCursor);
 
     //选中某一项时，把它转发成自己的信号
     connect(com, QOverload<const QString &>::of(&QCompleter::activated),
