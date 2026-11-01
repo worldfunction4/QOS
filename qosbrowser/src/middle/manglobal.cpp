@@ -49,6 +49,8 @@ void ManGlobal::init(int argc, char *argv[])
     QString qss_str = FileHelper::readAllText(":/resource/static/qss/default.qss");
     //加载qss内容
     qApp->setStyleSheet(qss_str);
+    //关掉下拉名单的滑动。鼠标一动，滑动会停在半路，名单就偏了
+    QApplication::setEffectEnabled(Qt::UI_AnimateCombo, false);
     //启动插件
     MG->mPlugin->installPlugins(argc, argv);
     //桶列表交给 ManCloud 装进桶 model

@@ -2,6 +2,7 @@
 #define GLOBAL_H
 
 #include "helper/filehelper.h"
+#include <QCoreApplication>
 #include <QString>
 #include <QStringList>
 #include <QDir>
@@ -13,6 +14,12 @@ namespace GLOBAL
         inline const QString WORK = QDir::currentPath();
         inline const QString TEMP = FileHelper::joinPath(WORK, "temp");
         inline const QString LOG_DIR = FileHelper::joinPath(WORK, "logs");
+
+        //exe 旁边的 config/regions_cos.csv。窗口创建之后才能调用
+        inline QString regionsCosFile()
+        {
+            return FileHelper::joinPath(QCoreApplication::applicationDirPath(), "config/regions_cos.csv");
+        }
     }
 
     namespace IMG
@@ -23,6 +30,8 @@ namespace GLOBAL
 
         inline const QString DIR         = ":/resource/static/imgs/dir.png";
         inline const QString FILE        = ":/resource/static/imgs/file.png";
+
+        inline const QString SEARCH      = ":/resource/static/imgs/Search.png";
 
         inline const QString CLOSE       = ":/resource/static/imgs/Close-1.png";
         inline const QString CLOSE_HOVER = ":/resource/static/imgs/Close-2.png";

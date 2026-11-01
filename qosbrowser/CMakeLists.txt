@@ -96,6 +96,11 @@ add_custom_command(TARGET qosbrowser POST_BUILD
         "${COS_SDK_ROOT}/third_party/lib/x64/poco" "$<TARGET_FILE_DIR:qosbrowser>"
     COMMAND ${CMAKE_COMMAND} -E copy_directory
         "${COS_SDK_ROOT}/third_party/lib/x64/openssl" "$<TARGET_FILE_DIR:qosbrowser>"
+    COMMAND ${CMAKE_COMMAND} -E make_directory
+        "$<TARGET_FILE_DIR:qosbrowser>/config"
+    COMMAND ${CMAKE_COMMAND} -E copy_if_different
+        "${CMAKE_CURRENT_SOURCE_DIR}/resource/static/docs/regions_cos.csv"
+        "$<TARGET_FILE_DIR:qosbrowser>/config/regions_cos.csv"
 )
 
 install(TARGETS qosbrowser

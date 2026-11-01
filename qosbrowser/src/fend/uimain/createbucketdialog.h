@@ -17,6 +17,10 @@ public:
     //取出用户填的桶名和地域
     Bucket bucket() const;
 
+protected:
+    //窗口移动就把打开的名单收起来
+    void moveEvent(QMoveEvent* event)override;
+
 private:
     Ui::CreateBucketDialog *ui_create;   //避免遮住父类的ui,更改名字
 };
