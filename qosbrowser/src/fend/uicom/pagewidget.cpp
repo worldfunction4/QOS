@@ -17,6 +17,10 @@ PageWidget::PageWidget(QWidget *parent)
     ui->lineCurrentPage->setReadOnly(true);
     ui->lineCurrentPage->setAlignment(Qt::AlignHCenter);
 
+    //给两个翻页输入框贴一个标签，名字叫 style_frame，值是字符串 "bottomframe"
+    ui->lineMaxRows->setProperty("style_frame", "bottomframe");
+    ui->lineCurrentPage->setProperty("style_frame", "bottomframe");
+
     //选择了每页条数
     connect(ui->lineMaxRows, &ComboLine::itemSelected, this, [=](const QString &text){
         setMaxRow(text.toInt());

@@ -58,6 +58,11 @@ ObjectsTableWidget::ObjectsTableWidget(QWidget *parent)
         ui->widgetPage->setTotalRow(MG->mCloud->modelObjects()->rowCount());
     });
 
+    //每一行固定 40 像素高
+    for (int64_t i = 0; i < MG->mCloud->modelObjects()->rowCount(); ++i) {
+        ui->tableView->setRowHeight(static_cast<int>(i), 40);
+    }
+
     //双击表格
     connect(ui->tableView, &QTableView::doubleClicked,
             this, &ObjectsTableWidget::onTableViewDoubleClicked);

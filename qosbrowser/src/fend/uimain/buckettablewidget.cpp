@@ -71,6 +71,11 @@ BucketTableWidget::BucketTableWidget(QWidget *parent)
         ui->widgetPage->setTotalRow(MG->mCloud->modelBuckets()->rowCount());
     });
 
+    //每一行固定 40 像素高
+    for (int64_t i = 0; i < MG->mCloud->modelBuckets()->rowCount(); ++i) {
+        ui->tableView->setRowHeight(static_cast<int>(i), 40);
+    }
+
     //刷新采取重新请求桶列表
     connect(ui->buttonRefresh, &QPushButton::clicked, this, []{
         MG->mGate->send(API::BUCKET::LIST, QJsonValue());

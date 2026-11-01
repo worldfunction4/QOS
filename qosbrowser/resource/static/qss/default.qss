@@ -28,6 +28,12 @@
     font: bold 12pt;
 }
 
+*[style_frame="bottomframe"] {
+    border: none;
+    border-bottom: 1px solid #b2ebf2;
+    border-radius: 0px;
+}
+
 /* 输入框 */
 QLineEdit {
     height: 28px;
@@ -201,4 +207,38 @@ QComboBox QAbstractItemView {
     border: 1px solid #00bcd4;
     selection-background-color: #b2ebf2;
     selection-color: #263238;
+}
+
+/* 滚动条：细一点，两端的箭头不要 */
+QScrollBar {
+    border: none;
+    background-color: transparent;
+}
+QScrollBar:horizontal {
+    height: 6px;
+}
+QScrollBar:vertical {
+    width: 6px;
+}
+QScrollBar::handle {
+    background: #aaaaaa;
+    border-radius: 3px;
+}
+QScrollBar::add-line, QScrollBar::sub-line {
+    border: none;
+}
+
+/* 进度条：槽用浅青，走过的一段用主题色 */
+QProgressBar {
+    background: #e0f7fa;
+    border-radius: 3px;
+}
+QProgressBar::chunk {
+    background: #00bcd4;
+    border-radius: 3px;
+}
+
+/* 传输窗口的标签页不再套一层边框 */
+QTabWidget::pane {
+    border: none;
 }

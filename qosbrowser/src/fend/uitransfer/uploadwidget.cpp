@@ -39,6 +39,9 @@ void UploadWidget::onStartUpload(const QString &workId, const QString &key, cons
     //最上面插入一行，新任务加在顶部
     ui->tableWidget->insertRow(0);
 
+    //插入的一行为40像素高
+    ui->tableWidget->setRowHeight(0, 40);
+
     //云端路径
     QTableWidgetItem* item = new QTableWidgetItem(key);
 
