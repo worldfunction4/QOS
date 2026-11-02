@@ -3,9 +3,9 @@
 #include "ui_uploadwidget.h"
 #include "fend/uidelegate/tableitemdelegate.h"
 
-#include <middle/signals/mansignals.h>
-#include <config/apis.h>
-#include <fend/uicom/progresswidget.h>
+#include "middle/signals/mansignals.h"
+#include "config/apis.h"
+#include "fend/uicom/progresswidget.h"
 
 
 UploadWidget::UploadWidget(QWidget *parent)

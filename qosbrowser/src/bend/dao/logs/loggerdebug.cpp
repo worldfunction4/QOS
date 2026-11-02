@@ -1,5 +1,5 @@
 #include "loggerdebug.h"
-#include "src/config/global.h"
+#include "config/global.h"
 
 #include <QDateTime>
 #include <QString>

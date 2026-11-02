@@ -3,10 +3,10 @@
 #include "bend/dao/clouds/daocloudsmock.h"
 #include "bend/dao/config/versioncmd.h"
 #include "bend/dao/config/versionjson.h"
-#include "src/config/global.h"
-#include "src/config/loggerproxy.h"
-#include "src/middle/manglobal.h"
-#include "src/bend/dao/logs/loggerdebug.h"
+#include "config/global.h"
+#include "config/loggerproxy.h"
+#include "middle/manglobal.h"
+#include "bend/dao/logs/loggerdebug.h"
 
 ManPlugin::ManPlugin(QObject *parent)
     : QObject{parent}

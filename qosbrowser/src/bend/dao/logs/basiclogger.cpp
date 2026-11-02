@@ -1,6 +1,6 @@
 #include "basiclogger.h"
-#include "src/helper/filehelper.h"
-#include "src/config/global.h"
+#include "helper/filehelper.h"
+#include "config/global.h"
 
 #include <QDate>
 

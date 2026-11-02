@@ -1,15 +1,14 @@
 #include "mancloud.h"
-#include <plugins/manplugin.h>
+#include "plugins/manplugin.h"
 #include "config/errorcode.h"
 #include "config/exceptions.h"
 #include "middle/manglobal.h"
 #include "middle/signals/mansignals.h"
-#include "src/helper/bytehelper.h"
-#include "src/config/global.h"
+#include "helper/bytehelper.h"
+#include "config/global.h"
 
 #include <QMetaType>
 #include <QVariant>
-#include <QList>
 #include <QDateTime>
 #include <QIcon>
 

@@ -1,6 +1,6 @@
 #include "breadwidget.h"
 #include "ui_breadwidget.h"
-#include "src/config/global.h"
+#include "config/global.h"
 
 BreadWidget::BreadWidget(QWidget *parent)
     : QWidget(parent)

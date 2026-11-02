@@ -1,7 +1,7 @@
 #include "middle/manglobal.h"
-#include "src/fend/uimain/uimain.h"
-#include <fend/uilogin/loginwidget.h>
-#include <config/global.h>
+#include "fend/uimain/uimain.h"
+#include "fend/uilogin/loginwidget.h"
+#include "config/global.h"
 
 #include <QApplication>
 #include <QIcon>

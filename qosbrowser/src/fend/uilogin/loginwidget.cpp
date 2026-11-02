@@ -1,18 +1,17 @@
 #include "loginwidget.h"
 #include "bend/gateway.h"
 #include "config/apis.h"
-#include "src/bend/man/mandb.h"
+#include "bend/man/mandb.h"
 #include "middle/signals/mansignals.h"
 #include "middle/manglobal.h"
 #include "ui_loginwidget.h"
 
 #include <QFile>
 #include <QCompleter>
-#include "src/fend/uicom/qosmessagebox.h"
+#include "fend/uicom/qosmessagebox.h"
 #include <QAbstractItemView>
 #include <QJsonValue>
 #include <QJsonObject>
-#include <QString>
 
 LoginWidget::LoginWidget(QWidget *parent)
     : QosDialog(parent)

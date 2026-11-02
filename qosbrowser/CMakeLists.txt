@@ -15,7 +15,7 @@ qt_add_executable(qosbrowser
     src/fend/uilogin/loginwidget.h src/fend/uilogin/loginwidget.cpp src/fend/uilogin/loginwidget.ui
     src/helper/filehelper.h src/helper/filehelper.cpp
     src/config/global.h
-    resources.qrc
+    resource/resources.qrc
     src/middle/models/bucket.h
     src/middle/models/dbmodels.h
 
@@ -26,7 +26,6 @@ qt_add_executable(qosbrowser
     src/bend/dao/dbs/daologininfosqlite.h src/bend/dao/dbs/daologininfosqlite.cpp
     src/bend/dao/clouds/daoclouds.h
     src/bend/dao/clouds/daocloudsmock.h src/bend/dao/clouds/daocloudsmock.cpp
-    src/bend/dao/dbs/daologininfosqlite.h
     src/bend/dao/dbs/daologininfo.h
     src/plugins/manplugin.h src/plugins/manplugin.cpp
     src/bend/dao/config/version.h
@@ -59,6 +58,8 @@ qt_add_executable(qosbrowser
     src/fend/uicom/qosmessagebox.h src/fend/uicom/qosmessagebox.cpp src/fend/uicom/qosmessagebox.ui
     src/fend/uidelegate/tableitemdelegate.h src/fend/uidelegate/tableitemdelegate.cpp
     src/fend/uicom/pushbutton.h src/fend/uicom/pushbutton.cpp
+	#Windows 资源文件：exe 图标
+    qosbrowser.rc
 )
 
 target_include_directories(${PROJECT_NAME} PRIVATE

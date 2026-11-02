@@ -1,7 +1,7 @@
 #include "basedialog.h"
 #include "pushbutton.h"
 #include "ui_basedialog.h"
-#include "src/config/global.h"
+#include "config/global.h"
 
 #include <QMouseEvent>
 #include <QKeyEvent>

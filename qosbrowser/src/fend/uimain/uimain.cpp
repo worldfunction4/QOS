@@ -1,12 +1,12 @@
 #include "uimain.h"
 #include "ui_uimain.h"
-#include "src/fend/uilogin/loginwidget.h"
-#include "src/fend/uitransfer/transferdialog.h"
-#include "src/middle/signals/mansignals.h"
-#include "src/middle/manglobal.h"
-#include "src/config/global.h"
-#include "src/fend/uicom/qosmessagebox.h"
-#include "src/config/apis.h"
+#include "fend/uilogin/loginwidget.h"
+#include "fend/uitransfer/transferdialog.h"
+#include "middle/signals/mansignals.h"
+#include "middle/manglobal.h"
+#include "config/global.h"
+#include "fend/uicom/qosmessagebox.h"
+#include "config/apis.h"
 
 #include <QWidget>
 #include <QPushButton>

@@ -2,7 +2,7 @@
 #define LOGGERPROXY_H
 
 #include <QObject>
-#include "src/middle/manglobal.h"
+#include "middle/manglobal.h"
 
 class BasicLogger;
 

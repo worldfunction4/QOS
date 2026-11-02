@@ -2,8 +2,8 @@
 #define DAOCLOUDS_H
 
 #include <QList>
-#include "src/middle/models/bucket.h"
-#include "src/middle/models/cloudobject.h"
+#include "middle/models/bucket.h"
+#include "middle/models/cloudobject.h"
 
 #include <functional>
 

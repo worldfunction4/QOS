@@ -2,12 +2,11 @@
 #include "fend/uidelegate/bucketdelegate.h"
 #include "middle/manglobal.h"
 #include "ui_buckettablewidget.h"
-#include "src/bend/man/mancloud.h"
-#include "src/middle/manglobal.h"
-#include "src/middle/signals/mansignals.h"
-#include "src/bend/gateway.h"
-#include "src/config/apis.h"
-#include "src/fend/uimain/createbucketdialog.h"
+#include "bend/man/mancloud.h"
+#include "middle/signals/mansignals.h"
+#include "bend/gateway.h"
+#include "config/apis.h"
+#include "fend/uimain/createbucketdialog.h"
 #include "fend/uidelegate/tableitemdelegate.h"
 
 #include <QStandardItemModel>
@@ -15,7 +14,7 @@
 #include <QAction>
 #include <QMenu>
 
-#include <fend/uicom/qosmessagebox.h>
+#include "fend/uicom/qosmessagebox.h"
 
 BucketTableWidget::BucketTableWidget(QWidget *parent)
     : QWidget(parent)

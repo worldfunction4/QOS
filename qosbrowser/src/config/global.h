@@ -6,12 +6,15 @@
 #include <QString>
 #include <QStringList>
 #include <QDir>
+//系统标准目录（AppData 等）
+#include <QStandardPaths>
 
 namespace GLOBAL
 {
     namespace PATH
     {
-        inline const QString WORK = QDir::currentPath();
+        //用户数据目录：C:/Users/用户·/AppData/Local/qos，普通用户可写，装在哪都一样
+        inline const QString WORK = FileHelper::joinPath(QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation), "qos");
         inline const QString TEMP = FileHelper::joinPath(WORK, "temp");
         inline const QString LOG_DIR = FileHelper::joinPath(WORK, "logs");
 

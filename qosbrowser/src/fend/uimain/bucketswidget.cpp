@@ -1,11 +1,11 @@
 #include "bucketswidget.h"
 #include "ui_bucketswidget.h"
-#include "src/bend/man/mancloud.h"
-#include "src/middle/manglobal.h"
-#include "src/bend/gateway.h"
-#include "src/config/apis.h"
-#include "src/middle/signals/mansignals.h"
-#include "src/config/global.h"
+#include "bend/man/mancloud.h"
+#include "middle/manglobal.h"
+#include "bend/gateway.h"
+#include "config/apis.h"
+#include "middle/signals/mansignals.h"
+#include "config/global.h"
 
 #include <QStandardItemModel>
 #include <QJsonObject>

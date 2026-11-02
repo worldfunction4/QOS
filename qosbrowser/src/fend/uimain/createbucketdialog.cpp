@@ -1,10 +1,10 @@
 #include "createbucketdialog.h"
 #include "ui_createbucketdialog.h"
-#include "src/config/global.h"
-#include "src/helper/filehelper.h"
-#include "src/fend/uicom/qosmessagebox.h"
-#include "src/middle/manglobal.h"
-#include "src/bend/man/mancloud.h"
+#include "config/global.h"
+#include "helper/filehelper.h"
+#include "fend/uicom/qosmessagebox.h"
+#include "middle/manglobal.h"
+#include "bend/man/mancloud.h"
 
 #include <QStandardItemModel>
 #include <QMoveEvent>

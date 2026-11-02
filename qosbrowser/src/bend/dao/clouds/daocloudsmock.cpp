@@ -1,7 +1,7 @@
 #include "daocloudsmock.h"
 #include "config/errorcode.h"
 #include "config/exceptions.h"
-#include "src/helper/filehelper.h"
+#include "helper/filehelper.h"
 #include <QJsonArray>
 
 DaoCloudsMock::DaoCloudsMock(const QString& path)

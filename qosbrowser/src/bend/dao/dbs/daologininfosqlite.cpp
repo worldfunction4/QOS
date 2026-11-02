@@ -1,7 +1,7 @@
 #include "daologininfosqlite.h"
 #include <QSqlQuery>
 #include <QSqlError>
-#include "src/config/global.h"
+#include "config/global.h"
 
 DaoLoginInfoSqlite::DaoLoginInfoSqlite(): table_(GLOBAL::TABLE::LOGIN_INFO_NAME)
 {}

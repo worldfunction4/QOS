@@ -1,17 +1,17 @@
 #include "manglobal.h"
 
-#include <plugins/manplugin.h>
+#include "plugins/manplugin.h"
 
-#include <middle/signals/mansignals.h>
+#include "middle/signals/mansignals.h"
 
-#include <bend/man/mancloud.h>
-#include <bend/man/mandb.h>
+#include "bend/man/mancloud.h"
+#include "bend/man/mandb.h"
 
-#include <config/loggerproxy.h>
+#include "config/loggerproxy.h"
 
-#include <bend/gateway.h>
+#include "bend/gateway.h"
 
-#include <helper/filehelper.h>
+#include "helper/filehelper.h"
 
 #include <QApplication>
 

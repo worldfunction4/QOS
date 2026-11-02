@@ -1,5 +1,5 @@
 #include "versioncmd.h"
-#include "src/config/global.h"
+#include "config/global.h"
 #include <QList>
 
 VersionCmd::VersionCmd(int argc, char *argv[])

@@ -3,7 +3,7 @@
 
 #include <QDialog>
 #include <QJsonValue>
-#include <fend/uicom/qosdialog.h>
+#include "fend/uicom/qosdialog.h"
 
 namespace Ui {
 class UiMain;

@@ -2,12 +2,11 @@
 #include "bend/man/mancloud.h"
 #include "helper/filehelper.h"
 #include "ui_objectstablewidget.h"
-#include "src/middle/manglobal.h"
-#include "src/middle/signals/mansignals.h"
-#include "src/middle/manglobal.h"
-#include "src/bend/gateway.h"
-#include "src/config/apis.h"
-#include "src/fend/uicom/qosmessagebox.h"
+#include "middle/manglobal.h"
+#include "middle/signals/mansignals.h"
+#include "bend/gateway.h"
+#include "config/apis.h"
+#include "fend/uicom/qosmessagebox.h"
 #include "fend/uidelegate/tableitemdelegate.h"
 
 #include <QJsonObject>

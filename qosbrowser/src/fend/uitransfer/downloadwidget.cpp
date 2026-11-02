@@ -3,9 +3,9 @@
 #include "ui_downloadwidget.h"
 #include "fend/uidelegate/tableitemdelegate.h"
 
-#include <middle/signals/mansignals.h>
-#include <config/apis.h>
-#include <fend/uicom/progresswidget.h>
+#include "middle/signals/mansignals.h"
+#include "config/apis.h"
+#include "fend/uicom/progresswidget.h"
 
 DownloadWidget::DownloadWidget(QWidget *parent)
     : QWidget(parent)

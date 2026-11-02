@@ -1,5 +1,5 @@
 #include "exceptions.h"
-#include "src/helper/filehelper.h"
+#include "helper/filehelper.h"
 
 #include <QList>
 #include <QStringList>

@@ -9,7 +9,7 @@ add_executable(QosTests
     testfilehelper/tst_testhelper.h      testfilehelper/tst_testhelper.cpp
     testfilehelper/testFile.qrc
     # 主程序的资源，里面有错误码表 errorcode.csv
-    ${QOS_SRC}/resources.qrc
+    ${QOS_SRC}/resource/resources.qrc
     testexceptions/tst_testexceptions.h  testexceptions/tst_testexceptions.cpp
     testcos/tst_testcos.h                testcos/tst_testcos.cpp
     # 测试cos代码

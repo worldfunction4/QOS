@@ -1,7 +1,7 @@
 #include "loggerproxy.h"
 
-#include <bend/dao/logs/basiclogger.h>
-#include <config/global.h>
+#include "bend/dao/logs/basiclogger.h"
+#include "config/global.h"
 
 LoggerProxy::LoggerProxy(QObject *parent)
     : QObject{parent}

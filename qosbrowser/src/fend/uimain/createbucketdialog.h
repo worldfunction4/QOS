@@ -1,8 +1,8 @@
 #ifndef CREATEBUCKETDIALOG_H
 #define CREATEBUCKETDIALOG_H
 
-#include "src/fend/uicom/qosdialog.h"
-#include "src/middle/models/bucket.h"
+#include "fend/uicom/qosdialog.h"
+#include "middle/models/bucket.h"
 
 namespace Ui { class CreateBucketDialog; }
 

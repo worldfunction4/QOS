@@ -1,7 +1,7 @@
 #ifndef TRANSFERDIALOG_H
 #define TRANSFERDIALOG_H
 
-#include "src/fend/uicom/qosdialog.h"
+#include "fend/uicom/qosdialog.h"
 #include <QWidget>
 
 namespace Ui {
