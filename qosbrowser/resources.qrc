@@ -25,5 +25,6 @@
         <file>resource/static/imgs/dir.png</file>
         <file>resource/static/imgs/imgs-cyan/file.png</file>
         <file>resource/static/imgs/Search.png</file>
+        <file>resource/static/imgs/check.png</file>
     </qresource>
 </RCC>
